@@ -1,124 +1,832 @@
 <!DOCTYPE html>
+<html lang="en">
 <html>
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Giao Xu BX Dung Lac</title>
+    <!--<link rel="stylesheet" href="style.css">--> 
+    <link rel="preconnect" href="https://fonts.gstatic.com"> 
+    <link href="https://fonts.googleapis.com /css?? family Poppins: wght@100;200;300;400;600;700&display swap" rel="stylesheet">
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 <style>
-* {
-  box-sizing: border-box;
-}
-
-/* Add a gray background color with some padding */
-body {
-  font-family: Arial;
-  padding: 0px;
-  background: #f1f1f1;
-}
-
-/* Header/Blog Title */
-.header {
-  padding: 75px;
-  font-size: 40px;
-  text-align: center;
-  background: white;
-}
-
-/* Create two unequal columns that floats next to each other */
-/* Left column */
-.leftcolumn {   
-  float: left;
-  width: 50%;
-}
-
-/* Right column */
-.rightcolumn {
-  float: left;
-  width: 50%;
-  padding-left: 20px;
-}
-
-/* Fake image */
-.fakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-}
-
-/* Add a card effect for articles */
-.card {
-   background-color: white;
-   padding: 20px;
-   margin-top: 20px;
-}
-
-/* Clear floats after the columns */
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
-}
-
-/* Footer */
-.footer {
-  padding: 20px;
-  text-align: center;
-  background: #ddd;
-  margin-top: 20px;
-}
-
-/* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other */
-@media screen and (max-width: 800px) {
-  .leftcolumn, .rightcolumn {   
-    width: 100%;
+/* sect0 -------- Phan khong nen thay doi */
+*{
+    margin: 0;
     padding: 0;
-  }
+    font-family: 'Poppins', sans-serif;
 }
+#sect0 {
+    min-height: 75vh;
+    width: 100%;
+    /* background-image: linear-gradient(rgba(4,9,0.7),rgba(4,9,30,0.7)), 
+    url("images/banner.png"); */
+    background-image: url("images/banner.png");
+    background-position: center ;
+    background-size: cover;
+    position: relative;
+}
+nav{
+    display: flex;
+    padding: 4% 6%;
+    justify-content: space-between;
+    align-items: top;
+}
+nav img{
+    width: 60px;
+}
+.nav-links{
+    flex: 1;
+    text-align: right;
+} 
+.nav-links ul li{
+    list-style: none;
+    display: inline-block;
+    padding: 8px 12px;
+    position: relative;
+}
+.nav-links ul li a{
+    /*color: #fff;*/
+    text-decoration: none;
+    font-size: 13px;
+    
+
+}
+.nav-links ul li::after{
+    content: '';
+    width: 0%;
+    height: 2px;
+    background: #f44336;
+    display: block;
+    margin: auto;
+    transition: 0.5s;
+}
+.nav-links ul li:hover::after{
+    width: 100%;
+}
+.text-box{
+    width: 90%;
+    color: #fff;
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%,-50%) ;
+    text-align: center;
+}
+.text-box h1{
+    font-size: 62px;
+}
+.text-box p{
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: #fff;
+}
+.hero-btn{
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    border: 1px solid #fff;
+    padding: 12px 34px;
+    font-size: 13px;
+    background: transparent;
+    position: relative;
+    cursor: pointer;
+}
+.hero-btn:hover{
+    border: 1px solid rgb(98, 161, 233);
+    background: rgb(98, 161, 233);
+    transition: 1s;
+}
+nav .fa{
+    display: none;
+
+}
+@media(max-width: 700px){
+    .text-box h1{
+        font-size: 20px;
+    }
+    .nav-links ul li{
+        display: block;
+    }
+    .nav-links{
+        position: absolute;
+        background: transparent;
+        height: 100vh;
+        width: 180px;
+        top: 0;
+        right: 0px;
+        text-align: left;
+        z-index: 2;
+        transition: 1s;
+    }
+    nav .fa{
+        display: block;
+        color: #fff;
+        margin: 10px;
+        font-size: 22px;
+        cursor: pointer;
+    }
+    .nav-links ul{
+        padding: 30px;
+    }
+}
+#dilui {
+    background-color: transparent;
+    border: 0;
+    color: white;
+}    
+#ditoi {
+    background-color: transparent;
+    border: 0;
+    color: white;
+}    
+
+/* Het sect0 */
+
+/* sect1 -------- */
+#sect1 {
+    width: 80%;
+    margin: auto;
+    /* text-align: center; */
+    padding: 10px;
+    display: none;
+}
+h1{
+    font-size: 36px;
+    font-weight: 600;
+}
+p{
+    color: #777;
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 22px;
+    padding: 10px ;
+}
+.row{
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+.course-col{
+    flex-basis: 31%;
+    background: #fff3f3;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 20px 12px;
+    box-sizing: border-box;
+    transition: 0.5s;
+}
+h3{
+    text-align: center;
+    font-weight: 600;
+    margin: 10px 0;
+}
+.couse-col:hover{
+    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
+}
+@media(max-width:700px)  {
+    .row{
+        flex-direction: column;
+    }
+}
+.center{
+    text-align: center; 
+
+}
+.course-col table{
+    text-align: left;
+}
+/* Het sect1 */
+
+/* sect2 ----------- */
+#sect2 {
+    width:80% ;
+    margin: auto;
+    text-align: center;
+    padding-top: 10px;
+    display: none;
+
+}
+.campus-col{
+    flex-basis: 32%;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    position: relative;
+    overflow: hidden;
+}
+.campus-col img{
+    width: 100%;
+    display: block;
+}
+.layer{
+    background: transparent;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: 0.5s;
+}
+.layer:hover{
+    background: rgba(226,0,0,0.7);
+}
+.layer h3{
+    width: 100%;
+    font-weight: 500;
+    color: #fff;
+    font-size: 26px;
+    bottom: 0;
+    left:50%;
+    transform: translateX(-50%);
+    position: absolute;
+    opacity: 0;
+    transition: 0.5s;
+}
+.layer:hover h3{
+    bottom: 49%;
+    opacity: 1;
+}
+
+/* Het sect2 */
+
+/* sect3 -------------- */
+#sect3 {
+    width: 80%;
+    margin: auto;
+    text-align: center;
+    padding-top: 10px;
+}
+.facilities-col{
+    flex-basis: 31%;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    text-align: left;
+}
+.facilities-col img{
+    width: 100%;
+    border-radius: 10%;
+}
+.facilities-col p{
+    padding: 0;
+}
+.facilities-col h3{
+    margin-top: 16px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+/* Het sect3 */
+
+/* sect4 -------------- */
+#sect4 {
+    width: 80%;
+    margin: auto;
+    padding-top: 10px;
+    text-align: center;
+}
+.testimonials-col{
+    flex-basis: 36%;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    text-align: left;
+    background: #fff3f3;
+    padding: 25px;
+    cursor: pointer;
+    display: flex;
+}
+.testimonial-col img{
+    height: 40px;
+    margin-left: 5px;
+    margin-right: 30px;
+    border-radius: 50%;
+}
+.testimonial-col p{
+    padding: 0;
+}
+.testimonial-col h3{
+    margin-top: 10px;
+    text-align: center;   
+}
+.testimonial-col .fa{
+    color: #f44336;
+}
+@media(max-width: 700px) {
+    .testimonial-col img{
+        height: 40px;
+        margin-left: 0px;
+        margin-right: 15px;
+    }
+}
+/* Het sect4 */
+
+/* sect5 -------lich su gx------- */
+#sect5 {
+    width: 80%;
+    margin: auto;
+    padding-top: 10px;
+    text-align: center;
+}
+
+/* Het sect5 */
+
+/* sect6 -------to chuc gx------- */
+#sect6 {
+    width: 80%;
+    margin: auto;
+    padding-top: 10px;
+    text-align: center;
+}
+
+/* Het sect6 */
+/*------------ FOOTER ------------*/
+.footer{
+    margin: 0px auto;
+    width: 100%;
+    background-image:url("images/banner2.png");  
+    /* background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), 
+    url("images/banner2.png");  */
+    background-position: center;
+    background-size: cover;
+    border-radius: 0px;
+    text-align: center;
+    padding: 0;
+}
+.footer h4{
+    margin-bottom: 25px;
+    margin-top: 20px;
+    font-weight: 600;
+}
+.icons .fa{
+    color: #f44336;
+    margin: 0 13px;
+    cursor: pointer;
+    padding: 18px 0;
+}
+
 </style>
 </head>
 <body>
+<!------------------------------------------------ Menu nho ben phai ----------------------->
 
-<div class="header">
-  <h2>Blog Name</h2>
-</div>
+<section class="header" id="sect0">
+    <nav>
+        <img src="images/logo.png"></a>
+        <div class="nav-links" id="navLinks" >
+        <i class="fa fa-times0" onclick="hideMenu()"></i>     
+            <ul>
+                <li><a id="menu0" onclick="fchon_sec(id)">Trang chủ</a></1i>
+                <li><a id="menu1" onclick="fchon_sec(id)">Giờ mục vụ</a></li>
+                <li><a id="menu2" onclick="fchon_sec(id)">Mùa phụng vụ</a></li>
+                <li><a id="menu3" onclick="fchon_sec(id)">Bí tích</a></li>
+                <li><a id="menu4" onclick="fchon_sec(id)">Thông báo</a></li>
+                <li><a id="menu5" onclick="fchon_sec(id)">Lịch sử giáo xứ</a></li>
+                <li><a id="menu6" onclick="fchon_sec(id)">Tổ chức giáo xứ</a></li>
+            </ul>
+        </div>
+        <i class="fa fa-bars" onclick="showMenu()"></i>
+    </nav>
+    <div class="text-box">
+        <h1>Cộng Đoàn Công Giáo<br>Gioanbaotixita Dũng Lạc</h1>
+            <p><span style="font-size:medium ;color: whitesmoke ; "> 1201 Lafitte Rd.
+                <br>Abbeville, Louisiana 70511-1507 </span></p>
+        <div class="hero-btn">    
+            <button id="dilui" onclick="f_dilui()">&lt; &lt; &ensp;</button> 
+            <a id="sectionht">&nbsp; Giờ mục vụ &nbsp;</a> 
+            <button id="ditoi" onclick="f_ditoi()">&ensp; &gt; &gt;</button> 
+        </div>
+    </div> 
+</section>
+<!---------End Menu nho ben phai ----------------------->
+<section class="course" id="sect1">
+    <h1 class="center">Giờ Mục Vụ</h1>
+    <!-- <p>Lorem van Tien dang lam web</p> -->
 
-<div class="row">
-  <div class="leftcolumn">
-    <div class="card">
-      <h2>TITLE HEADING</h2>
-      <h5>Title description, Dec 7, 2017</h5>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    </div>
-    <div class="card">
-      <h2>TITLE HEADING</h2>
-      <h5>Title description, Sep 2, 2017</h5>
-      <div class="fakeimg" style="height:200px;">Image</div>
-      <p>Some text..</p>
-      <p>Sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco.</p>
-    </div>
-  </div>
-  <div class="rightcolumn">
-    <div class="card">
-      <h2>About Me</h2>
-      <div class="fakeimg" style="height:100px;">Image</div>
-      <p>Some text about me in culpa qui officia deserunt mollit anim..</p>
-    </div>
-    <div class="card">
-      <h3>Popular Post</h3>
-      <div class="fakeimg">Image</div><br>
-      <div class="fakeimg">Image</div><br>
-      <div class="fakeimg">Image</div>
-    </div>
-    <div class="card">
-      <h3>Follow Me</h3>
-      <p>Some text..</p>
-    </div>
-  </div>
-</div>
+    <div class="row">
+        <div class="course-col">
+            <h3>Thánh Lễ</h3>
+            <table>
+                <tr>
+                    <th colspan="3">Daily Mass</th>
+                </tr>
+                <tr>
+                    <td></td><td colspan="2"><u>Monday-Friday</u></td>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>7:00 PM</td>
+                </tr>
+            
+                <tr>
+                    <td></td><td colspan="2"><u>Saturday Vigil</u></th>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>8:00 PM</td>
+                </tr>
+                <tr>
+                    <td></td><td colspan="2"><u>Sunday</u></th>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>8:00 AM</td>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>10:00 AM</td>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>12:30 PM</td>
+                </tr>
+            
+                <tr>
+                    <th colspan="3">Holy Days of Obligation</th>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>8:00 AM</td>
+                </tr>
+                <tr>
+                    <td></td><td></td><td>7:00 PM</td>
+                </tr>
+                <tr>
+                    <th colspan="3">Mass Time Around the World</th>
+                </tr>
+            
+            </table>
+                      </div>
+        <div class="course-col">
+            <h3>Giải Tội</h3>
+            <p>
+                Thứ Bảy 5:30 - 6:30 pm   <br>
+                   * 30 phút trước các Thánh Lễ hay theo hẹn.
 
-<div class="footer">
-  <h2>Footer</h2>
-</div>
+            </p>
+            <h3>Rửa Tội</h3>
+            <p>
+                Sau lễ 11:00AM mỗi Chúa Nhật đầu tháng.
+                Xin liên lạc Văn Phòng Giáo Xứ để biết thêm chi tiết:
 
+            </p>
+            <h3>Thêm Sức</h3>
+            <p>
+                Mỗi năm 1 lần vào trước Mùa Phục Sinh.
+                Xin liên lạc Văn Phòng Giáo Xứ để biết thêm chi tiết:
+
+            </p>
+
+        </div>
+        <div class="course-col">
+            <h3>Hôn Phối</h3>
+            <p>
+                Xin liên lạc với Cha Thomas Trần Thiên Ân, O.P, ít nhất 4 tháng trước ngày cưới: (832) 692-4761. 
+                Hoặc văn phòng GX để lấy hẹn với cha xứ.
+            </p>
+            <h3>Xức Dầu</h3>
+            <p>
+                Xin liên lạc Văn Phòng Giáo Xứ để biết thêm chi tiết:
+
+            </p>
+            <h3><span style="color:red">Văn phòng Giáo xứ:</span></h3>
+            <p>
+                54 Lourd Saint Abbeville LA 7777.<br>
+                Tel 228 912 5555
+
+            </p>
+
+        </div>
+    </div>
+</section>
+<!----------------- MUA PHUNG VU ----------------------->
+<section class="campus" id="sect2">
+    <h1>Mùa Phụng Vụ</h1>
+    <p>
+        <img src="images/muapv.png">
+    </p>
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muavong.png">
+            <div class="layer">
+                <h3>MUA VONG</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muags.png">
+            <div class="layer">
+                <h3>MUA GIANG SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muatn.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN I</h3>
+            </div>
+        </div>    
+    </div>    
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muachay.png">
+            <div class="layer">
+                <h3>MUA CHAY</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muaps.png">
+            <div class="layer">
+                <h3>MUA PHUC SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/ducmelt.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN II</h3>
+            </div>
+        </div>    
+    </div>    
+
+</section>
+<!---------------- BI TICH -------------->
+<section class="facilities" id="sect3">
+    <h1>Bí Tích</h1>
+    <p>
+        Lorem ipsum is placeholder text commonly used in the graphic, print
+    </p>
+    <div class="row">
+        <div class="facilities-col">
+            <img src="images/ruatoi.png">
+            <h3>Rua Toi</h3>
+            <p>
+                Lorem ipsum is placeholder text commonly used in the graphic, print
+            </p>
+        </div>
+        <div class="facilities-col">
+            <img src="images/themsuc.png">
+            <h3>Them Suc</h3>
+            <p>
+                Lorem ipsum is placeholder text commonly used in the graphic, print
+            </p>
+        </div>
+        <div class="facilities-col">
+            <img src="images/thanhthe.png">
+            <h3>Thanh The</h3>
+            <p>
+                Lorem ipsum is placeholder text commonly used in the graphic, print
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="facilities-col">
+            <img src="images/giaitoi.png">
+            <h3>Giai Toi</h3>
+            <p>
+                Lorem ipsum is placeholder text commonly used in the graphic, print
+            </p>
+        </div>
+        <div class="facilities-col">
+            <img src="images/xucdau.png">
+            <h3>Xuc Dau</h3>
+            <p>
+                Lorem ipsum is placeholder text commonly used in the graphic, print
+            </p>
+        </div>
+        <div class="facilities-col">
+            <img src="images/honphoi.png">
+            <h3>Hon Phoi</h3>
+            <p>
+                Lorem ipsum is placeholder text commonly used in the graphic, print
+            </p>
+        </div>
+    </div>
+</section>
+<!--------------- THONG BAO ------------------->
+<section class="testimonials" id="sect4">
+    <h1>Thông Báo</h1>
+    <p>
+        Lorem ipsum is placeholder text commonly used in the graphic, print
+    </p>
+    <div class="row">
+        <div class="testimonial-col">
+            <img src="images/user1.jpg">
+            <div>
+                <p>
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                </p>
+                <h3>Linh mục Chánh xứ</h3>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+        </div>
+        <div class="testimonial-col">
+            <img src="images/user2.jpg">
+            <div>
+                <p>
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                </p>
+                <h3>Chủ tịch Cộng đoàn</h3>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+        </div>
+    </div>
+</section>
+<!------------------ Lịch sử giáo xứ --------------->
+<section class="líchugx" id="sect5">
+    <h1 class="center">Lịch sử giáo xứ</h1>
+    <p>
+        Lorem ipsum is placeholder text commonly used in the graphic,
+    </p>
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muavong.png">
+            <div class="layer">
+                <h3>MUA VONG</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muags.png">
+            <div class="layer">
+                <h3>MUA GIANG SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muatn.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN I</h3>
+            </div>
+        </div>    
+    </div>    
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muachay.png">
+            <div class="layer">
+                <h3>MUA CHAY</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muaps.png">
+            <div class="layer">
+                <h3>MUA PHUC SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/ducmelt.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN II</h3>
+            </div>
+        </div>    
+    </div>    
+
+
+</section>
+<!------------------ Tổ chức giáo xứ --------------->
+<section class="tochucgx" id="sect6">
+    <h1 class="center">Tổ chức giáo xứ</h1>
+    <p>
+        Lorem ipsum is placeholder text commonly used in the graphic,
+    </p>
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muavong.png">
+            <div class="layer">
+                <h3>MUA VONG</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muags.png">
+            <div class="layer">
+                <h3>MUA GIANG SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muatn.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN I</h3>
+            </div>
+        </div>    
+    </div>    
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muachay.png">
+            <div class="layer">
+                <h3>MUA CHAY</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muaps.png">
+            <div class="layer">
+                <h3>MUA PHUC SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/ducmelt.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN II</h3>
+            </div>
+        </div>    
+    </div>    
+
+
+</section>
+<!------------------ FOOTER --------------->
+<hr>
+<section class="footer">
+    <h4>About Us</h4>
+    <p>
+        Lorem ipsum is placeholder text commonly used in the graphic,
+    </p>
+    <div class="icons">
+        <i class="fa fa-facebook"></i>
+        <i class="fa fa-twitter"></i>
+        <i class="fa fa-instagram"></i>
+        <i class="fa fa-linkedin"></i>
+    </div>
+    <!-- <p>Made with vantiensg2002@yahoo.com</p> -->
+</section>
+
+<!--================================= for Javascript ==================================--->
+<script>var idj=""; textmenuht="Trang chủ";</script>
+<script>
+    var navLinks= document.getElementById("navLinks");
+    function showMenu(){
+        navLinks.style.right= "0";
+    }
+    function hideMenu(){
+        navLinks.style.right= "0px";
+    
+    }
+
+</script>
+<script>
+    function f_dilui(){
+        //alert('f_dilui');
+        textmenuht = document.getElementById("sectionht").innerHTML;
+        if (textmenuht==="Tổ chức giáo xứ") {
+            fchon_sec("menu5");
+        } else if (textmenuht==="Lịch sử giáo xứ") {
+            fchon_sec("menu4");
+        } else if (textmenuht==="Thông báo") {
+            fchon_sec("menu3");
+        } else if (textmenuht==="Bí tích") {
+            fchon_sec("menu2");
+        } else if (textmenuht==="Mùa phụng vụ") {
+            fchon_sec("menu1");
+        } else if (textmenuht==="Giờ mục vụ") {
+            fchon_sec("menu0");
+
+        } 
+
+    }
+    function f_ditoi(){
+        textmenuht = document.getElementById("sectionht").innerHTML;
+        if (textmenuht==="Giờ mục vụ") {
+            fchon_sec("menu2");
+        } else if (textmenuht==="Mùa phụng vụ") {
+            fchon_sec("menu3");
+        } else if (textmenuht==="Bí tích") {
+            fchon_sec("menu4");
+        } else if (textmenuht==="Thông báo") {
+            fchon_sec("menu5");
+        } else if (textmenuht==="Lịch sử giáo xứ") {
+            fchon_sec("menu6");
+
+        } 
+    }
+    function fchon_sec(id){
+
+        for (let j = 0; j <= 6; j++) {
+                idj = 'menu'+j;
+                if ((idj == id) && (id !== 'menu0')) {
+                    var x = document.getElementById(idj);
+                    x.style.color = 'yellow';
+                    document.getElementById("sectionht").innerHTML= document.getElementById(idj).innerHTML;
+                    idsectht='sect'+j;
+                    var y = document.getElementById(idsectht);
+                    y.style.display = 'block';
+                    document.getElementById('sect0').style.display = 'block';
+
+                }    
+                if ((idj !== id) && (id !== 'menu0'))  {    
+                    var x = document.getElementById(idj);
+                    x.style.color = 'white';
+                    idsectht='sect'+j;
+                    var y = document.getElementById(idsectht);
+                    y.style.display = 'none';
+
+                };
+            }
+        
+    }
+    
+</script>
+<script>
+    hideMenu();
+    fchon_sec("menu1"); //de khoi dong luc dau
+</script>
 </body>
 </html>
