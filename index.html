@@ -363,6 +363,7 @@ h3{
 }
 
 </style>
+<script>var dem_showMenu=0;</script>
 </head>
 <body>
 <!------------------------------------------------ Menu nho ben phai ----------------------->
@@ -371,7 +372,7 @@ h3{
     <nav>
         <img src="images/logo.png"></a>
         <div class="nav-links" id="navLinks" >
-        <i class="fa fa-times0" onclick="hideMenu()"></i>     
+        <i class="fa fa-times" onclick="hideMenu()"></i>     
             <ul>
                 <li><a id="menu0" onclick="fchon_sec(id)">Trang chủ</a></1i>
                 <li><a id="menu1" onclick="fchon_sec(id)">Giờ mục vụ</a></li>
@@ -757,7 +758,7 @@ h3{
         navLinks.style.right= "0";
     }
     function hideMenu(){
-        navLinks.style.right= "0px";
+        navLinks.style.right= "-200px";
     
     }
 
