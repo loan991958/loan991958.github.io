@@ -1,21 +1,17 @@
 <!DOCTYPE html>
 <html lang="en">
-<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Giao Xu BX Dung Lac</title>
-    <!--<link rel="stylesheet" href="style.css">--> 
-    <link rel="preconnect" href="https://fonts.gstatic.com"> 
-    <link href="https://fonts.googleapis.com /css?? family Poppins: wght@100;200;300;400;600;700&display swap" rel="stylesheet">
-    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Toggle Menu</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
-/* sect0 -------- Phan khong nen thay doi */
-*{
+/* Định dạng chung cho trang */
+body {
     margin: 0;
-    padding: 0;
-    font-family: 'Poppins', sans-serif;
+    font-family: Arial, sans-serif;
 }
+
 #sect0 {
     min-height: 75vh;
     width: 100%;
@@ -26,123 +22,92 @@
     background-size: cover;
     position: relative;
 }
-nav{
+
+/* Thanh menu chính */
+.menu {
     display: flex;
-    padding: 4% 6%;
     justify-content: space-between;
-    align-items: top;
-}
-nav img{
-    width: 60px;
-}
-.nav-links{
-    flex: 1;
-    text-align: right;
-} 
-.nav-links ul li{
-    list-style: none;
-    display: inline-block;
-    padding: 8px 12px;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: green;
+    color: white;
     position: relative;
 }
-.nav-links ul li a{
-    /*color: #fff;*/
-    text-decoration: none;
-    font-size: 13px;
-    
+
+/* Văn bản menu */
+.menu-text {
+font-size: 18px;
+margin-left: 36%;
+transition: all 0.3s ease;
+color:#fbf6f6;
+}
+.menu-text ul li{
+    list-style: none;
+    display: inline-block;
+    position: relative;
+    margin-right: 10px;
 
 }
-.nav-links ul li::after{
-    content: '';
-    width: 0%;
-    height: 2px;
-    background: #f44336;
-    display: block;
-    margin: auto;
-    transition: 0.5s;
-}
-.nav-links ul li:hover::after{
-    width: 100%;
+
+/* Biểu tượng toggle */
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    color:#fbf6f6;
 }
 .text-box{
     width: 90%;
     color: #fff;
     position: absolute;
-    top: 70%;
+    top: 90%;
     left: 50%;
     transform: translate(-50%,-50%) ;
     text-align: center;
 }
 .text-box h1{
-    font-size: 62px;
+    font-size: 20px;
 }
 .text-box p{
     margin: 10px 0 40px;
     font-size: 14px;
     color: #fff;
 }
-.hero-btn{
-    display: inline-block;
-    text-decoration: none;
-    color: #fff;
-    border: 1px solid #fff;
-    padding: 12px 34px;
-    font-size: 13px;
-    background: transparent;
-    position: relative;
-    cursor: pointer;
+li:hover {
+  color:orange;
 }
-.hero-btn:hover{
-    border: 1px solid rgb(98, 161, 233);
-    background: rgb(98, 161, 233);
-    transition: 1s;
-}
-nav .fa{
-    display: none;
+/* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
+@media (max-width: 600px) {
+    .menu-text {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;
+    }
 
-}
-@media(max-width: 800px){
-    .text-box h1{
-        font-size: 20px;
-    }
-    .nav-links ul li{
-        display: block;
-    }
-    .nav-links{
+    .menu-text.visible {
+        visibility: visible;
         position: absolute;
         background: transparent;
         height: 100vh;
-        width: 180px;
+        width: 200px;
         top: 0;
-        right: 0px;
-        text-align: left;
+        right: 10px;
+        text-align: right;
         z-index: 2;
-        transition: 1s;
+        transition: 0.3s;
+        line-height: 1.8;
     }
-    nav .fa{
-        display: block;
-        color: #fff;
-        margin: 10px;
-        font-size: 22px;
-        cursor: pointer;
+    .menu-text.hidden {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;
     }
-    .nav-links ul{
-        padding: 30px;
-    }
+
 }
-#dilui {
-    background-color: transparent;
-    border: 0;
-    color: white;
-}    
-#ditoi {
-    background-color: transparent;
-    border: 0;
-    color: white;
-}    
-
-/* Het sect0 */
-
 /* sect1 -------- */
 #sect1 {
     width: 80%;
@@ -363,39 +328,36 @@ h3{
 }
 
 </style>
-<script>var dem_showMenu=0;</script>
 </head>
 <body>
-<!------------------------------------------------ Menu nho ben phai ----------------------->
-
+<!-- Thanh menu -->
 <section class="header" id="sect0">
     <nav>
-        <img src="images/logo.png"></a>
-        <div class="nav-links" id="navLinks" >
-        <i class="fa fa-times" onclick="hideMenu()"></i>     
+        <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
+        
+        <div class="menu-text" id="menutext" >
+
+            <!--<i class="fa fa-times" onclick="hideMenu()"></i>     -->
             <ul>
-                <li><a id="menu0" onclick="fchon_sec(id)">Trang chủ</a></1i>
-                <li><a id="menu1" onclick="fchon_sec(id)">Giờ mục vụ</a></li>
-                <li><a id="menu2" onclick="fchon_sec(id)">Mùa phụng vụ</a></li>
-                <li><a id="menu3" onclick="fchon_sec(id)">Bí tích</a></li>
-                <li><a id="menu4" onclick="fchon_sec(id)">Thông báo</a></li>
-                <li><a id="menu5" onclick="fchon_sec(id)">Lịch sử giáo xứ</a></li>
-                <li><a id="menu6" onclick="fchon_sec(id)">Tổ chức giáo xứ</a></li>
+                <li id="menu0" onclick="fchon_sec(id)">Trang chủ</1i>
+                <li id="menu1" onclick="fchon_sec(id)">Giờ mục vụ</li>
+                <li id="menu2" onclick="fchon_sec(id)">Mùa phụng vụ</li>
+                <li id="menu3" onclick="fchon_sec(id)">Bí tích</li>
+                <li id="menu4" onclick="fchon_sec(id)">Thông báo</li>
+                <li id="menu5" onclick="fchon_sec(id)">Lịch sử giáo xứ</li>
+                <li id="menu6" onclick="fchon_sec(id)">Tổ chức giáo xứ</li>
             </ul>
         </div>
-        <i class="fa fa-bars" onclick="showMenu()"></i>
+        <!--<i class="fa fa-bars" onclick="showMenu()"></i>-->
+        <!--<i id="toggle-icon" class="fa fa-bars menu-icon"></i>-->
     </nav>
     <div class="text-box">
         <h1>Cộng Đoàn Công Giáo<br>Gioanbaotixita Dũng Lạc</h1>
-            <p><span style="font-size:medium ;color: whitesmoke ; "> 1201 Lafitte Rd.
+        <p><span style="font-size:medium ;color: whitesmoke ; "> 1201 Lafitte Rd.
                 <br>Abbeville, Louisiana 70511-1507 </span></p>
-        <div class="hero-btn">    
-            <button id="dilui" onclick="f_dilui()">&lt; &lt; &ensp;</button> 
-            <a id="sectionht">&nbsp; Giờ mục vụ &nbsp;</a> 
-            <button id="ditoi" onclick="f_ditoi()">&ensp; &gt; &gt;</button> 
-        </div>
     </div> 
 </section>
+
 <!---------End Menu nho ben phai ----------------------->
 <section class="course" id="sect1">
     <h1 class="center">Giờ Mục Vụ</h1>
@@ -750,84 +712,67 @@ h3{
     <!-- <p>Made with vantiensg2002@yahoo.com</p> -->
 </section>
 
-<!--================================= for Javascript ==================================--->
-<script>var idj=""; textmenuht="Trang chủ";</script>
-<script>
-    var navLinks= document.getElementById("navLinks");
-    function showMenu(){
-        navLinks.style.right= "0";
+
+<script> //----------------------------------------------------------------------------
+const toggleIcon = document.getElementById('toggle-icon');
+const menuText = document.getElementById('menutext');
+let isMenuOpen = false;
+
+toggleIcon.addEventListener('click', function () {
+    // Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
+    if (window.innerWidth <= 600) {
+        if (isMenuOpen) {
+            menuText.classList.remove('visible');
+            menuText.classList.add('hidden');
+            toggleIcon.classList.remove('fa-times');
+            toggleIcon.classList.add('fa-bars');
+        } else {
+            menuText.classList.remove('hidden');
+            menuText.classList.add('visible');
+            toggleIcon.classList.remove('fa-bars');
+            toggleIcon.classList.add('fa-times');
+        }
+        isMenuOpen = !isMenuOpen;
     }
-    function hideMenu(){
-        navLinks.style.right= "-200px";
-    
+});
+
+function fchon_sec(id){
+    for (let j = 0; j <= 6; j++) {
+            idj = 'menu'+j;
+            if (idj == id)  {
+                var x = document.getElementById(idj);
+                x.style.color = 'yellow';
+                //document.getElementById("sectionht").innerHTML= document.getElementById(idj).innerHTML;
+                idsectht='sect'+j;
+                var y = document.getElementById(idsectht);
+                y.style.display = 'block';
+                document.getElementById('sect0').style.display = 'block';
+
+            };    
+            if ((idj !== id) && (id !== 'menu0'))  {    
+                var x = document.getElementById(idj);
+                x.style.color = 'white';
+                idsectht='sect'+j;
+                var y = document.getElementById(idsectht);
+                y.style.display = 'none';
+            }    
+            if ((idj !== id) && (id === 'menu0'))  {     
+                var x = document.getElementById(idj);
+                x.style.color = 'white';
+                idsectht='sect'+j;
+                var y = document.getElementById(idsectht);
+                y.style.display = 'block';
+
+            };
+        }
+
     }
+
 
 </script>
 <script>
-    function f_dilui(){
-        //alert('f_dilui');
-        textmenuht = document.getElementById("sectionht").innerHTML;
-        if (textmenuht==="Tổ chức giáo xứ") {
-            fchon_sec("menu5");
-        } else if (textmenuht==="Lịch sử giáo xứ") {
-            fchon_sec("menu4");
-        } else if (textmenuht==="Thông báo") {
-            fchon_sec("menu3");
-        } else if (textmenuht==="Bí tích") {
-            fchon_sec("menu2");
-        } else if (textmenuht==="Mùa phụng vụ") {
-            fchon_sec("menu1");
-        } else if (textmenuht==="Giờ mục vụ") {
-            fchon_sec("menu0");
-
-        } 
-
-    }
-    function f_ditoi(){
-        textmenuht = document.getElementById("sectionht").innerHTML;
-        if (textmenuht==="Giờ mục vụ") {
-            fchon_sec("menu2");
-        } else if (textmenuht==="Mùa phụng vụ") {
-            fchon_sec("menu3");
-        } else if (textmenuht==="Bí tích") {
-            fchon_sec("menu4");
-        } else if (textmenuht==="Thông báo") {
-            fchon_sec("menu5");
-        } else if (textmenuht==="Lịch sử giáo xứ") {
-            fchon_sec("menu6");
-
-        } 
-    }
-    function fchon_sec(id){
-
-        for (let j = 0; j <= 6; j++) {
-                idj = 'menu'+j;
-                if ((idj == id) && (id !== 'menu0')) {
-                    var x = document.getElementById(idj);
-                    x.style.color = 'yellow';
-                    document.getElementById("sectionht").innerHTML= document.getElementById(idj).innerHTML;
-                    idsectht='sect'+j;
-                    var y = document.getElementById(idsectht);
-                    y.style.display = 'block';
-                    document.getElementById('sect0').style.display = 'block';
-
-                }    
-                if ((idj !== id) && (id !== 'menu0'))  {    
-                    var x = document.getElementById(idj);
-                    x.style.color = 'white';
-                    idsectht='sect'+j;
-                    var y = document.getElementById(idsectht);
-                    y.style.display = 'none';
-
-                };
-            }
-        
-    }
-    
+    fchon_sec("menu0"); //de khoi dong luc dau
 </script>
-<script>
-    hideMenu();
-    fchon_sec("menu1"); //de khoi dong luc dau
-</script>
+
 </body>
 </html>
