@@ -17,7 +17,7 @@ body {
     width: 100%;
     /* background-image: linear-gradient(rgba(4,9,0.7),rgba(4,9,30,0.7)), 
     url("images/banner.png"); */
-    background-image: url("images/banner.png");
+    background-image: url("images_sect0/0.png");
     background-position: center ;
     background-size: cover;
     position: relative;
@@ -75,6 +75,31 @@ color:#fbf6f6;
 li:hover {
   color:orange;
 }
+/* Hai mui ten < > toi lui */
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  width:auto;
+  bottom: 0%;
+  transition: 0.6s ease;
+  border-radius: 0 5px 5px 0;
+  margin-top: -22px;
+  padding: 6px;
+  user-select: none;
+}
+.next {
+  right: 0;
+  border-radius: 5px 0 0 5px;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+/* End Hai mui ten < > toi lui */
+
 /* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
 @media (max-width: 600px) {
     .menu-text {
@@ -97,7 +122,7 @@ li:hover {
         text-align: right;
         z-index: 2;
         transition: 0.3s;
-        line-height: 2.5;
+        line-height: 2.4;
     }
     .menu-text.hidden {
         visibility: hidden;
@@ -330,6 +355,7 @@ h3{
 </style>
 </head>
 <body>
+    
 <!-- Thanh menu -->
 <section class="header" id="sect0">
     <nav>
@@ -356,6 +382,9 @@ h3{
         <p><span style="font-size:medium ;color: whitesmoke ; "> 1201 Lafitte Rd.
                 <br>Abbeville, Louisiana 70511-1507 </span></p>
     </div> 
+    <a class="prev" onclick="changeImageSect0(-1)">❮</a>
+    <a class="next" onclick="changeImageSect0(1)">❯</a>
+    
 </section>
 
 <!---------End Menu nho ben phai ----------------------->
@@ -714,6 +743,7 @@ h3{
 
 
 <script> //----------------------------------------------------------------------------
+var nImage=8; // so nay 8 mod 8 bang 0 ung anh goc 0.png la nha tho
 const toggleIcon = document.getElementById('toggle-icon');
 const menuText = document.getElementById('menutext');
 let isMenuOpen = false;
@@ -774,5 +804,15 @@ function fchon_sec(id){
     fchon_sec("menu0"); //de khoi dong luc dau
 </script>
 
+<script>
+function changeImageSect0(n) {
+    nImage = nImage + n
+    mod_nImage_8 = nImage % 8; 
+    let im = String(mod_nImage_8)+'.png';
+    document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
+}
+</script>
+
+</script>
 </body>
 </html>
