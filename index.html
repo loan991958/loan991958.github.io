@@ -6,12 +6,18 @@
 <title>Toggle Menu</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <style>
+#google_translate_wrapper { position: fixed; top: 0px; right: 0px; z-index:2;background-color: transparent; }
 /* Định dạng chung cho trang */
 body {
     margin: 0;
     font-family: Arial, sans-serif;
 }
-
+#speaker{
+    background-color: transparent;
+    width:30px;
+    height: 30px;
+    border-radius:50%    
+}
 #sect0 {
     min-height: 75vh;
     width: 100%;
@@ -37,7 +43,7 @@ body {
 /* Văn bản menu */
 .menu-text {
 font-size: 18px;
-margin-left: 36%;
+margin-left: 30%;
 transition: all 0.3s ease;
 color:#fbf6f6;
 }
@@ -45,7 +51,7 @@ color:#fbf6f6;
     list-style: none;
     display: inline-block;
     position: relative;
-    margin-right: 10px;
+    margin-right: 30px;
 
 }
 
@@ -99,7 +105,17 @@ li:hover {
   background-color: rgba(0,0,0,0.8);
 }
 /* End Hai mui ten < > toi lui */
-
+#languagebrowse{
+    border: 1px solid black;
+    width:34px;
+    height: 34px;
+    border-radius: 50%;
+    float: right;
+    background-color:transparent ;
+    border-color:white;
+    color:yellow;
+    
+}
 /* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
 @media (max-width: 600px) {
     .menu-text {
@@ -133,48 +149,32 @@ li:hover {
     }
 
 }
+
 /* sect1 -------- */
-#sect1 {
-    width: 80%;
-    margin: auto;
-    /* text-align: center; */
-    padding: 10px;
-    display: none;
-}
-h1{
-    font-size: 36px;
-    font-weight: 600;
-}
-p{
-    color: #777;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 22px;
-    padding: 10px ;
-}
-.row{
-    margin-top: 5%;
+
+.f-grid {
     display: flex;
     justify-content: space-between;
-}
-.course-col{
-    flex-basis: 31%;
-    background: #fff3f3;
-    border-radius: 10px;
-    margin-bottom: 5%;
-    padding: 20px 12px;
-    box-sizing: border-box;
-    transition: 0.5s;
-}
-h3{
-    text-align: center;
-    font-weight: 600;
-    margin: 10px 0;
-}
-.couse-col:hover{
-    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
-}
-@media(max-width:800px)  {
+    flex-flow: row wrap;
+    margin-bottom: 1.5rem;}
+.select1-l{
+    flex: 3 0;
+    /*margin-left: 0.5rem;*/
+    margin-left:2rem;
+    margin-right:2rem;
+    margin-bottom: 0rem;
+    font-size: 18pt;
+    padding: 10rem;}
+.select1-r{
+    flex: 3 0;
+    margin-left: 2rem;
+    margin-bottom: rem;
+    font-size: 16pt;
+    padding: 1rem;
+    color:darkblue;}
+
+
+@media(max-width:600px)  {
     .row{
         flex-direction: column;
     }
@@ -241,7 +241,7 @@ h3{
 
 /* sect3 -------------- */
 #sect3 {
-    width: 80%;
+    width: 66.6%;
     margin: auto;
     text-align: center;
     padding-top: 10px;
@@ -355,23 +355,37 @@ h3{
 </style>
 </head>
 <body>
-    
+<!-- cho google dich
+Khi trang hien ra , menu selec ngon ngu chon en
+ok thi menu nay bien mat va thay the menu goo
+chi con xem bang ngon ngu - dich  va hien van ban goc -->
+    <div id="google_translate_wrapper">
+        <div id="google_translate_element"></div>
+     
+        <script type="text/javascript">
+            function googleTranslateElementInit() {
+                new google.translate.TranslateElement({ pageLanguage: 'en,vi', includedLanguages: 'vi,en' }, 'google_translate_element');
+            }
+        </script>
+     
+        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    </div>
+
 <!-- Thanh menu -->
 <section class="header" id="sect0">
     <nav>
         <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
-        
         <div class="menu-text" id="menutext" >
 
             <!--<i class="fa fa-times" onclick="hideMenu()"></i>     -->
             <ul>
                 <li id="menu0" onclick="fchon_sec(id)">Trang chủ</1i>
-                <li id="menu1" onclick="fchon_sec(id)">Giờ mục vụ</li>
-                <li id="menu2" onclick="fchon_sec(id)">Mùa phụng vụ</li>
-                <li id="menu3" onclick="fchon_sec(id)">Bí tích</li>
-                <li id="menu4" onclick="fchon_sec(id)">Thông báo</li>
-                <li id="menu5" onclick="fchon_sec(id)">Lịch sử giáo xứ</li>
-                <li id="menu6" onclick="fchon_sec(id)">Tổ chức giáo xứ</li>
+                <li id="menu1" onclick="fchon_sec(id)">Sử lập GX</li>
+                <li id="menu2" onclick="fchon_sec(id)">Lm. & Ban TV</li>
+                <li id="menu3" onclick="fchon_sec(id)">Thông báo</li>
+                <li id="menu4" onclick="fchon_sec(id)">Giờ Mục vụ</li>
+                <li id="menu5" onclick="fchon_sec(id)">Mùa Phụng vụ</li>
+                <li id="menu6" onclick="fchon_sec(id)">Bí tích</li>
             </ul>
         </div>
         <!--<i class="fa fa-bars" onclick="showMenu()"></i>-->
@@ -387,8 +401,111 @@ h3{
     
 </section>
 
+<!------------------ Lịch sử giáo xứ ----------------------------------------------->
+<div id="vi">
+
+<section class="líchugx" id="sect1">
+
+    <h1 class="center"><button id='speaker' onclick="speakeronoff(1);">🔈</button> Lịch sử thành lập</h1>
+    
+    <div class="f-grid">
+        <div class="sect1-l">l-tôi là giáo viên và tôi đang sống tại Saigon </div>
+        <div class="sect1-r" class="sect1-r">r-tôi là giáo viên và tôi đang sống tại Saigon</div>
+    </div>
+</section>
+<!------------------ Linh mục vả Ban thường vụ --------------->
+<section class="tochucgx" id="sect2">
+    <h1 class="center">Linh Mục & Ban Thường Vụ</h1>
+    <p>
+        Lorem ipsum is placeholder text commonly used in the graphic,
+    </p>
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muavong.png">
+            <div class="layer">
+                <h3>MUA VONG</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muags.png">
+            <div class="layer">
+                <h3>MUA GIANG SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muatn.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN I</h3>
+            </div>
+        </div>    
+    </div>    
+    <div class="row">
+        <div class="campus-col">
+            <img src="images/muachay.png">
+            <div class="layer">
+                <h3>MUA CHAY</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/muaps.png">
+            <div class="layer">
+                <h3>MUA PHUC SINH</h3>
+            </div>
+        </div>    
+        <div class="campus-col">
+            <img src="images/ducmelt.png">
+            <div class="layer">
+                <h3>MUA THUONG NIEN II</h3>
+            </div>
+        </div>    
+    </div>    
+
+
+</section>
+<!--------------- THONG BAO ------------------->
+<section class="testimonials" id="sect3">
+    <h1>Thông Báo</h1>
+    <p>
+        Lorem ipsum is placeholder text commonly used in the graphic, print
+    </p>
+    <div class="row">
+        <div class="testimonial-col">
+            <img src="images/user1.jpg">
+            <div>
+                <p>
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                </p>
+                <h3>Linh mục Chánh xứ</h3>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+            </div>
+        </div>
+        <div class="testimonial-col">
+            <img src="images/user2.jpg">
+            <div>
+                <p>
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                    Lorem ipsum is placeholder text commonly used in the graphic,
+                </p>
+                <h3>Chủ tịch Cộng đoàn</h3>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star-o"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
 <!---------End Menu nho ben phai ----------------------->
-<section class="course" id="sect1">
+<section class="course" id="sect4">
     <h1 class="center">Giờ Mục Vụ</h1>
     <!-- <p>Lorem van Tien dang lam web</p> -->
 
@@ -486,7 +603,7 @@ h3{
     </div>
 </section>
 <!----------------- MUA PHUNG VU ----------------------->
-<section class="campus" id="sect2">
+<section class="campus" id="sect5">
     <h1>Mùa Phụng Vụ</h1>
     <p>
         <img src="images/muapv.png">
@@ -534,7 +651,7 @@ h3{
 
 </section>
 <!---------------- BI TICH -------------->
-<section class="facilities" id="sect3">
+<section class="facilities" id="sect6">
     <h1>Bí Tích</h1>
     <p>
         Lorem ipsum is placeholder text commonly used in the graphic, print
@@ -586,149 +703,10 @@ h3{
         </div>
     </div>
 </section>
-<!--------------- THONG BAO ------------------->
-<section class="testimonials" id="sect4">
-    <h1>Thông Báo</h1>
-    <p>
-        Lorem ipsum is placeholder text commonly used in the graphic, print
-    </p>
-    <div class="row">
-        <div class="testimonial-col">
-            <img src="images/user1.jpg">
-            <div>
-                <p>
-                    Lorem ipsum is placeholder text commonly used in the graphic,
-                    Lorem ipsum is placeholder text commonly used in the graphic,
-                    Lorem ipsum is placeholder text commonly used in the graphic,
-                </p>
-                <h3>Linh mục Chánh xứ</h3>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-            </div>
-        </div>
-        <div class="testimonial-col">
-            <img src="images/user2.jpg">
-            <div>
-                <p>
-                    Lorem ipsum is placeholder text commonly used in the graphic,
-                    Lorem ipsum is placeholder text commonly used in the graphic,
-                    Lorem ipsum is placeholder text commonly used in the graphic,
-                </p>
-                <h3>Chủ tịch Cộng đoàn</h3>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star"></i>
-                <i class="fa fa-star-o"></i>
-            </div>
-        </div>
-    </div>
-</section>
-<!------------------ Lịch sử giáo xứ --------------->
-<section class="líchugx" id="sect5">
-    <h1 class="center">Lịch sử giáo xứ</h1>
-    <p>
-        Lorem ipsum is placeholder text commonly used in the graphic,
-    </p>
-    <div class="row">
-        <div class="campus-col">
-            <img src="images/muavong.png">
-            <div class="layer">
-                <h3>MUA VONG</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/muags.png">
-            <div class="layer">
-                <h3>MUA GIANG SINH</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/muatn.png">
-            <div class="layer">
-                <h3>MUA THUONG NIEN I</h3>
-            </div>
-        </div>    
-    </div>    
-    <div class="row">
-        <div class="campus-col">
-            <img src="images/muachay.png">
-            <div class="layer">
-                <h3>MUA CHAY</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/muaps.png">
-            <div class="layer">
-                <h3>MUA PHUC SINH</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/ducmelt.png">
-            <div class="layer">
-                <h3>MUA THUONG NIEN II</h3>
-            </div>
-        </div>    
-    </div>    
-
-
-</section>
-<!------------------ Tổ chức giáo xứ --------------->
-<section class="tochucgx" id="sect6">
-    <h1 class="center">Tổ chức giáo xứ</h1>
-    <p>
-        Lorem ipsum is placeholder text commonly used in the graphic,
-    </p>
-    <div class="row">
-        <div class="campus-col">
-            <img src="images/muavong.png">
-            <div class="layer">
-                <h3>MUA VONG</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/muags.png">
-            <div class="layer">
-                <h3>MUA GIANG SINH</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/muatn.png">
-            <div class="layer">
-                <h3>MUA THUONG NIEN I</h3>
-            </div>
-        </div>    
-    </div>    
-    <div class="row">
-        <div class="campus-col">
-            <img src="images/muachay.png">
-            <div class="layer">
-                <h3>MUA CHAY</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/muaps.png">
-            <div class="layer">
-                <h3>MUA PHUC SINH</h3>
-            </div>
-        </div>    
-        <div class="campus-col">
-            <img src="images/ducmelt.png">
-            <div class="layer">
-                <h3>MUA THUONG NIEN II</h3>
-            </div>
-        </div>    
-    </div>    
-
-
-</section>
 <!------------------ FOOTER --------------->
 <hr>
 <section class="footer">
-    <h4>About Us</h4>
+    <h3>About Us</h3>
     <p>
         Lorem ipsum is placeholder text commonly used in the graphic,
     </p>
@@ -740,12 +718,21 @@ h3{
     </div>
     <!-- <p>Made with vantiensg2002@yahoo.com</p> -->
 </section>
+</div><!--------------------- End viDiv ----------------------------------------->
+
+<div id="'en"><!------- Start enDiv ----->
+
+</div><!------- End enDiv ----->
 
 
-<script> //----------------------------------------------------------------------------
+<script> //==================== Phan JS ===============================================
+var idDiv='vi';
+var nSect=0;
 var nImage=8; // so nay 8 mod 8 bang 0 ung anh goc 0.png la nha tho
+var nLang=0; // so nay 8 mod 8 bang 0 ung anh goc 0.png la nha tho
 const toggleIcon = document.getElementById('toggle-icon');
 const menuText = document.getElementById('menutext');
+const languagebrowse = document.getElementById('languagebrowse');
 let isMenuOpen = false;
 
 toggleIcon.addEventListener('click', function () {
@@ -766,53 +753,93 @@ toggleIcon.addEventListener('click', function () {
     }
 });
 
-function fchon_sec(id){
+function fchon_sec(id){ //---------------------------------------------------------
+    //lay ki tu cuoi lam chuong so global
+    let nsectstr = id.replace("menu", ""); 
+    nSect=parseInt(nsectstr);
     for (let j = 0; j <= 6; j++) {
-            idj = 'menu'+j;
-            if (idj == id)  {
-                var x = document.getElementById(idj);
-                x.style.color = 'yellow';
-                //document.getElementById("sectionht").innerHTML= document.getElementById(idj).innerHTML;
-                idsectht='sect'+j;
-                var y = document.getElementById(idsectht);
-                y.style.display = 'block';
-                document.getElementById('sect0').style.display = 'block';
+        idj = 'menu'+j;
+        if (idj == id)  {
+            nsect=j;
+            var x = document.getElementById(idj);
+            x.style.color = 'yellow';
+            //document.getElementById("sectionht").innerHTML= document.getElementById(idj).innerHTML;
+            idsectht='sect'+j;
+            var y = document.getElementById(idsectht);
+            y.style.display = 'block';
+            document.getElementById('sect0').style.display = 'block';
 
-            };    
-            if ((idj !== id) && (id !== 'menu0'))  {    
-                var x = document.getElementById(idj);
-                x.style.color = 'white';
-                idsectht='sect'+j;
-                var y = document.getElementById(idsectht);
-                y.style.display = 'none';
-            }    
-            if ((idj !== id) && (id === 'menu0'))  {     
-                var x = document.getElementById(idj);
-                x.style.color = 'white';
-                idsectht='sect'+j;
-                var y = document.getElementById(idsectht);
-                y.style.display = 'block';
+        };    
+        if ((idj !== id) && (id !== 'menu0'))  {    
+            var x = document.getElementById(idj);
+            x.style.color = 'white';
+            idsectht='sect'+j;
+            var y = document.getElementById(idsectht);
+            y.style.display = 'none';
+        }    
+        if ((idj !== id) && (id === 'menu0'))  {   
+            var x = document.getElementById(idj);
+            x.style.color = 'white';
+            idsectht='sect'+j;
+            var y = document.getElementById(idsectht);
+            y.style.display = 'block';
 
-            };
-        }
-
+        };
     }
 
+}
+function changeImageSect0(n) { //------------------------------------------
+    if (nSect !== 0){
+        let images_sectN="images_sect"+String(nSect)+"/";
+        nImage = nImage + n
+        mod_nImage_8 = nImage % 8; 
+        let im = String(mod_nImage_8)+'.png';
+        //document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
+        document.getElementById('sect0').style.backgroundImage = "url('" + images_sectN + im + "')";
+    } else {
+        for (let j = 0; j <= 6; j++) {
+            let images_sectN="images_sect"+String(j)+"/";
+            nImage = nImage + n
+            mod_nImage_8 = nImage % 8; 
+            let im = String(mod_nImage_8)+'.png';
+            //document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
+            document.getElementById('sect0').style.backgroundImage = "url('" + images_sectN + im + "')";
+    
+        }
+    }    
+}
+//--------------------------------------------------------------------------
+var nSpeakerOnOff =0;
+function speakeronoff(vol){
+  nSpeakerOnOff = nSpeakerOnOff + vol; 
+  if (nSpeakerOnOff%2===1){
+    document.getElementById('speaker').innerHTML='🔊';
+  }else{
+    document.getElementById('speaker').innerHTML='🔈';
+  }
+  const enDiv = document.getElementById('en');
+  const allElements = enDiv.querySelectorAll('*');
+  const uniqueTexts = new Set();
 
-</script>
-<script>
-    fchon_sec("menu0"); //de khoi dong luc dau
-</script>
-
-<script>
-function changeImageSect0(n) {
-    nImage = nImage + n
-    mod_nImage_8 = nImage % 8; 
-    let im = String(mod_nImage_8)+'.png';
-    document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
+  allElements.forEach(elem => {
+    if (hasInnerText(elem) && !elem.querySelector('*')) {
+      const text = elem.innerText.trim();
+      //console.log(elem.className,text);
+      if (!uniqueTexts.has(text)) {
+        tientranslate(text,elem);
+        //console.log(elem.className,text);
+        uniqueTexts.add(elem.innerText);
+      }
+    }
+  });
 }
 </script>
 
+<script>//------------------------------------
+//Ngay khi browse web hoac khoi dong lai web thi phai 
+//1.Chon trang chu sect0 menu0
+fchon_sec("menu0"); 
 </script>
+
 </body>
 </html>
