@@ -5,12 +5,15 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Toggle Menu</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 <style>
-#google_translate_wrapper { position: fixed; top: 0px; right: 0px; z-index:2;background-color: transparent; }
 /* Định dạng chung cho trang */
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
+    background: #fff3f3;
+
 }
 #speaker{
     background-color: transparent;
@@ -21,6 +24,7 @@ body {
     border:none;
     font-size: 22px;    
 }
+
 #sect0 {
     min-height: 75vh;
     width: 100%;
@@ -108,6 +112,59 @@ li:hover {
   background-color: rgba(0,0,0,0.8);
 }
 /* End Hai mui ten < > toi lui */
+.buttlang{
+    color:white;
+    font-size: 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background-color:transparent ;
+    border: 1px solid transparent;
+}
+.boxlang{
+    width:78px;
+    height:20px;
+    background-color:transparent ;
+    float: right;
+
+}
+a[data-butt-vi="1"] {
+    font-size: 20px;
+  color: yellow;}
+a[data-butt-vi="0"] {
+    font-size: 20px;
+  color: grey;}
+a[data-butt-en="1"] {
+    font-size: 20px;
+  color: yellow;}
+a[data-butt-en="0"] {
+    font-size: 20px;
+  color: grey;}
+
+div[data-sect1en="0"] {
+  display: none;}
+div[data-sect1en="1"] {
+  display: block;}
+div[data-sect1vi="0"] {
+  display: none;}
+div[data-sect1vi="1"] {
+  display: block;}
+
+
+h1[data-en="0"] {
+  display: none;
+}
+h1[data-en="1"] {
+  display: block;
+}
+
+h1[data-vi="0"] {
+  display: none;
+}
+h1[data-vi="1"] {
+  display: block;
+}
+
 #languagebrowse{
     border: 1px solid black;
     width:34px;
@@ -154,26 +211,37 @@ li:hover {
 }
 
 /* sect1 -------- */
+#sect1 {
+    width: 96%;
+    margin: auto;
+    padding-top: 0px;
+    padding-bottom: 10px;
+    /*text-align: center;*/
+    /*background: rgb(226, 229, 231);*/
+
+}
 
 .f-grid {
     display: flex;
     justify-content: space-between;
     flex-flow: row wrap;
-    margin-bottom: 1.5rem;}
-.select1-l{
+    /*margin-bottom: 0rem;*/
+}
+.f-grid-l{
     flex: 3 0;
-    /*margin-left: 0.5rem;*/
-    margin-left:2rem;
-    margin-right:2rem;
-    margin-bottom: 0rem;
-    font-size: 18pt;
-    padding: 10rem;}
-.select1-r{
+    margin-left:3rem;
+    margin-right:3rem;
+    margin-bottom: 1rem;
+    font-size: 13pt;
+    line-height: 1.6;
+    }
+.f-grid-r{
     flex: 3 0;
-    margin-left: 2rem;
-    margin-bottom: rem;
-    font-size: 16pt;
-    padding: 1rem;
+    margin-left: 3rem;
+    margin-right:3rem;
+    margin-bottom: 1rem;
+    font-size: 13pt;
+    line-height: 1.6;
     color:darkblue;}
 
 
@@ -193,12 +261,12 @@ li:hover {
 
 /* sect2 ----------- */
 #sect2 {
-    width:80% ;
+    width:96% ;
     margin: auto;
     text-align: center;
     padding-top: 10px;
     display: none;
-
+    background-color: rgb(168, 211, 168);
 }
 .campus-col{
     flex-basis: 32%;
@@ -358,26 +426,13 @@ li:hover {
 </style>
 </head>
 <body>
-<!-- cho google dich
-Khi trang hien ra , menu selec ngon ngu chon en
-ok thi menu nay bien mat va thay the menu goo
-chi con xem bang ngon ngu - dich  va hien van ban goc -->
-    <div id="google_translate_wrapper">
-        <div id="google_translate_element"></div>
-     
-        <script type="text/javascript">
-            function googleTranslateElementInit() {
-                new google.translate.TranslateElement({ pageLanguage: 'en,vi', includedLanguages: 'vi,en' }, 'google_translate_element');
-            }
-        </script>
-     
-        <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    </div>
-
+    
 <!-- Thanh menu -->
 <section class="header" id="sect0">
     <nav>
         <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
+        <div class="boxlang"><a data-butt-vi="1">vi</a><button class="buttlang" onclick="nButtLang();" data-nlang="0"> &#8646;</button><a data-butt-en="0">&nbsp; en &nbsp;</a></div>
+
         <div class="menu-text" id="menutext" >
 
             <!--<i class="fa fa-times" onclick="hideMenu()"></i>     -->
@@ -395,7 +450,7 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
         <!--<i id="toggle-icon" class="fa fa-bars menu-icon"></i>-->
     </nav>
     <div class="text-box">
-        <h1>Cộng Đoàn Công Giáo<br>Gioanbaotixita Dũng Lạc</h1>
+        <h1>Cộng Đoàn Công Giáo<br>Anrê Dũng Lạc</h1>
         <p><span style="font-size:medium ;color: whitesmoke ; "> 1201 Lafitte Rd.
                 <br>Abbeville, Louisiana 70511-1507 </span></p>
     </div> 
@@ -405,20 +460,40 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
 </section>
 
 <!------------------ Lịch sử giáo xứ ----------------------------------------------->
-<div id="vi">
-
-<section class="líchugx" id="sect1">
-
-    <h1 class="center"><button id='speaker' onclick="speakeronoff(1);" class="notranslate">🔇</button> Lịch sử thành lập</h1>
-    
-    <div class="f-grid">
-        <div class="sect1-l">l-tôi là giáo viên và tôi đang sống tại Saigon </div>
-        <div class="sect1-r" class="sect1-r">r-tôi là giáo viên và tôi đang sống tại Saigon</div>
+<section id="sect1" data-vi="sect1">
+    <div data-sect1vi="1">
+        <h1 data-vi="1" class="center" onclick="speakerViEnSectX(maLang,'sect1');">🎧 Lịch sử thành lập. </h1>
+        <br>
+        <div class="f-grid">
+            <div class="f-grid-l" data-vi="1">
+                Sau khi <span style="color:blue;"> Nước Việt Nam Cộng Hòa</span> bị cưỡng hóa 
+                vào <span style="color:red;"> Nước Việt Nam Dân Chủ Cộng Hòa</span> (ngày nay là Cộng Hòa Xã Hôi Chủ Nghĩa Việt Nam) vào năm 1975.<br><br>   
+                Dưới Chính quyền do Đảng Cộng Sản quản lý, 
+                vào những năm 1977-1987, hàng trăm ngàn người Việt Nam đã phải vượt biên, 
+                đa số bằng đường biển, đẻ đi tỵ nạn chính trị. Trong số đó có một nhóm người 
+                ra đi từ tỉnh Bà Rịa Vũng Tàu. Họ đã đến Tiểu bang Louisana của nước Mỹ để sống.
+                <img src="images/vuotbien.png" alt="Smiley face" style="float:left;width:380px;height:180px;border: 10px solid transparent;">
+                <br><br>
+                Trong số những người tới LA, có nhiều người theo đức tin Công Giáo. 
+                Họ không có nơi phụng vụ theo đức tin cố định, mà phải đi tới Nhà Thờ này hoặc Nhà Thờ khác 
+                để phụng vụ.
+                <br><br>
+                Mãi đến năm 2024 họ mới cùng nhau xây dựng xong một Nhà Thờ đẻ làm nơi 
+                phụng vụ và sinh hoat theo đức tin Công Giáo. Nhà thờ được khánh thành vào ngày 24/11/2024. 
+                Từ ngày này, Giáo xứ <a href="https://vi.wikipedia.org/wiki/Anr%C3%AA_D%C5%A9ng_L%E1%BA%A1c">Anrê Dúng Lạc</a> tại LA có nơi chính thức để phụng vụ và sinh hoạt theo đức tin 
+                của mình thuận lợi hơn. 
+            </div>
+        </div>
     </div>
+    
+    <div data-sect1en="0">
+    </div>
+    
 </section>
+    
 <!------------------ Linh mục vả Ban thường vụ --------------->
 <section class="tochucgx" id="sect2">
-    <h1 class="center">Linh Mục & Ban Thường Vụ</h1>
+    <h2 class="center">Linh Mục & Ban Thường Vụ</h2>
     <p>
         Lorem ipsum is placeholder text commonly used in the graphic,
     </p>
@@ -467,7 +542,7 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
 </section>
 <!--------------- THONG BAO ------------------->
 <section class="testimonials" id="sect3">
-    <h1>Thông Báo</h1>
+    <h2>Thông Báo</h2>
     <p>
         Lorem ipsum is placeholder text commonly used in the graphic, print
     </p>
@@ -509,7 +584,7 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
 
 <!---------End Menu nho ben phai ----------------------->
 <section class="course" id="sect4">
-    <h1 class="center">Giờ Mục Vụ</h1>
+    <h2 class="center">Giờ Mục Vụ</h2>
     <!-- <p>Lorem van Tien dang lam web</p> -->
 
     <div class="row">
@@ -607,7 +682,7 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
 </section>
 <!----------------- MUA PHUNG VU ----------------------->
 <section class="campus" id="sect5">
-    <h1>Mùa Phụng Vụ</h1>
+    <h2>Mùa Phụng Vụ</h2>
     <p>
         <img src="images/muapv.png">
     </p>
@@ -655,7 +730,7 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
 </section>
 <!---------------- BI TICH -------------->
 <section class="facilities" id="sect6">
-    <h1>Bí Tích</h1>
+    <h2>Bí Tích</h2>
     <p>
         Lorem ipsum is placeholder text commonly used in the graphic, print
     </p>
@@ -706,6 +781,7 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
         </div>
     </div>
 </section>
+
 <!------------------ FOOTER --------------->
 <hr>
 <section class="footer">
@@ -721,22 +797,18 @@ chi con xem bang ngon ngu - dich  va hien van ban goc -->
     </div>
     <!-- <p>Made with vantiensg2002@yahoo.com</p> -->
 </section>
-</div><!--------------------- End viDiv ----------------------------------------->
 
-<div id="'en"><!------- Start enDiv ----->
-
-</div><!------- End enDiv ----->
-
-
+<button onclick="thu()">THU</button>
 <script> //==================== Phan JS ===============================================
-var idDiv='vi';
 var nSect=0;
 var nImage=8; // so nay 8 mod 8 bang 0 ung anh goc 0.png la nha tho
-var nLang=0; // so nay 8 mod 8 bang 0 ung anh goc 0.png la nha tho
+var nLang=0;
+var maLang='vi';
 const toggleIcon = document.getElementById('toggle-icon');
 const menuText = document.getElementById('menutext');
 const languagebrowse = document.getElementById('languagebrowse');
 let isMenuOpen = false;
+var idsectht, idsectht2;
 
 toggleIcon.addEventListener('click', function () {
     // Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
@@ -769,6 +841,7 @@ function fchon_sec(id){ //------------------------------------------------------
             //document.getElementById("sectionht").innerHTML= document.getElementById(idj).innerHTML;
             idsectht='sect'+j;
             var y = document.getElementById(idsectht);
+            var y2 = document.getElementById(idsectht2);
             y.style.display = 'block';
             document.getElementById('sect0').style.display = 'block';
 
@@ -777,8 +850,10 @@ function fchon_sec(id){ //------------------------------------------------------
             var x = document.getElementById(idj);
             x.style.color = 'white';
             idsectht='sect'+j;
+
             var y = document.getElementById(idsectht);
             y.style.display = 'none';
+
         }    
         if ((idj !== id) && (id === 'menu0'))  {   
             var x = document.getElementById(idj);
@@ -811,37 +886,256 @@ function changeImageSect0(n) { //------------------------------------------
         }
     }    
 }
-//--------------------------------------------------------------------------
-var nSpeakerOnOff =0;
-function speakeronoff(vol){
-  nSpeakerOnOff = nSpeakerOnOff + vol; 
-  if (nSpeakerOnOff%2===1){
-    document.getElementById('speaker').innerHTML='🔊';
-  }else{
-    document.getElementById('speaker').innerHTML='🔇';
-  }
-  const enDiv = document.getElementById('en');
-  const allElements = enDiv.querySelectorAll('*');
-  const uniqueTexts = new Set();
-
-  allElements.forEach(elem => {
-    if (hasInnerText(elem) && !elem.querySelector('*')) {
-      const text = elem.innerText.trim();
-      //console.log(elem.className,text);
-      if (!uniqueTexts.has(text)) {
-        tientranslate(text,elem);
-        //console.log(elem.className,text);
-        uniqueTexts.add(elem.innerText);
-      }
+function nButtLang() { //----------------------------------------------
+    //Tat speaker neu dang noi moi lan thay doi Lang
+    const synth = window.speechSynthesis;
+    if (synth.speaking) {
+        synth.cancel(); // Dừng văn bản hiện tại
     }
-  });
+    nLang=nLang+1;
+    //2 phan tu nay se phai doi mau
+    const aDataVi = document.querySelectorAll("a[data-butt-vi]");
+    const aDataEn = document.querySelectorAll("a[data-butt-en]");
+
+    const viDivChon = document.querySelector("div[data-sect1vi]");
+    const enDivChon = document.querySelector("div[data-sect1en]");
+
+    if (nLang%2===1){
+        maLang='en';
+        //thay doi mau en/vi
+        aDataVi.forEach(element => {
+            element.setAttribute('data-butt-vi','0');
+        });
+        aDataEn.forEach(element => {
+            element.setAttribute('data-butt-en','1');
+        });
+        // hien thi or hide block Div en/vi
+        enDivChon.setAttribute('data-sect1en','1');
+        viDivChon.setAttribute('data-sect1vi','0');
+
+    } else {
+        //thay doi mau en/vi
+        maLang='vi';
+        aDataVi.forEach(element => {
+            element.setAttribute('data-butt-vi','1');
+        });
+        aDataEn.forEach(element => {
+            element.setAttribute('data-butt-en','0');
+        });
+        // hien thi or hide block Div en/vi
+        viDivChon.setAttribute('data-sect1vi','1');
+        enDivChon.setAttribute('data-sect1en','0');
+    }
+}
+//-----------------------------
+function speakerViEnSectX(maLang, sectX){
+    //console.log(maLang);
+    if (maLang === 'vi'){
+        maLangNoi = 'vi-VN';
+        const content = document.getElementById(sectX).querySelector("div[data-sect1vi]");
+        let textvi='';
+        traverseNodes(content, node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                if (node.nodeValue.trim() !== ''){
+                    textvi += node.nodeValue.trim()+' ';
+                }
+            }
+        });
+        textvi = textvi.replace(/🎧/g,'');
+        speakViEn(textvi,maLangNoi);   
+    }
+    if (maLang === 'en'){
+        maLangNoi = 'en-US';
+        const content = document.getElementById(sectX).querySelector("div[data-sect1en]");
+        let texten='';
+        traverseNodes(content, node => {
+            if (node.nodeType === Node.TEXT_NODE) {
+                if (node.nodeValue.trim() !== ''){
+                    texten += node.nodeValue.trim()+' ';
+                    //da dem dich vao nodeValue
+                }
+            }
+        });
+        texten = texten.replace(/🎧/g,'');
+        speakViEn(texten,maLangNoi);   
+    }
+}
+//--------------------------------
+function countTagInDivCha(idDiv){
+    const enDiv = document.getElementById(idDiv);
+    const allElements = enDiv.querySelectorAll('*');
+     return allElements.length;
+}
+//--------------------------------🎧
+function tientranslate() {
+    const listDataVi = document.querySelectorAll("[data-vi]");
+    const listDataEn = document.querySelectorAll("[data-en]");
+    for (let i=0; i<listDataVi.length; i ++){
+        //console.log(i, listDataVi[i].className, listDataVi[i].innerText);
+        const inputText = listDataVi[i].innerText;
+        const outputTextEle = listDataEn[i].innerText;
+        let sourceLanguage = 'vi';
+        let targetLanguage = 'en';
+
+        const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+
+        const xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200){
+                const responseReturned = JSON.parse(this.responseText);
+                const translations = responseReturned[0].map((text) => text[0]);
+                const outputText = translations.join(" ");
+                //console.log(outputText);
+                outputTextEle.textContent = outputText;
+                //ghi vao en
+                listDataEn[i].innerText =  outputText;
+            }
+        };
+        //---------------------
+        xhttp.open("GET", url);
+        xhttp.send();
+    }
+}
+function speakViEn(text,malang){
+    const message = new SpeechSynthesisUtterance(text);
+    message.lang = malang;
+    const voices = speechSynthesis
+                    .getVoices()
+                    .filter(voice => {
+                        voice.lang = malang;});
+    message.voice = voices[0];
+    speechSynthesis.speak(message);
 }
 </script>
 
-<script>//------------------------------------
-//Ngay khi browse web hoac khoi dong lai web thi phai 
-//1.Chon trang chu sect0 menu0
-fchon_sec("menu0"); 
+
+<script>
+//-----mau GPT tra loi
+// Hàm để duyệt qua tất cả các node và lấy văn bản cần dịch
+function extractText(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+        return node.nodeValue.trim(); // Lấy nội dung của các node văn bản
+    }
+
+    let text = "";
+    node.childNodes.forEach(child => {
+        text += extractText(child) + " "; // Đệ quy để lấy text từ các node con
+    });
+
+    return text.trim();
+}
+//---------------------------------------
+// Hàm để thay thế văn bản trong các node tương ứng sau khi dịch
+function replaceText(node, translatedTexts, index) {
+    if (node.nodeType === Node.TEXT_NODE) {
+        node.nodeValue = translatedTexts[index.count].trim(); // Thay thế văn bản
+        index.count++;
+    } else {
+        node.childNodes.forEach(child => replaceText(child, translatedTexts, index));
+    }
+}
+//-----------------------------------------
+function thu(){
+    //chon div muon clone
+    const divChonVi = document.querySelector("[data-vi='sect1']");
+    //chon div ma div clone se dua vao
+    //const divChonEn = document.querySelector("[data-en='sect1']");
+    //thuc hien clone 
+    const clonedivChonVi = divChonVi.cloneNode(true);
+    //sua doi div clone truoc khi dua vao noi chua
+    //let children = clonedivChonVi.childNodes;
+    //dua vao div chua
+    divChonEn.append(clonedivChonVi);
+
+    //const children = clonedivChonVi.children;
+    //console.log(children.length );
+    //---
+
+    //const content = document.getElementById("content");
+    const divChonEn = document.querySelector("[data-en='sect1']");
+    //const originalText = extractText(content);
+    const originalText = extractText(divChonEn);
+
+    //console.log("Văn bản gốc:", originalText); // Kiểm tra văn bản cần dịch
+
+    // Giả sử đây là văn bản đã dịch (ví dụ: dịch từ tiếng Việt sang tiếng Anh)
+    //const translatedText = "I he and she";
+
+    // Chia văn bản đã dịch thành mảng để gán vào đúng vị trí
+    //const translatedTexts = translatedText.split(" ");
+
+    // Thay thế văn bản đã dịch vào đúng vị trí trong HTML ban đầu
+    //replaceText(content, translatedTexts, { count: 0 });
+
+    //console.log("HTML sau khi dịch:", content.innerHTML);
+
+}
+
+</script> 
+
+<script>
+//---Can 3-----------------------------------
+function dichViToEn(textCanDich,ptnode){
+    const inputText = textCanDich;
+    let sourceLanguage = 'vi';
+    let targetLanguage = 'en';
+
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200){
+            const responseReturned = JSON.parse(this.responseText);
+            const translations = responseReturned[0].map((text) => text[0]);
+            const outputText = translations.join(" ");
+            ptnode.nodeValue = ' '+outputText;
+            //console.log(ptnode.nodeValue);
+        }
+    };
+    //---------------------
+    xhttp.open("GET", url);
+    xhttp.send();
+}
+//---Can 2----------------------------------
+function traverseNodes(node, callback) {
+    // Gọi callback cho node hiện tại (có thể là phần tử hoặc văn bản)
+    callback(node);
+    // Duyệt qua tất cả các node con
+    node.childNodes.forEach(child => traverseNodes(child, callback));
+}
+//-------------------------------------
+function dich_viDivChonClone_en(content){
+    //const content = document.querySelector("[data-vi='sect1']");
+    traverseNodes(content, node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            if (node.nodeValue.trim() !== ''){
+                dichViToEn(node.nodeValue,node);
+                //da dem dich vao nodeValue
+            }else{
+                node.nodeValue=' ';      
+            }    
+        } else if (node.nodeType === Node.ELEMENT_NODE) {
+            console.log(' ');
+        }
+    });
+ }    
+//-Can 1--------------------------
+function cloneSect1ToEn(){
+    const viDivChon = document.querySelector("div[data-sect1vi]");
+    const viDivChonClone = viDivChon.cloneNode(true); 
+    const enDivNhan = document.querySelector("div[data-sect1en]");
+
+    dich_viDivChonClone_en(viDivChonClone)
+    enDivNhan.append(viDivChonClone)
+
+    //None enDivNhan
+    //enDivNhan.style.display = "none";
+
+}
+//----------------------------------------
+fchon_sec("menu0"); //de khoi dong luc dau
+cloneSect1ToEn(); //Can co:dich_viDivChonClone_en,traverseNodes
+
 </script>
 
 </body>
