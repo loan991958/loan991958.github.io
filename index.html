@@ -423,7 +423,7 @@ p{
     
 <div class="sticky">
     <i id="toggle-icon" class="fa fa-bars menu-icon"></i><a> &nbsp;<span style="color:rgb(109, 27, 27)">ANRE DUNG LAC CHURCH</span></a>
-    <div class="boxlang"><button data-headphone-mau ='0' class="headphone" onclick="readSelectedText()">🎧</button>&nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button></div>
+    <div class="boxlang"><button data-headphone-mau ='0' class="headphone" onclick="readSelectedText()">🎧</button>&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button></div>
     <div class="menu-text" id="menutext" >
         <ul> 
             <li id="menu0" onclick="fchon_sec(id)">Toàn trang</1i>
@@ -1310,6 +1310,17 @@ function changeImageSect0(n) {
         }
     }    
 }
+function speakViEn(text,malang){
+    const message = new SpeechSynthesisUtterance(text);
+    message.lang = malang;
+    const voices = speechSynthesis
+                    .getVoices()
+                    .filter(voice => {
+                        voice.lang = malang;});
+    message.voice = voices[0];
+    speechSynthesis.speak(message);
+}
+
 //---------
 function readSelectedText() {
     // Lấy đoạn văn bản đã chọn
@@ -1318,14 +1329,18 @@ function readSelectedText() {
     // Kiểm tra xem người dùng có chọn văn bản nào không
     if (selectedText) {
         // Tạo một đối tượng SpeechSynthesisUtterance để đọc văn bản
-        const speech = new SpeechSynthesisUtterance(selectedText);
+        
+
+        //const speech = new SpeechSynthesisUtterance(selectedText);
 
         // Chọn ngôn ngữ (ví dụ: tiếng Việt)
+        let malang=''; 
         if (document.getElementById('nButt').innerText==='vi'){
-            speech.lang = 'vi-VN';
+            malang = 'vi-VN';
         }else{
-            speech.lang = 'en-US';
+            malang = 'en-US';
         }
+        speakViEn(selectedText,malang);
 
         speech.onend = function(){
             let mauhead = document.querySelector("button[data-headphone-mau]")
