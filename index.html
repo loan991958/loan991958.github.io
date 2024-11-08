@@ -10,7 +10,8 @@
 <style>
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
+    font-family: 'Times New Roman', serif;
+
     background: rgb(237, 237, 230);
     
 }
@@ -197,6 +198,8 @@ p{
     font-weight: 300;
     line-height: 22px;
     padding: 10px ;
+    line-height: 1.6;
+
 }
 .row{
     margin-top: 5%;
@@ -416,6 +419,12 @@ p{
     flex-direction: column;
     outline: 1px solid green;
 }
+.f-grid {
+line-height: 1.4;
+margin-bottom: 13px;
+font-size: 20px;
+}
+
 
 </style>
 </head>
@@ -445,9 +454,9 @@ p{
     </div> 
     <a class="prev" onclick="changeImageSect0(-1)">❮</a>
     <a class="next" onclick="changeImageSect0(1)">❯</a>
-    
+<hr>    
 </section><!------------------ End sect0 ------------------------------------->
-<hr>
+
 <section id="sect1" class="giomucvu"><!---sect1-- Giờ Mục Vụ ----------------->
     <div id='sect1vi'>
         <h2 class="title-sect" >1.Giờ Mục Vụ</h2>
@@ -517,8 +526,9 @@ p{
 </div> 
 <div id='sect1en'>
 </div>
-</section><!--========== End -sect1-- Giờ Mục Vụ --=======================-->
 <hr>
+</section><!--========== End -sect1-- Giờ Mục Vụ --=======================-->
+
 <section id="sect2" class="campus" ><!-- sect2--Mùa Phụng Vụ--------------->
 <div id='sect2vi'>
     <h2 class="title-sect">2.Các Mùa Phụng Vụ</h2>
@@ -591,9 +601,9 @@ p{
 
 <div id='sect2en'>
 </div>
-
-</section><!--====== End sect2--Mùa Phụng Vụ-======----------------------->
 <hr>
+</section><!--====== End sect2--Mùa Phụng Vụ-======----------------------->
+
 <section id="sect3" class="facilities"><!-- sect3--Bi tich----------------->
     <div id='sect3vi'>
 
@@ -740,9 +750,9 @@ p{
 </div>
 <div id='sect3en'>
 </div>
-
-</section><!--End sect3--Bi tich----------------------------------------------->
 <hr>
+</section><!--End sect3--Bi tich----------------------------------------------->
+
 <section class="testimonials" id="sect4"><!--sect4 THONG BAO ------------------>
     <div id='sect4vi'>
         <h2 class="title-sect">4.Thông Báo</h2>
@@ -797,8 +807,9 @@ p{
 
     <div id='sect4en'>
     </div>
-</section><!--End sect4 THONG BAO --------------------------------------------->
 <hr>
+</section><!--End sect4 THONG BAO --------------------------------------------->
+
 <section class="tochucgx" id="sect5"><!--- sect5 Linh mục vả Ban thường vụ ---->
 
     <div id='sect5vi'>
@@ -882,9 +893,9 @@ p{
     <div id='sect5en'>
     </div>    
     
-    
+<hr>    
 </section><!---End sect5 Linh mục vả Ban thường vụ ----------------------------->
-<hr>
+
 <section id="sect6" data-vi="sect6"><!-- sect6 vai net ve giao xu------------ -->
 
     <div id='sect6vi'>
@@ -914,9 +925,9 @@ p{
     
     <div id='sect6en'>
     </div>
-    
+<hr>    
 </section><!-- End sect6 vai net ve giao xu------------------------------------- -->
-<hr>
+
 <section class="footer"><!-- Footer cua trang ---------------------------------- -->
     <br>
     <h3>Phụ trách trang web</h3>
@@ -945,7 +956,6 @@ var idsectht, idsectht2;
 //--2- Quan trong Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
 //--Khi click vao 3 gach o goc trai se dieu khien menu nho--
 toggleIcon.addEventListener('click', function () {
-    alert('TEST');
     // Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
     if (window.innerWidth <= 600) {
         if (isMenuOpen) {
