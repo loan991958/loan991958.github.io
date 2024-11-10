@@ -557,6 +557,7 @@ function changeImageSect0(n) {
 }
 //---------
 function readSelectedText() {
+
     // Lấy đoạn văn bản đã chọn
     const selectedText = window.getSelection().toString();
 
@@ -566,10 +567,13 @@ function readSelectedText() {
         const speech = new SpeechSynthesisUtterance(selectedText);
 
         // Chọn ngôn ngữ (ví dụ: tiếng Việt)
+        let malang;
         if (document.getElementById('nButt').innerText==='vi'){
-            speech.lang = 'vi-VN';
+            //speech.lang = 'vi-VN';
+            malang='vi-VN'
         }else{
-            speech.lang = 'en-US';
+            //speech.lang = 'en-US';
+            malang='en-US';
         }
 
         speech.onend = function(){
@@ -578,6 +582,12 @@ function readSelectedText() {
 
         }
         // Đọc văn bản
+        const voices = speechSynthesis
+                    .getVoices()
+                    .filter(voice => {
+                        voice.lang = malang;
+                    });
+        speech.voice = voices[0];
         window.speechSynthesis.speak(speech);
 
         let mauhead = document.querySelector("button[data-headphone-mau]")
@@ -599,13 +609,13 @@ function readSelectedText() {
     }
 }
 //--------
-document.addEventListener('touchend', () => {
-    let selectedText = window.getSelection().toString();
-    if (selectedText) {
-        let utterance = new SpeechSynthesisUtterance(selectedText);
-        speechSynthesis.speak(utterance);
-    }
-});
+//document.addEventListener('touchend', () => {
+//    let selectedText = window.getSelection().toString();
+//    if (selectedText) {
+//        let utterance = new SpeechSynthesisUtterance(selectedText);
+//        speechSynthesis.speak(utterance);
+//    }
+//});
 
 //-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
 cloneSectXToEn('sect1'); 
