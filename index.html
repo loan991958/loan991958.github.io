@@ -118,8 +118,8 @@ button[data-headphone-mau ='1']{
     <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
     <a> &nbsp;<span style="color:#ddc168;font-size: 24px;">ANRE DUNG LAC CHURCH</span></a>
     <div style="float:right;">
-        <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()" style="border:none;border-radius:50% ;width:30px;height:30px;font-size:24px;">🔈</button>
-        &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt" style="background-color:transparent; border-radius:50% ;font-size: 20px;width:30px;height:30px;">vi</button>
+        <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()" style="border:none;border-radius:50% ;width:30px;height:30px;font-size:22px;">🔈</button>
+        &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt" style="background-color:transparent; border-radius:50% ;font-size: 18px;width:30px;height:30px;">vi</button>
     </div>
         <!--<h1>Nhà Thờ Công Giáo Anrê Dũng Lạc</h1>-->
     <br>
@@ -331,7 +331,7 @@ function nButtLang() {
         maLang='en';
         //1-buttonlang ra chu en va mau blue
         document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="blue";
+        document.getElementById("nButt").style.color="lightblue";
         //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
         if (nMenu===0){
             for (let i=1;i<=6;i++){
@@ -370,7 +370,7 @@ function nButtLang() {
         maLang='vi';
         //1-buttonlang ra chu vi va mau vang
         document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="brown";
+        document.getElementById("nButt").style.color="orange";
         //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
         if (nMenu===0){
             for (let i=1;i<=6;i++){
