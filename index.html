@@ -568,11 +568,13 @@ function readSelectedText() {
         // Chọn ngôn ngữ (ví dụ: tiếng Việt)
         let malang;
         if (document.getElementById('nButt').innerText==='vi'){
-            //speech.lang = 'vi-VN';
+            speech.lang = 'vi-VN';
             malang='vi-VN'
+            alert(malang);
         }else{
-            //speech.lang = 'en-US';
+            speech.lang = 'en-US';
             malang='en-US';
+            alert(malang);
         }
 
         speech.onend = function(){
