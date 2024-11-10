@@ -3,1398 +3,175 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Toggle Menu</title>
+<!-- cai sau can cho menu icon -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>-->
-<!--<link rel="stylesheet" href="index.css">-->
+
+<title>Nhà Thờ Công Giáo</title>
 <style>
+/* Reset mặc định */
+* {
+margin: 0;
+padding: 0;
+box-sizing: border-box;
+}
+
 body {
-    margin: 0;
-    font-family: 'Times New Roman', serif;
-
-    background: rgb(237, 237, 230);
-    
-}
-div.sticky {
-    position: sticky;
-    top: 0;
-    background-color: rgb(237, 237, 230);
-    z-index: 1;
-  }
-button[data-headphone-mau='0'] {
-    background-color: transparent;
-    border: none;
-}
-button[data-headphone-mau='1'] {
-    background-color: rgb(249, 249, 22);
-    border: none;
-
+font-family: 'Times New Roman', serif;
+background-color: #f9f9f9;
+color: #2f2f2f;
 }
 
-/* Chuong sect0 --------------------------------------------*/
-#sect0 {
-    min-height: 75vh;
-    width: 96%;
-    margin: auto;
-    /* background-image: linear-gradient(rgba(4,9,0.7),rgba(4,9,30,0.7)), 
-    url("images/banner.png"); */
-    background-image: url("images_sect0/0.png");
-    background-position: center ;
-    background-size: cover;
-    position: relative;}
-
-/*buuton vi/en*/
-.buttlang{
-    color:brown;
-    font-size: 14px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    background-color:transparent ;
-    border: 1px solid blue;}
-/* hop dung buuton vi/en*/
-    .boxlang{
-    background-color:transparent ;
-    padding-right: 14px;
-    float: right;}
-
-/* Thanh menu chính */
-.menu {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: green;
-    color: white;
-    /*position: relative;*/
+/* Header */
+header {
+background-image:url("images/banner2.png");  
+position: sticky;
+top: 0;
+z-index: 1;
+background-color: #ffffff;
+padding: 10px;
+/*text-align: center;*/
+border-bottom: 2px solid #d4af37; /* vàng ánh kim */
+}
+header h1 {
+font-size: 2.6em;
+color: #d4af37;
 }
 
-/* Văn bản menu */
-.menu-text {
-font-size: 18px;
-margin-left: 20%;
-transition: all 0.3s ease;
-color:#fbf6f6;
-padding-bottom: 1px;
+nav a {
+color: #2f2f2f;
+margin: 0 15px;
+text-decoration: none;
+font-size: 1.1em;
 }
-.menu-text ul li{
-    list-style: none;
-    display: inline-block;
-    position: relative;
-    margin-right: 30px;
+
+nav a:hover {
+color: #d4af37;
+}
+
+/* Phần nội dung chính */
+main {
+max-width: 800px;
+margin: 20px auto;
+padding: 20px;
 
 }
 
-/* Biểu tượng toggle */
-.menu-icon {
-    font-size: 24px;
-    cursor: pointer;
-    /*color:#fbf6f6;*/
-    color:blue;
-    padding-left: 10px;
-}
-.text-box{
-    width: 90%;
-    color: #fff;
-    position: absolute;
-    top: 90%;
-    left: 50%;
-    transform: translate(-50%,-50%) ;
-    text-align: center;
-}
-.text-box h1{
-    font-size: 20px;
-}
-.text-box p{
-    margin: 10px 0 40px;
-    font-size: 14px;
-    color: #fff;
-}
-li:hover {
-  color:orange;
-}
-/* Hai mui ten < > toi lui */
-.prev, .next {
-  cursor: pointer;
-  position: absolute;
-  color: white;
-  font-weight: bold;
-  font-size: 18px;
-  width:auto;
-  bottom: 0%;
-  transition: 0.6s ease;
-  border-radius: 0 5px 5px 0;
-  margin-top: -22px;
-  padding: 6px;
-  user-select: none;
-}
-.next {
-  right: 0;
-  border-radius: 5px 0 0 5px;
-}
-/* On hover, add a black background color with a little bit see-through */
-.prev:hover, .next:hover {
-  background-color: rgba(0,0,0,0.8);
-}
-/* End Hai mui ten < > toi lui */
-
-
-/* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
-@media (max-width: 600px) {
-    .menu-text {
-        visibility: hidden;
-        width: 0;
-        height: 0;
-        padding: 0;
-        margin: 0;
-        overflow: hidden;}
-    .menu-text.visible {
-        visibility: visible;
-        position: absolute;
-        background: rgb(205, 205, 231);
-        height: 73vh;
-        width: 200px;
-        top: 50;
-        right: 10px;
-        text-align: right;
-        z-index: 2;
-        transition: 0.3s;
-        line-height: 2.4;
-        padding-top: 10px;}
-    .menu-text.hidden {
-        visibility: hidden;
-        width: 0;
-        height: 0;
-        padding: 0;
-        overflow: hidden;}
-}
-/* HET sect0------------------------------------------------------ */
-
-/* chung cho cac tieu de section : doi mau ---------------------- */
-.title-sect {
-    color: blue;
-    text-align: center;
-}
-.title-sect-xanh {
-    color: darkblue;
-    text-align: center;
-}
-/* HET chung cho cac tieu de section : doi mau ---------------------- */
-
-/* ------ sect1 ----------------------------------------------------- */
-#sect1 {
-    width: 80%;
-    margin: auto;
-    /* text-align: center; */
-    padding: 10px;
-    display: none;
-}
-h2{
-    font-size: 36px;
-    font-weight: 600;
-}
-p{
-    color: #777;
-    font-size: 14px;
-    font-weight: 300;
-    line-height: 22px;
-    padding: 10px ;
-    line-height: 1.6;
-
-}
-.row{
-    margin-top: 5%;
-    display: flex;
-    justify-content: space-between;
-}
-.giomucvu-col{
-    flex-basis: 31%;
-    background: #fff3f3;
-    border-radius: 10px;
-    margin-bottom: 5%;
-    padding: 20px 12px;
-    box-sizing: border-box;
-    transition: 0.5s;
-}
-h3{
-    text-align: center;
-    font-weight: 600;
-    margin: 10px 0;
-}
-.giomucvu-col:hover{
-    box-shadow: 0 0 20px 0px rgba(0,0,0,0.2);
-}
-@media(max-width:800px)  {
-    .row{
-        flex-direction: column;
-    }
-}
-.center{
-    text-align: center; 
-
-}
-.giomucvu-col table{
-    text-align: left;
-}
-/*-- Het sect1----------------------------------------------- */
-
-/* ----------------sect2 ----------- */
-#sect2 {
-    width:96% ;
-    margin: auto;
-    text-align: center;
-    padding-top: 10px;
-    display: none;
-    background-color: rgb(240, 244, 240);
-}
-.hinhtron-cacmua{
-    width:80% ;
-    height:auto;
-}
-.campus-col{
-    flex-basis: 32%;
-    border-radius: 10px;
-    margin-bottom: 30px;
-    position: relative;
-    overflow: hidden;
-}
-.campus-col img{
-    width: 100%;
-    display: block;
-}
-.layer{
-    background: transparent;
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transition: 0.5s;
-}
-.layer:hover{
-    background: rgba(226,0,0,0.7);
-}
-.layer h3{
-    width: 100%;
-    font-weight: 500;
-    color: #fff;
-    font-size: 26px;
-    bottom: 0;
-    left:50%;
-    transform: translateX(-50%);
-    position: absolute;
-    opacity: 0;
-    transition: 0.5s;
-}
-.layer:hover h3{
-    bottom: 49%;
-    opacity: 1;
+main h2 {
+color: #d4af37;
+margin-bottom: 10px;
 }
 
-/* Het sect2---------------------------------------- */
-/* sect3 -------------- */
-#sect3 {
-    width: 96%;
-    margin: auto;
-    text-align: center;
-    padding-top: 10px;
-}
-.facilities-col{
-    flex-basis: 31%;
-    border-radius: 10px;
-    margin-bottom: 5%;
-    text-align: left;
-}
-.facilities-col img{
-    width: 100%;
-    border-radius: 10%;
-}
-.facilities-col p{
-    padding: 0;
-}
-.facilities-col h3{
-    margin-top: 16px;
-    margin-bottom: 15px;
-    text-align: left;
-}
-/* Het sect3 */
-/* sect4 -------- */
-#sect4 {
-    width: 80%;
-    margin: auto;
-    padding-top: 10px;
-    /*padding-bottom: 10px;*/
-    text-align: center;
-    /*background: rgb(226, 229, 231);*/}
-table {
-        font-family: arial, sans-serif;
-        border-collapse: collapse;
-        width: 100%;
-      }
-      
-td, th {
-        border: 1px solid #dddddd;
-        text-align: left;
-        padding: 8px;
-      }
-      
-tr:nth-child(even) {
-        background-color: #dddddd;
-      }
-th, td {
-        border-color: blue;
-      }
-
-/* sect5 -------lich su gx------- */
-#sect5 {
-    width: 80%;
-    margin: auto;
-    padding-top: 10px;
-    text-align: center;}
-.anh-tc{
-    width:25%;
-    height: auto;
-}
-    /* Create four equal columns that floats next to each other */
-.container {
-    display: flex;
-    flex-direction: row;
-}
-    
-.col {
-    flex: 1;
-    margin: 5px;
-    padding: 10px;
-    background-color: rgb(212, 212, 209);
-    border: 1px solid green;
-    border-radius: 10px;
-}
-/* Het sect5 */
-
-/* sect6 -------to chuc gx------- */
-#sect6 {
-    width: 80%;
-    margin: auto;
-    padding-top: 10px;
-    /*text-align: center;*/
-}
-
-/* Het sect6 */
-
-/*------------ FOOTER ------------*/
-.footer{
-    margin: 0px auto;
-    width: 100%;
-    background-image:url("images/banner2.png");  
-    /* background-image: linear-gradient(rgba(0,0,0,0.7),rgba(0,0,0,0.7)), 
-    url("images/banner2.png");  */
-    background-position: center;
-    background-size: cover;
-    border-radius: 0px;
-    text-align: center;
-    color: gray;
-    padding: 0;
-}
-.footer h4{
-    margin-bottom: 25px;
-    margin-top: 20px;
-    font-weight: 600;
-    color: gray;
-}
-p{
-    font-size: 14pt;
-    text-align: left;
-}
-.center{
-    text-align: center;
-}
-
-.test {
-    width: 66%; 
-    display: flex;
-    justify-content: flex-start;
-    /*align-items: center;*/
-    gap: 1rem;
-    margin: 2rem auto;
-    padding: 2rem 0;
-    flex-direction: column;
-    outline: 1px solid green;
-}
-.f-grid {
-line-height: 1.4;
-margin-bottom: 13px;
+main p {
+line-height: 1.6;
+margin-bottom: 15px;
 font-size: 20px;
 }
 
 
+/* Footer */
+footer {
+
+ background-image:url("images/banner2.png");  
+/*background-color: #2f2f2f;*/
+color: #ffffff;
+text-align: center;
+padding: 20px;
+margin-top: 20px;
+}
+
+footer p, footer a {
+color: #ffffff;
+font-size: 0.9em;
+}
+
+footer a:hover {
+color: #d4af37;
+}
+img {
+float: right;
+margin: 0px;
+width:200px;
+height:auto;
+}
+nav a{
+    color:rgb(189, 187, 187);
+}
+#toggle-icon{
+    font-size:xx-large;
+    color:gray;
+}
+.center{
+    text-align: center;
+}
 </style>
 </head>
 <body>
-    
-<div class="sticky">
-    <i id="toggle-icon" class="fa fa-bars menu-icon"></i><a> &nbsp;<span style="color:rgb(109, 27, 27)">ANRE DUNG LAC CHURCH</span></a>
-    <div class="boxlang"><button data-headphone-mau ='0' class="headphone" onclick="readSelectedText()">🎧</button>&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button></div>
-    <div class="menu-text" id="menutext" >
-        <ul> 
-            <li id="menu0" onclick="fchon_sec(id)">Toàn trang</1i>
-            <li id="menu1" onclick="fchon_sec(id)">Giờ Mục vụ</li>
-            <li id="menu2" onclick="fchon_sec(id)">Mùa Phụng vụ</li>
-            <li id="menu3" onclick="fchon_sec(id)">Bí tích</li>
-            <li id="menu4" onclick="fchon_sec(id)">Thông báo</li>
-            <li id="menu5" onclick="fchon_sec(id)">Lm. & Ban Tv</li>
-            <li id="menu6" onclick="fchon_sec(id)">Vài nét về Gx</li>
-        </ul>
+<!-- Header -->
+<header class="sticky">
+    <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
+    <a> &nbsp;<span style="color:#ddc168;font-size: 24px;">ANRE DUNG LAC CHURCH</span></a>
+    <div style="float:right;">
+        <button data-headphone-mau ='0' class="headphone" onclick="readSelectedText()" style="background-color: transparent; border:none;border-radius:50% ;width:30px;height:30px;">🔈</button>
+        &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt" style="background-color:gray; border-radius:50% ;font-size: 20px;width:30px;height:30px;">vi</button>
     </div>
-</div>
-
-<!-- Sect0 menu - buttLang ---------------------------------------------------->
-<section class="header" id="sect0">
-    <div class="text-box">
-        <h1>Nhà Thờ Công Giáo<br>Giáo Xứ Anrê Dũng Lạc</h1>
-        <h4> 1201 Lafitte Rd. Abbeville, LA 70511-1507</h4>
-    </div> 
-    <a class="prev" onclick="changeImageSect0(-1)">❮</a>
-    <a class="next" onclick="changeImageSect0(1)">❯</a>
-<hr>    
-</section><!------------------ End sect0 ------------------------------------->
-
-<section id="sect1" class="giomucvu"><!---sect1-- Giờ Mục Vụ ----------------->
-    <div id='sect1vi'>
-        <h2 class="title-sect" >1.Giờ Mục Vụ</h2>
-        <!-- <p>Lorem van Tien dang lam web</p> -->
-    
-        <div class="row">
-            <div class="giomucvu-col">
-                <h3>Thánh Lễ</h3>
-                <p>
-                     <b>Các ngày thường Thứ Hai đén Thứ Bảy</b> <br>
-                       10:00<br>
-                </p>
-                <p>
-                    <b>Chúa Nhật</b>  <br>
-                       10:00<br>
-                       18:00<br>
-                </p>
-                <p>
-                    <b>Các ngày Lễ đặc biệt</b>  <br>
-                       <b>- Lế Giáng Sinh</b> : 11:00<br>
-                       <b>- Lế Phục Sinh</b> : 11:00<br>
-                       <b>- Lế Cưới</b> : 10:00<br>
-                </p>
-
-            </div>
-            <div class="giomucvu-col">
-                <h3>Giải Tội</h3>
-                <p>
-                    Thứ Bảy 5:30 - 6:30 pm   <br>
-                       * 30 phút trước các Thánh Lễ hay theo hẹn.
-    
-                </p>
-                <h3>Rửa Tội</h3>
-                <p>
-                    Sau lễ 11:00AM mỗi Chúa Nhật đầu tháng.
-                    Xin liên lạc Văn Phòng Giáo Xứ để biết thêm chi tiết:
-    
-                </p>
-                <h3>Thêm Sức</h3>
-                <p>
-                    Mỗi năm 1 lần vào trước Mùa Phục Sinh.
-                    Xin liên lạc Văn Phòng Giáo Xứ để biết thêm chi tiết:
-    
-                </p>
-    
-            </div>
-            <div class="giomucvu-col">
-                <h3>Hôn Phối</h3>
-                <p>
-                    Xin liên lạc với Cha Thomas Trần Thiên Ân, O.P, ít nhất 4 tháng trước ngày cưới: (832) 692-4761. 
-                    Hoặc văn phòng GX để lấy hẹn với cha xứ.
-                </p>
-                <h3>Xức Dầu</h3>
-                <p>
-                    Xin liên lạc Văn Phòng Giáo Xứ để biết thêm chi tiết:
-    
-                </p>
-                <h3><span style="color:red">Văn phòng Giáo xứ:</span></h3>
-                <p>
-                    54 Lourd Saint Abbeville LA 7777.<br>
-                    Tel 228 912 5555
-    
-                </p>
-    
-            </div>
-        </div>
-</div> 
-<div id='sect1en'>
-</div>
-<hr>
-</section><!--========== End -sect1-- Giờ Mục Vụ --=======================-->
-
-<section id="sect2" class="campus" ><!-- sect2--Mùa Phụng Vụ--------------->
-<div id='sect2vi'>
-    <h2 class="title-sect">2.Các Mùa Phụng Vụ</h2>
-    <p>
-        <b>Năm phụng vụ </b> (hay còn gọi là Lịch Kitô giáo) là chu kỳ thời gian xác định 
-        bằng các <b>mùa phụng vụ </b>(dựa vào chu kỳ thời gian của năm Dương lịch) với những 
-        nghi thức và lễ hội đặc trưng của Kitô giáo, được tổ chức bám sát với diễn tiến 
-        nội dung trong Kinh Thánh. 
-    </p>
-    <img class='hinhtron-cacmua' src="images/nam-phung-vu.jpg">
+        <!--<h1>Nhà Thờ Công Giáo Anrê Dũng Lạc</h1>-->
     <br>
-    <div class="row">
-        <div class="campus-col">
-            <h3>MÙA VỌNG</h3>
-            <img src="images/muavong.png">
-            <p>
-                Mùa Vọng là khoảng thời gian bốn tuần lễ trước Lễ Giáng Sinh. 
-                Chủ đề chính của Mùa Vọng là chuẩn bị để kỷ niệm Sự Giáng Sinh của Chúa Giêsu. 
-            </p>
-        </div>    
-
-        <div class="campus-col">
-            <h3>MÙA GIÁNG SINH</h3>
-            <img src="images/muags.png">
-            <p>
-                Mùa Giáng sinh bắt đầu từ Lễ Giáng Sinh ngày 25/12 đến đến Chủ nhật sau 
-                Lễ Hiển Linh (sau ngày 6 tháng Giêng) 
-                với ý nghĩa mừng sự kiện Chúa Giêsu giáng trần năm xưa. 
-            </p>
-        </div>    
-        <div class="campus-col">
-            <h3>MÙA THƯỜNG NIÊN I</h3>
-            <img src="images/muatn.png">
-            <p>
-                Mùa Thường Niên còn gọi là Mùa Quanh Năm là mùa phụng vụ không mang ý nghĩa thần học 
-                đặc biệt nào thông thường gồm 33 hoặc 34 tuần lễ.
-            </p>    
-        </div>    
-    </div>
-    
-    <div class="row">
-
-        <div class="campus-col">
-            <h3>MÙA CHAY</h3>
-            <img src="images/muachay.png">
-            <p>
-                Mùa Chay bắt đầu từ Thứ tư Lễ Tro và kết thúc trước Tam Nhật Vượt Qua vào chiều Thứ năm 
-                Tuần Thánh với ý nghĩa sự ăn năn thống hối của từng tín đồ và Cuộc thương khó của Giêsu Kitô. 
-            </p>
-        </div>    
-        <div class="campus-col">
-            <h3>MÙA PHỤC SINH</h3>
-            <img src="images/muaps.png">
-            <p>
-                Mùa Phục Sinh bắt đầu từ chiều Chúa Nhật thứ I Phục Sinh đến hết Chúa Nhật 
-                Lễ Chúa Thánh Thần Hiện Xuống (Lễ Ngũ Tuần), rơi vào trong khoảng từ ngày 22/3 đến 25/4. 
-            </p>
-        </div>    
-        <div class="campus-col">
-            <h3>MÙA THƯỜNG NIÊN II</h3>
-            <img src="images/ducmelt.png">
-            <p>
-                Mùa Thường Niên II bắt đầu từ sau Lễ Hiện Xuống và kết thúc trước giờ 
-                trước Chúa Nhật thứ I mùa Vọng của năm phụng vụ tiếp theo.
-            </p>
-
-        </div>
-    </div>    
-</div>
-
-<div id='sect2en'>
-</div>
-<hr>
-</section><!--====== End sect2--Mùa Phụng Vụ-======----------------------->
-
-<section id="sect3" class="facilities"><!-- sect3--Bi tich----------------->
-    <div id='sect3vi'>
-
-    <h2 class="title-sect">3.Các Bí Tích</h2>
-    <p class="center">
-        Bí Tích là dấu bề ngoài Ðức Chúa Giêsu đã lập để ban ơn bề trong cho ta.
-        Bí tích được coi là một nghi thức quan trọng và có ý nghĩa biểu thị cách 
-        tượng trưng chân tính Thiên Chúa cũng như nguồn mạch ân sủng của Thiên Chúa.
-    </p>
-    <p>    
-        Ðể trở thành một bí tích cần phải có 3 điều kiện:<br>
-        1.Phải do Chúa Giêsu lập.<br>
-        2.Dấu bề ngoài (Mô thể – Chất thể).<br>
-        3.Ơn bề trong.<br>
-    </p>     
-    <h3> Có 7 phép Bí Tich: Rửa Tội, Thêm Sức, Mình Thánh Chúa, Giải Tội, Xức Dầu Thánh,Truyền Chức Thánh, và Hôn Phối:</h3>
-        
-    
-    <div class="row">
-        <div class="facilities-col">
-            <img src="images/ruatoi.png">
-            <h3>1 ⭐ Rửa Tội ⭐⭐⭐⭐⭐⭐</h3>
-            <p>
-                Khi được sinh ra, tất cả chúng ta đều có tội. Đó là tội nguyên tổ. 
-                Đó là tội mà gia đình đầu tiên là ông Ađam và Evà đã phạm. 
-                Khi rửa tội, chúng ta được rửa sạch tội nguyên tổ và tất cả các tội 
-                ta đã phạm trước đó (trong trường hợp một người rửa tội đã đủ tuổi 
-                khôn, nghĩa là trên 7 tuổi), chúng ta được trở nên con cái Thiên Chúa 
-                và chúng ta trở thành một phần của Giáo Hội. 
-                Thiên Chúa hạnh phúc, khi vị linh mục nói trong lúc đổ nước thánh 
-                và rửa tội cho một người: "Cha rửa con, nhân danh Chúa Cha, Chúa Con và Chúa Thánh Thần."
-
-            </p>
-        </div>
-        <div class="facilities-col">
-            <img src="images/themsuc.png">
-            <h3>2 ⭐ Thêm Sức ⭐⭐⭐⭐⭐⭐</h3>
-            <p>
-                Thật là đơn giản như việc Thiên Chúa (Thánh Thần của Ngài) gia tăng ơn đức tin 
-                cho chúng ta để chúng ta có thêm sự chắc chắn rằng Ngài sẽ ở với chúng ta cho 
-                tới khi chúng ta được về Thiên đang, vì Ngài cũng trao cho chúng ta niềm hy vọng. 
-                Cuối cùng, Ngài củng cố đức ái của chúng ta yêu mến Ngài và tha nhân sâu xa hơn. 
-                Trong trường hợp này, bí tích Thêm sức phải được Đức Giám mục đặt tay của ngài 
-                trên thụ nhân và xức dầu cho người ấy (dầu S.C Dầu thánh hiến), trong khi ghi 
-                hình Thánh giá trên trán người chịu phép Thêm sức, ngài nói: "Hãy lãnh nhận ấn 
-                tín ơn Chúa Thánh Thần."
-            </p>
-        </div>
-        <div class="facilities-col">
-            <img src="images/thanhthe.png">
-            <h3>3 ⭐Thánh Thể ⭐⭐⭐⭐⭐⭐</h3>
-            <p>
-                Mỗi ngày, Chúa Giêsu biến đổi bánh và rượu trở nên chính Thịt 
-                và Máu Ngài trong Thánh lễ. Ngay lúc diễn ra việc điều này được 
-                gọi gọi là sự hiến tế. Bằng cách này chúng ta có thể ăn và tiếp 
-                nhận chính Ngài vào trong linh hồn chúng ta. 
-                Chúa Giêsu thiết lập bí tích này vào Bữa Tiệc Ly với mười hai 
-                tông đồ. Đây là điều thêm vào: bí tích này tha thứ mọi tội nhẹ 
-                và củng cố sức mạnh cho chúng ta để chúng ta chống lại những hành 
-                động dẫn đến sự chết trong tương lai. 
-                Chính Chúa Giêsu là Đấng ở trong chúng ta.
-            </p>
-        </div>
-    </div>
-    <div class="row">
-        <div class="facilities-col">
-            <img src="images/giaitoi.png">
-            <h3>4 ⭐ Giải Tội ⭐⭐⭐⭐⭐⭐</h3>
-            <p>
-                Bí tích này là một quà tặng lớn lao của Thiên Chúa. Qua linh mục, 
-                người lắng nghe tội lỗi của chúng ta khi chúng ta đến và xưng 
-                thú tội lỗi trong sự tin tưởng ngài, Thiên Chúa tha thứ mọi hành động 
-                và thiếu sót của chúng ta vỗn đã làm chúng ta xúc phạm Ngài. 
-                Một lần nữa, chúng ta phải thật sự ăn năn về những điều xấu chúng ta 
-                đã làm, và những điều tốt đẹp mà chúng ta đã bỏ qua. Bên cạnh đó, 
-                bí tích Hòa giải mang lại cho chúng ta một sự bình an lớn lao và 
-                tăng sức mạnh cho chúng ta để trở thành Kitô hữu tốt, nghĩa là những 
-                người con của Thiên Chúa.
-            </p>
-        </div>
-        <div class="facilities-col">
-            <img src="images/xucdau.png">
-            <h3>5 ⭐ Xức Dầu ⭐⭐⭐⭐⭐⭐</h3>
-            <p>
-                Thiên Chúa yêu thương kẻ bệnh tật. Khi một người bệnh hoạn hoặc 
-                già nua và có thể chết sớm, người ấy cần sự giúp đỡ của Thiên Chúa 
-                cho khoảnh khắc đó. Xức dầu là sự trợ giúp đem lại sức mạnh, 
-                sự bình an và sự khích lệ; thêm vào đó, là việc tha thứ tất cả 
-                những lỗi lầm của người bệnh và chuẩn bị cho họ trong lúc  chết. 
-                Nó giống như một sự kết hiệp với cuộc Khổ nạn Chúa Kitô chịu trên 
-                đồi Can-vê. Bằng cách này, người bệnh, giúp Chúa Giêsu mang 
-                Thánh giá qua những nỗi đau và thống khổ của họ, đồng thời 
-                Chúa Giêsu giúp họ trong những khoảnh khắc cuối đời của họ.
-            </p>
-        </div>
-        <div class="facilities-col">
-            <img src="images/honphoi.png">
-            <h3>6 ⭐ Hôn Phối ⭐⭐⭐⭐⭐⭐</h3>
-            <p>
-                Bí tích này là sự kết hợp vĩnh viễn giữa một người nam và một người nữ. 
-                Khi họ kết hôn trong Giáo Hội, chính Thiên Chúa là Đấng hiệp nhất thân 
-                thể và linh hồn của họ. Những người kết hôn sẽ không phá vỡ mối quan hệ 
-                hôn nhân của họ: "Điều mà Thiên Chúa đã kết hiệp, con người không được 
-                phân ly" (Mc 10,9). Mô hình mà người nam và người nữ phải tuân theo là 
-                của Gia đình thánh: Chúa Giêsu, Đức Trinh Nữ Maria và Thánh Giuse. 
-                Gia đình thánh này cũng như là một tấm gương về mối ràng buộc hôn nhân 
-                của Chúa Kitô với nàng dâu của Người là Hội Thánh.
-            </p>
-        </div>
-    </div>
-        <h3>7 ⭐ Truyền Chức Thánh ⭐⭐⭐⭐⭐⭐</h3>
+    <nav class="center">
+        <a href="#about">Giới Thiệu</a>
+        <a href="#services">Lễ và Thánh Lễ</a>
+        <a href="#events">Sự Kiện</a>
+        <a href="#contact">Liên Hệ</a>
+    </nav>
+</header>
+<!-- Nội dung chính -->
+<main>
+    <!-- Giới thiệu -->
+    <section id="about" class="square">
+    <h2>Giới Thiệu</h2>
+    <div >
         <div>
-            <img style="width: auto; height:400px; float: left; margin: 5px;" src="images/truyen-chuc.png">
+            <img src="images/banner.png">
         </div>
-        <p style="text-align: justify;font-size: 14px;">
-            Bí tích Truyền Chức Thánh có ba cấp từ thấp lên cao:
-        </p> 
-        <p>   
-            Phó tế: là người được Giám mục cắt đặt để phục vụ trong một lĩnh vực nhất định nào đó. 
-            Một trong các nhiệm vụ của Phó Tế là phụ giúp các Giám mục và linh mục trong việc 
-            cử hành mầu nhiệm thánh, nhất là trong thánh lễ, trao Mình Thánh Chúa, 
-            chứng hôn, Rửa Tội, công bố và rao giảng Tin Mừng, chủ toạ lễ nghi an táng 
-            và các công việc bác ái. 
-            Có hai loại phó tế: Phó tế vĩnh viễn có thể được ban cho người nam đã lập 
-            gia đình và họ bị dừng lại ở chức này, còn phó tế chuyển tiếp (thừa tác) 
-            được ban cho những người nam độc thân, họ sẽ chuẩn bị lên chức linh mục.
+        <p>Chào mừng đén với trang web của Nhà Thờ Công Giáo Anrê Dũng Lạc. 
+            Chúng tôi là cộng đồng tín hữu Công Giáo với sứ mệnh phục vụ và yêu thương. 
+            Chúng tôi luôn mong muốn mang lại những giá trị tốt đẹp và lan tỏa niềm tin 
+            vào Thiên Chúa.
+            Nhà thờ là nơi hội tự. Khánh thành năm 2024. Tọa lạc tại 1221 Latter St. Abbevill. 
         </p>
-        <p>    
-            Linh mục: là cộng sự viên của Giám mục, được tham dự vào sứ mạng phổ quát 
-            mà Chúa Kitô trao cho các tông đồ.
-        </p>    
-        <p>
-            Giám mục: là người có chức thánh "tròn đầy nhất" vì đây là chức vụ kế vị 
-            các tông đồ do việc đặt tay (tông truyền).
-            Việc truyền chức đều phải qua trình tự từ thấp lên cao này. 
-            Những người đã được thụ lãnh việc truyền chức thánh thì chức vụ của họ được 
-            gọi là Chức Thánh (tránh nhầm lẫn giữa Chức Thánh và Thánh nhân).
-            Là người thay mặt Chúa Ki-tô và các môn đệ trong công cuộc truyền giáo 
-        </p>    
-        <p>
-            Bí tích Truyền Chức Thánh do chúa Giê-su thiết lập.
-        </p>
-
-</div>
-<div id='sect3en'>
-</div>
-<hr>
-</section><!--End sect3--Bi tich----------------------------------------------->
-
-<section class="testimonials" id="sect4"><!--sect4 THONG BAO ------------------>
-    <div id='sect4vi'>
-        <h2 class="title-sect">4.Thông Báo</h2>
-        <div class="row">
-            <div class="testimonial-col">
-                <div>
-                    <h3>TUẦN NÀY</h3>
-                    <i>⭐</i><i>⭐</i><i>⭐</i>
-                </div>
-                <br>
-                <div>
-                    <table>
-                        <tr><th >Thời gian</th><th>Công việc</th><th>Ghi chú</th></tr>
-                        <tr><td>1-10-24 dến 22-11-24</td><td>Tập hát và tập dâng hoa</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                      </table><br>
-                </div>
-            </div>
-            <div class="testimonial-col">
-                <div>
-                    <h3>TUẦN SAU</h3>
-                    <i>⭐</i><i>⭐</i><i>⭐</i>
-                </div>
-                <br>
-                <div>
-                    <table>
-                        <tr><th>Thời gian</th><th>Công việc</th><th>Ghi chú</th></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24</td><td>Tập hát</td><td>Ca đoàn Fatima</td></tr>
-                        <tr><td>1-10-24 dến 22-11-24</td><td>Tập hát và tập dâng hoa</td><td>Ca đoàn Fatima</td></tr>
-                      </table><br><br><br>
-                </div>
-            </div>
-        </div>
-
-    </div>
-
-    <div id='sect4en'>
-    </div>
-<hr>
-</section><!--End sect4 THONG BAO --------------------------------------------->
-
-<section class="tochucgx" id="sect5"><!--- sect5 Linh mục vả Ban thường vụ ---->
-
-    <div id='sect5vi'>
-    
-        <h2 class="title-sect">5.Linh Mục và Ban Thường Vụ</h2>
-        <div class="row">
-            <div class="testimonial-col">
-                <div>
-                    <h3>Linh mục Chánh xứ</h3>
-                    <i>⭐</i>
-                    <i>⭐</i>
-                    <i>⭐</i>
-                    <i>⭐</i>
-                    <i>⭐</i>
-                </div>
-                <br>
-                <img class='anh-tc' src="images/cha-adl.png">
-                <div>
-                    <p class="center">
-                        Giuse Hoàng Văn Kỳ,<br>
-                        Thụ phong Linh mục năm 1990,<br>
-                        Linh mục chánh Giáo Xứ Anrê Dũng Lạc từ năm 2010.<br>
-                        Email: xxxx@gmail.com
-                    </p>
-                </div>
-            </div>
-            <div class="testimonial-col">
-                <div>
-                    <h3>Chủ tịch Cộng đoàn</h3>
-                    <i>⭐</i>
-                    <i>⭐</i>
-                    <i>⭐</i>
-                    <i>⭐</i>
-                    <i></i>
-                    
-                </div>
-                <br>
-                <img class='anh-tc' src="images/hau-adl.png">
-                <div>
-                    <p class="center">
-                        Phêrô Đoàn Văn Hậu,<br>
-                        Gia nhập Giáo xứ từ năm 1980,<br>
-                        Chủ tịch Cộng đồng Giáo Xứ Anrê Dũng Lạc từ năm 2000.<br>
-                        Email: zzzz@gmail.com
-                    </p>
-                </div>
-            </div>
-        </div>
-        <h3>Phụ giúp Mục vụ hoặc Phụng vụ:</h3>
-        <i>⭐</i>
-        <i>⭐</i>
-        <i>⭐</i><br><br>
-
-        <!--khoi 2 cot theo ngang-->
-        <div class="container">
-            <div class="col">
-                <h6>Column 1</h6>
-                <p class="center">This is the content of column 1.</p>
-            </div>
-            <div class="col">
-                <h6>Column 2</h6>
-                <p class="center">This is the content of column 2.</p>
-            </div><br><br>
-        </div>
-        <!--HET khoi 4 cot theo ngang-->  
-        <!--khoi 2 cot theo ngang-->
-        <div class="container">
-            <div class="col">
-                <h6>Column 3</h6>
-                <p class="center">This is the content of column 1.</p>
-            </div>
-            <div class="col">
-                <h6>Column 4</h6>
-                <p class="center">This is the content of column 2.</p>
-            </div>
-        </div><br><br><br>
-        <!--HET khoi 4 cot theo ngang-->  
-
-    </div>
-    
-    <div id='sect5en'>
     </div>    
-    
-<hr>    
-</section><!---End sect5 Linh mục vả Ban thường vụ ----------------------------->
+    </section>
 
-<section id="sect6" data-vi="sect6"><!-- sect6 vai net ve giao xu------------ -->
-
-    <div id='sect6vi'>
-        <h2 class="title-sect" onclick="speakerViEnSectX(maLang,'sect6');">🎧 6.Lịch sử thành lập Nhà Thờ </h2>
-        <br>
-        <div class="f-grid">
-            <div class="f-grid-l" data-vi="1">
-                 Sau khi <span style="color:blue;"> Nước Việt Nam Cộng Hòa</span> bị cưỡng hóa 
-                vào <span style="color:red;"> Nước Việt Nam Dân Chủ Cộng Hòa</span> (ngày nay là Cộng Hòa Xã Hội Chủ Nghĩa Việt Nam) vào năm 1975.<br><br>   
-                Dưới Chính quyền do Đảng Cộng Sản quản lý, 
-                vào những năm 1977-1987, hàng trăm ngàn người Việt Nam đã phải vượt biên, 
-                đa số bằng đường biển, đẻ đi tỵ nạn chính trị. Trong số đó có một nhóm người 
-                ra đi từ tỉnh Bà Rịa Vũng Tàu. Họ đã đến Tiểu bang Louisana của nước Mỹ để sống.
-                <img src="images/vuotbien.png" alt="Smiley face" style="float:left;width:100%;height:auto;border: 10px solid transparent;">
-                <br><br>
-                Trong số những người tới LA, có nhiều người theo đức tin Công Giáo. 
-                Họ không có nơi phụng vụ theo đức tin cố định, mà phải đi tới Nhà Thờ này hoặc Nhà Thờ khác 
-                để phụng vụ.
-                <br><br>
-                Mãi đến năm 2024 họ mới cùng nhau xây dựng xong một Nhà Thờ đẻ làm nơi 
-                phụng vụ và sinh hoat theo đức tin Công Giáo. Nhà thờ được khánh thành vào ngày 24/11/2024. 
-                Từ ngày này, Giáo xứ <a href="https://vi.wikipedia.org/wiki/Anr%C3%AA_D%C5%A9ng_L%E1%BA%A1c">Anrê Dúng Lạc</a> tại LA có nơi chính thức để phụng vụ và sinh hoạt theo đức tin 
-                của mình thuận lợi hơn. 
-            </div><br><br><br>
-        </div>
-    </div>
-    
-    <div id='sect6en'>
-    </div>
-<hr>    
-</section><!-- End sect6 vai net ve giao xu------------------------------------- -->
-
-<section class="footer"><!-- Footer cua trang ---------------------------------- -->
-    <br>
-    <h3>Phụ trách trang web</h3>
-    <p class="center">
-        Nhi Nguyễn<br>
-        Email: nhinguyen@gmail.com<br>
-        Tel : +1 903 999 2222 
+    <!-- Lễ và Thánh Lễ -->
+    <section id="services">
+    <h2>Lễ và Thánh Lễ</h2>
+    <p>Thánh Lễ được cử hành vào các ngày Chủ Nhật lúc 8:00 và 10:00. 
+        Xin mời quý vị đến tham dự và cầu nguyện cùng cộng đoàn.
     </p>
-    <!-- <p>Made with vantiensg2002@yahoo.com</p> -->
-</section><!-- End Footer cua trang -------------------------------------------- -->
+    </section>
 
-<script>//src="index.js">
-//-- Cho sect0--------------------------------------------------------
-//--1-Cac bien global----------------
-var nSect=0;
-var nMenu=0;
-var nImage=8; // so nay 8 mod 8 bang 0 ung anh goc 0.png la nha tho
-var nLang=0;
-var maLang='vi';
-const toggleIcon = document.getElementById('toggle-icon');
-const menuText = document.getElementById('menutext');
-const languagebrowse = document.getElementById('languagebrowse');
-let isMenuOpen = false;
-var idsectht, idsectht2;
+    <!-- Sự kiện -->
+    <section id="events">
+    <h2>Sự Kiện</h2>
+    <p>Hãy tham gia các sự kiện đặc biệt của chúng tôi, bao gồm các lễ hội, 
+        buổi hòa nhạc và các hoạt động từ thiện.
+        1. Ngày 24-11-2024 từ 10:00 - 12:00 Khánh thành Nhà Thờ mới. Kính mời tín hữu tham dự. 
+        Để biết thêm chi tiết, vui lòng liên hệ với chúng tôi.</p>
+    </section>
 
-//--2- Quan trong Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
-//--Khi click vao 3 gach o goc trai se dieu khien menu nho--
-toggleIcon.addEventListener('click', function () {
-    // Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
-    if (window.innerWidth <= 600) {
-        if (isMenuOpen) {
-            menuText.classList.remove('visible');
-            menuText.classList.add('hidden');
-            toggleIcon.classList.remove('fa-times');
-            toggleIcon.classList.add('fa-bars');
-        } else {
-            menuText.classList.remove('hidden');
-            menuText.classList.add('visible');
-            toggleIcon.classList.remove('fa-bars');
-            toggleIcon.classList.add('fa-times');
-        }
-        isMenuOpen = !isMenuOpen;
-    }
-});//-------------------------------------------------------------
+    <!-- Liên hệ -->
+    <section id="contact">
+    <h2>Liên Hệ</h2>
+    <p>Nếu bạn có bất kỳ câu hỏi hoặc muốn tham gia vào cộng đồng của chúng tôi, hãy liên hệ qua số điện thoại hoặc email bên dưới.</p>
+    <button onclick="window.location.href='mailto:info@nhatho.vn'">Liên Hệ Qua Email</button>
+    </section>
+</main>
 
-//--3-Ham nay duoc goi boi ham ben duoi-----------------------------------
-function dichViToEn(textCanDich,ptnode){
-    const inputText = textCanDich;
-    let sourceLanguage = 'vi';
-    let targetLanguage = 'en';
-
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
-
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200){
-            const responseReturned = JSON.parse(this.responseText);
-            const translations = responseReturned[0].map((text) => text[0]);
-            const outputText = translations.join(" ");
-            ptnode.nodeValue = ' '+outputText;
-            //console.log(ptnode.nodeValue);
-        }
-    };
-    //---------------------
-    xhttp.open("GET", url);
-    xhttp.send();
-}
-//---4- Ham de quy nhan ban cac node con cua moi node----------------------------------
-function traverseNodes(node, callback) {
-    // Gọi callback cho node hiện tại (có thể là phần tử hoặc văn bản)
-    callback(node);
-    // Duyệt qua tất cả các node con
-    node.childNodes.forEach(child => traverseNodes(child, callback));
-}
-//--5-----------------------------------
-function dich_viDivChonClone_en(content){
-    //const content = document.querySelector("[data-vi='sect1']");
-    traverseNodes(content, node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-            if (node.nodeValue.trim() !== ''){
-                dichViToEn(node.nodeValue,node);
-                //da dem dich vao nodeValue
-            }else{
-                node.nodeValue=' ';      
-            }    
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-            console.log(' ');
-        }
-    });
- }    
-
-//--6--Khi goi ham nay (ngay luc dau) thi no se nhan ban viDiv vao enDiv tuong ung roi dich ra En---
-function cloneSectXToEn(sectX){
-    if (sectX==='sect1'){
-        const viDivChon = document.getElementById("sect1vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect1en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect2'){
-        const viDivChon = document.getElementById("sect2vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect2en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect3'){
-        const viDivChon = document.getElementById("sect3vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect3en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect4'){
-        const viDivChon = document.getElementById("sect4vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect4en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect5'){
-        const viDivChon = document.getElementById("sect5vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect5en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect6'){
-        const viDivChon = document.getElementById("sect6vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect6en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    //None enDivNhan
-    //enDivNhan.style.display = "none";
-}
-//--7-Ham nay thuc thi khi click vao nut nBuuton------------------------------
-function nButtLang() { 
-    //0-TAT OFF am speaker neu dang noi moi lan thay doi Lang
-    const synth = window.speechSynthesis;
-    if (synth.speaking) {
-        synth.cancel(); // Dừng văn bản hiện tại
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','0');
-    }
-
-    nLang=nLang+1;
-
-    if (nLang%2===1){
-        maLang='en';
-        //1-buttonlang ra chu en va mau blue
-        document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="blue";
-        //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
-        if (nMenu===0){
-            for (let i=1;i<=6;i++){
-                //phoi bay all sect
-                //let sectx = 'sect'+i;
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all enDiv
-                //let idsecten="#sect"+i+"en";
-                document.getElementById("sect"+i+"en").style.display = 'block';
-                //che all viDiv
-                //let idsectvi="#sect"+i+"vi";
-                document.getElementById("sect"+i+"vi").style.display = 'none';
-            }
-        }else{//neu nMenu !== 0
-            for (let i=1; i<=6;i++){
-                if (i===nMenu){
-                    //phoi bay 1 sect
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay 1 enDiv
-                    document.getElementById("sect"+i+"en").style.display = 'block';
-                    //che 1 viDiv
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-                }else{
-                    //che cac sect con lai
-                    document.getElementById('sect'+i).style.display = 'none';
-                    //che cac enDiv con lai
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                    //che cac viDiv con lai
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-
-                }
-            }
-        }    
-    } else {
-        //thay doi mau en/vi
-        maLang='vi';
-        //1-buttonlang ra chu vi va mau vang
-        document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="brown";
-        //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
-        if (nMenu===0){
-            for (let i=1;i<=6;i++){
-                //phoi bay all sect
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all viDiv
-                document.getElementById("sect"+i+"vi").style.display = 'block';
-                //che all viDiv
-                document.getElementById("sect"+i+"en").style.display = 'none';
-            }
-        }else{//neu nMenu !== 0
-            for (let i=1; i<=6;i++){
-                if (i===nMenu){
-                    //phoi bay 1 sect
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay 1 viDiv
-                    document.getElementById("sect"+i+"vi").style.display = 'block';
-                    //che 1 enDiv
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                }else{
-                    //che cac sect con lai
-                    document.getElementById('sect'+i).style.display = 'none';
-                    //che cac enDiv con lai
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                    //che cac viDiv con lai
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-
-                }
-            }
-        }    
-    }
-}
-//--8- Ham chon de muc Menu ----------------------------------------------------
-function fchon_sec(id){ 
-    maLang=document.getElementById('nButt').innerText;
-    console.log(id,maLang);
-    //lay ki tu cuoi lam chuong so global
-    let nsectstr = id.replace("menu", ""); 
-    nSect=parseInt(nsectstr);
-    nMenu = nSect;
-    if (nMenu===0){
-        //Doi ten class title-sect thanh title-sect-xanhdam 
-        let a = document.getElementsByClassName( "title-sect" );
-        [...a].forEach( x => x.className += " title-sect-xanh" );
-        [...a].forEach( x => x.classList.remove("title-sect") );
-        //mau text cua menu0 la vang
-        document.getElementById('menu0').style.color='brown';
-        if (maLang==='vi'){
-            for (let i=1;i<=6;i++){
-                //mau text cua menu1 - 6  la trang
-                document.getElementById('menu'+i).style.color='blue';
-                //phoi bay all sect 1 to 6
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all enDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"vi").style.display = 'block';
-                //che all viDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"en").style.display = 'none';
-            }
-        } else {//maLang==='en'
-            for (let i=1;i<=6;i++){
-                //mau text cua menu1 - 6  la trang
-                document.getElementById('menu'+i).style.color='blue';
-                //phoi bay all sect 1 to 6
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all enDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"en").style.display = 'block';
-                //che all viDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"vi").style.display = 'none';
-            }
-        }
-    }else{//nMenu !== 0
-        //Doi ten class title-sect thanh title-sect-xanh
-        let a = document.getElementsByClassName( "title-sect-xanh" );
-        [...a].forEach( x => x.className += " title-sect" );
-        [...a].forEach( x => x.classList.remove("title-sect-xanh") );
-        
-
-        if (maLang==='vi'){
-            for (let i=1;i<=6;i++){
-                if (i===nMenu){
-                    //mau text cua menu0 la trang
-                    document.getElementById('menu0').style.color='blue';
-                    //mau text cua menuChon la vang
-                    document.getElementById('menu'+i).style.color='brown';
-                    //phoi bay 1 sect chon
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay 1 viDiv cua 1 sect chon
-                    document.getElementById("sect"+i+"vi").style.display = 'block';
-                    //che all enDiv cua cac sect ko chon 
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                }else{//i !== nMenu
-                    //mau text cua menu0 la trang
-                    document.getElementById('menu0').style.color='blue';
-                    document.getElementById('menu'+i).style.color='blue';
-                    document.getElementById('sect'+i).style.display = 'none';
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-
-                }
-            }
-        } else {//maLang==='en'
-            for (let i=1;i<=6;i++){
-                if (i===nMenu){
-                    document.getElementById('menu0').style.color='white';
-                    document.getElementById('menu'+i).style.color='brown';
-                    //phoi bay all sect
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay all enDiv
-                    document.getElementById("sect"+i+"en").style.display = 'block';
-                    //che all viDiv
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-                }else{
-                    document.getElementById('menu0').style.color='white';
-                    document.getElementById('menu'+i).style.color='white';
-                    document.getElementById('sect'+i).style.display = 'none';
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-
-                }
-            }
-        }
-
-
-    }
-}
-//--9- Ham doc tieng Anh ỏ Viet theo giọng doc da cai trong may, co the khac nhau hoac chua cai-🎧
-function speakViEn(text,malang){
-    const message = new SpeechSynthesisUtterance(text);
-    message.lang = malang;
-    const voices = speechSynthesis
-                    .getVoices()
-                    .filter(voice => {
-                        voice.lang = malang;});
-    message.voice = voices[0];
-    speechSynthesis.speak(message);
-}
-
-//-10- ---------------------------
-function speakerViEnSectX(maLang, sectX){
-    //alert(sectX.slice(-1));
-    if (maLang === 'vi'){
-        let maLangNoi = 'vi-VN';
-        const content = document.getElementById(sectX+'vi');
-        let textvi='';
-        traverseNodes(content, node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                if (node.nodeValue.trim() !== ''){
-                    textvi += node.nodeValue.trim()+' ';
-                }
-            }
-        });
-        textvi = textvi.replace(/🎧/g,'');
-        speakViEn(textvi,maLangNoi);   
-    }
-    if (maLang === 'en'){
-        let maLangNoi = 'en-US';
-
-        const content = document.getElementById(sectX+'en');
-        let texten='';
-        traverseNodes(content, node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                if (node.nodeValue.trim() !== ''){
-                    texten += node.nodeValue.trim()+' ';
-                    //da dem dich vao nodeValue
-                }
-            }
-        });
-        texten = texten.replace(/🎧/g,'');
-        speakViEn(texten,maLangNoi);   
-    }
-}
-//--Xem hinh anh khi click < hoac > ---------------
-function changeImageSect0(n) { 
-    if (nSect !== 0){
-        let images_sectN="images_sect"+String(nSect)+"/";
-        nImage = nImage + n
-        mod_nImage_8 = nImage % 8; 
-        let im = String(mod_nImage_8)+'.png';
-        //document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
-        document.getElementById('sect0').style.backgroundImage = "url('" + images_sectN + im + "')";
-    } else {
-        for (let j = 0; j <= 6; j++) {
-            let images_sectN="images_sect"+String(j)+"/";
-            nImage = nImage + n
-            mod_nImage_8 = nImage % 8; 
-            let im = String(mod_nImage_8)+'.png';
-            //document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
-            document.getElementById('sect0').style.backgroundImage = "url('" + images_sectN + im + "')";
-    
-        }
-    }    
-}
-function speakViEn(text,malang){
-    const message = new SpeechSynthesisUtterance(text);
-    message.lang = malang;
-    const voices = speechSynthesis
-                    .getVoices()
-                    .filter(voice => {
-                        voice.lang = malang;});
-    message.voice = voices[0];
-    speechSynthesis.speak(message);
-}
-
-//---------
-function readSelectedText() {
-    // Lấy đoạn văn bản đã chọn
-    const selectedText = window.getSelection().toString();
-
-    // Kiểm tra xem người dùng có chọn văn bản nào không
-    if (selectedText) {
-        // Tạo một đối tượng SpeechSynthesisUtterance để đọc văn bản
-        
-
-        //const speech = new SpeechSynthesisUtterance(selectedText);
-
-        // Chọn ngôn ngữ (ví dụ: tiếng Việt)
-        let malang=''; 
-        if (document.getElementById('nButt').innerText==='vi'){
-            malang = 'vi-VN';
-        }else{
-            malang = 'en-US';
-        }
-        speakViEn(selectedText,malang);
-
-        speech.onend = function(){
-            let mauhead = document.querySelector("button[data-headphone-mau]")
-            mauhead.setAttribute('data-headphone-mau','0');
-
-        }
-        // Đọc văn bản
-        window.speechSynthesis.speak(speech);
-
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','1');
-
-        if (! window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel(); // Dừng văn bản hiện tại
-            mauhead.setAttribute('data-headphone-mau','0');
-
-        }
-
-
-
-    } else {
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','0');
-
-        //alert("Vui lòng bôi chọn một đoạn văn bản.");
-    }
-}
-
-
-//-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
-cloneSectXToEn('sect1'); 
-cloneSectXToEn('sect2'); 
-cloneSectXToEn('sect3'); 
-cloneSectXToEn('sect4'); 
-cloneSectXToEn('sect5'); 
-cloneSectXToEn('sect6'); 
-document.getElementById('menu0').style.color='brown';
-fchon_sec("menu0");
-
-</script>
+<!-- Footer -->
+<footer>
+    <p>&copy; 2024 Nhà Thờ Công Giáo. Mọi quyền được bảo lưu.</p>
+    <p>Địa chỉ: 123 Đường Tín Hữu, Thành phố, Quốc gia</p>
+    <p><a href="https://www.facebook.com/nhatho" target="_blank">Facebook</a> | <a href="https://www.instagram.com/nhatho" target="_blank">Instagram</a></p>
+</footer>
 
 </body>
 </html>
-
-
-
-
