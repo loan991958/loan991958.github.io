@@ -570,11 +570,9 @@ function readSelectedText() {
         if (document.getElementById('nButt').innerText==='vi'){
             speech.lang = 'vi-VN';
             malang='vi-VN'
-            alert(malang);
         }else{
             speech.lang = 'en-US';
             malang='en-US';
-            alert(malang);
         }
 
         speech.onend = function(){
