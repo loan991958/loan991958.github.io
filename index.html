@@ -111,7 +111,7 @@ nav a{
     <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
     <a> &nbsp;<span style="color:#ddc168;font-size: 24px;">ANRE DUNG LAC CHURCH</span></a>
     <div style="float:right;">
-        <button data-headphone-mau ='0' class="headphone" onclick="readSelectedText()" style="background-color: transparent; border:none;border-radius:50% ;width:30px;height:30px;">🔈</button>
+        <button data-headphone-mau ='0' class="headphone" onclick="readSelectedText()" style="background-color: transparent; border:none;border-radius:50% ;width:30px;height:30px;font-size:24px"  >🔈</button>
         &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt" style="background-color:transparent; border-radius:50% ;font-size: 20px;width:30px;height:30px;">vi</button>
     </div>
         <!--<h1>Nhà Thờ Công Giáo Anrê Dũng Lạc</h1>-->
@@ -598,7 +598,14 @@ function readSelectedText() {
         //alert("Vui lòng bôi chọn một đoạn văn bản.");
     }
 }
-
+//--------
+document.addEventListener('touchend', () => {
+    let selectedText = window.getSelection().toString();
+    if (selectedText) {
+        let utterance = new SpeechSynthesisUtterance(selectedText);
+        speechSynthesis.speak(utterance);
+    }
+});
 
 //-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
 cloneSectXToEn('sect1'); 
