@@ -118,7 +118,7 @@ button[data-headphone-mau ='1']{
     <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
     <a> &nbsp;<span style="color:#ddc168;font-size: 24px;">ANRE DUNG LAC CHURCH</span></a>
     <div style="float:right;">
-        <button data-headphone-mau ='0' class="headphone" onclick="readSelectedText()" style="border:none;border-radius:50% ;width:30px;height:30px;font-size:24px;">🔈</button>
+        <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()" style="border:none;border-radius:50% ;width:30px;height:30px;font-size:24px;">🔈</button>
         &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt" style="background-color:transparent; border-radius:50% ;font-size: 20px;width:30px;height:30px;">vi</button>
     </div>
         <!--<h1>Nhà Thờ Công Giáo Anrê Dũng Lạc</h1>-->
@@ -565,65 +565,61 @@ function changeImageSect0(n) {
 }
 //---------
 function readSelectedText() {
-    nButtHead++;
-    if (nButtHead%2===1){
+        // Lấy đoạn văn bản đã chọn
+        const selectedText = window.getSelection().toString();
 
-    }
-    // Lấy đoạn văn bản đã chọn
-    const selectedText = window.getSelection().toString();
+        // Kiểm tra xem người dùng có chọn văn bản nào không
+        if (selectedText) {
+            // Tạo một đối tượng SpeechSynthesisUtterance để đọc văn bản
+            const speech = new SpeechSynthesisUtterance(selectedText);
 
-    // Kiểm tra xem người dùng có chọn văn bản nào không
-    if (selectedText) {
-        // Tạo một đối tượng SpeechSynthesisUtterance để đọc văn bản
-        const speech = new SpeechSynthesisUtterance(selectedText);
+            // Chọn ngôn ngữ (ví dụ: tiếng Việt)
+            let malang;
+            if (document.getElementById('nButt').innerText==='vi'){
+                speech.lang = 'vi-VN';
+                malang='vi-VN'
+            }else{
+                speech.lang = 'en-US';
+                malang='en-US';
+            }
 
-        // Chọn ngôn ngữ (ví dụ: tiếng Việt)
-        let malang;
-        if (document.getElementById('nButt').innerText==='vi'){
-            speech.lang = 'vi-VN';
-            malang='vi-VN'
-        }else{
-            speech.lang = 'en-US';
-            malang='en-US';
-        }
+            speech.onend = function(){
+                let mauhead = document.querySelector("button[data-headphone-mau]")
+                mauhead.setAttribute('data-headphone-mau','0');
 
-        speech.onend = function(){
+            }
+            // Đọc văn bản
+            const voices = speechSynthesis
+                        .getVoices()
+                        .filter(voice => {
+                            voice.lang = malang;
+                        });
+            speech.voice = voices[0];
+            window.speechSynthesis.speak(speech);
+
             let mauhead = document.querySelector("button[data-headphone-mau]")
-            mauhead.setAttribute('data-headphone-mau','0');
+            mauhead.setAttribute('data-headphone-mau','1');
 
-        }
-        // Đọc văn bản
-        const voices = speechSynthesis
-                    .getVoices()
-                    .filter(voice => {
-                        voice.lang = malang;
-                    });
-        speech.voice = voices[0];
-        window.speechSynthesis.speak(speech);
+            if (! window.speechSynthesis.speaking) {
+                window.speechSynthesis.cancel(); // Dừng văn bản hiện tại
+                mauhead.setAttribute('data-headphone-mau','0');
 
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','1');
-
-        if (! window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel(); // Dừng văn bản hiện tại
-            mauhead.setAttribute('data-headphone-mau','0');
-
-        }
+            }
 
 
 
-    } else {
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','0');
+        } 
+        //else {
+        //    let mauhead = document.querySelector("button[data-headphone-mau]")
+        //    mauhead.setAttribute('data-headphone-mau','0');
 
-        //alert("Vui lòng bôi chọn một đoạn văn bản.");
-    }
+        //    //alert("Vui lòng bôi chọn một đoạn văn bản.");
+        //}
+    
 }
 //--------
 document.addEventListener('touchend', () => {
-    if (nButtHead%2===1){
         readSelectedText();
-    }
     //let selectedText = window.getSelection().toString();
     //if (selectedText) {
     //    let utterance = new SpeechSynthesisUtterance(selectedText);
