@@ -557,7 +557,6 @@ function changeImageSect0(n) {
 }
 //---------
 function readSelectedText() {
-
     // Lấy đoạn văn bản đã chọn
     const selectedText = window.getSelection().toString();
 
@@ -609,13 +608,14 @@ function readSelectedText() {
     }
 }
 //--------
-//document.addEventListener('touchend', () => {
-//    let selectedText = window.getSelection().toString();
-//    if (selectedText) {
-//        let utterance = new SpeechSynthesisUtterance(selectedText);
-//        speechSynthesis.speak(utterance);
-//    }
-//});
+document.addEventListener('touchend', () => {
+    readSelectedText();
+    //let selectedText = window.getSelection().toString();
+    //if (selectedText) {
+    //    let utterance = new SpeechSynthesisUtterance(selectedText);
+    //    speechSynthesis.speak(utterance);
+    //}
+});
 
 //-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
 cloneSectXToEn('sect1'); 
