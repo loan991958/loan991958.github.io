@@ -54,6 +54,14 @@ border-bottom: 2px solid #d4af37; /* vàng ánh kim */
     color:yellow;
     background-color: rgb(163, 161, 159);
 }
+.menu-text ul li{
+    list-style: none;
+    display: inline-block;
+    position: relative;
+    /*margin-right: 30px;*/
+
+}
+
 /* chung cho cac tieu de section : doi mau ---------------------- */
 .title-sect {
    color: blue;
@@ -209,7 +217,7 @@ button[data-headphone-mau ='1']{
         visibility: visible;
         position: absolute;
         background: black;
-        height: 48vh;
+        height: 20vh;
         width: 100%;
         top: 64;
         right: 0px;
@@ -234,7 +242,7 @@ button[data-headphone-mau ='1']{
 <!-- Header -->
 <header class="sticky">
     <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
-    <a> &nbsp;<span style="color:#ddc168;font-size: 24px;">ANRE DUNG LAC CHURCH</span></a>
+    <a> &nbsp;<span style="color:#ddc168;font-size: 20px;">ANRE DUNG LAC CHURCH</span></a>
     <div style="float:right;">
         <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()">🔈</button>
         &nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button>
@@ -242,11 +250,13 @@ button[data-headphone-mau ='1']{
         <!--<h1>Nhà Thờ Công Giáo Anrê Dũng Lạc</h1>-->
     <br>
     <nav class="menu-text" id="menutext">
+    <ul>
         <li><a id="menu0" href="#sect0" onclick="fchon_sec(id)">Hình Ảnh</a></li>
         <li><a id="menu1" href="#sect1" onclick="fchon_sec(id)">Giới Thiệu</a></li>
         <li><a id="menu2" href="#sect2" onclick="fchon_sec(id)">Thánh Lễ</a></li>
         <li><a id="menu3" href="#sect3" onclick="fchon_sec(id)">Sự Kiện</a></li>
         <li><a id="menu4" href="#sect4" onclick="fchon_sec(id)">Liên Hệ</a></li>
+    </ul>
     </nav>
 </header>
 <!-- Nội dung chính ------------------------------------------------------------------>
@@ -482,7 +492,7 @@ function nButtLang() {
         maLang='en';
         //1-buttonlang ra chu en va mau blue
         document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="blue";
+        document.getElementById("nButt").style.color="lightblue";
         //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
         if (nMenu===0){
             for (let i=1;i<=4;i++){
@@ -568,11 +578,11 @@ function fchon_sec(id){
         [...a].forEach( x => x.className += " title-sect-xanh" );
         [...a].forEach( x => x.classList.remove("title-sect") );
         //mau text cua menu0 la vang
-        document.getElementById('menu0').style.color='brown';
+        document.getElementById('menu0').style.color='orange';
         if (maLang==='vi'){
             for (let i=1;i<=4;i++){
                 //mau text cua menu1 - 6  la trang
-                document.getElementById('menu'+i).style.color='blue';
+                document.getElementById('menu'+i).style.color='lightblue';
                 //phoi bay all sect 1 to 6
                 document.getElementById('sect'+i).style.display = 'block';
                 //phoi bay all enDiv trong cac sect 1 to 6
@@ -583,7 +593,7 @@ function fchon_sec(id){
         } else {//maLang==='en'
             for (let i=1;i<=4;i++){
                 //mau text cua menu1 - 6  la trang
-                document.getElementById('menu'+i).style.color='blue';
+                document.getElementById('menu'+i).style.color='lightblue';
                 //phoi bay all sect 1 to 6
                 document.getElementById('sect'+i).style.display = 'block';
                 //phoi bay all enDiv trong cac sect 1 to 6
@@ -603,9 +613,9 @@ function fchon_sec(id){
             for (let i=1;i<=4;i++){
                 if (i===nMenu){
                     //mau text cua menu0 la trang
-                    document.getElementById('menu0').style.color='blue';
+                    document.getElementById('menu0').style.color='lightblue';
                     //mau text cua menuChon la vang
-                    document.getElementById('menu'+i).style.color='brown';
+                    document.getElementById('menu'+i).style.color='orange';
                     //phoi bay 1 sect chon
                     document.getElementById('sect'+i).style.display = 'block';
                     //phoi bay 1 viDiv cua 1 sect chon
@@ -614,8 +624,8 @@ function fchon_sec(id){
                     document.getElementById("sect"+i+"en").style.display = 'none';
                 }else{//i !== nMenu
                     //mau text cua menu0 la trang
-                    document.getElementById('menu0').style.color='blue';
-                    document.getElementById('menu'+i).style.color='blue';
+                    document.getElementById('menu0').style.color='lightblue';
+                    document.getElementById('menu'+i).style.color='lightblue';
                     document.getElementById('sect'+i).style.display = 'none';
                     document.getElementById("sect"+i+"vi").style.display = 'none';
                     document.getElementById("sect"+i+"en").style.display = 'none';
@@ -626,7 +636,7 @@ function fchon_sec(id){
             for (let i=1;i<=4;i++){
                 if (i===nMenu){
                     document.getElementById('menu0').style.color='white';
-                    document.getElementById('menu'+i).style.color='brown';
+                    document.getElementById('menu'+i).style.color='orange';
                     //phoi bay all sect
                     document.getElementById('sect'+i).style.display = 'block';
                     //phoi bay all enDiv
@@ -775,8 +785,8 @@ cloneSectXToEn('sect3');
 cloneSectXToEn('sect4'); 
 //cloneSectXToEn('sect5'); 
 //cloneSectXToEn('sect6'); 
-document.getElementById('menu0').style.color='brown';
 fchon_sec("menu0");
+document.getElementById('menu0').style.color='orange';
 
 </script>
 </body>
