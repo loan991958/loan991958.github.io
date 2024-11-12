@@ -61,7 +61,6 @@ border-bottom: 2px solid #d4af37; /* vàng ánh kim */
     /*margin-right: 30px;*/
 
 }
-
 /* chung cho cac tieu de section : doi mau ---------------------- */
 .title-sect {
    color: blue;
@@ -235,7 +234,6 @@ button[data-headphone-mau ='1']{
         overflow: hidden;}
 }
 /* HET sect0------------------------------------------------------ */
-
 </style>
 </head>
 <body>
@@ -277,8 +275,10 @@ button[data-headphone-mau ='1']{
 
     <br>
     <h2 class="title-sect" >Giới Thiệu</h2>
+    <h1 style="font-size:xx-large;text-align: center;">⛪</h1>
+    <br>
     <p>
-    Chào mừng đến với trang web của Nhà Thờ Công Giáo Anrê Dũng Lạc.<br> 
+    Chào mừng qúy vịvị đến với trang web của Nhà Thờ Công Giáo Anrê Dũng Lạc.<br> 
     Chúng tôi là một trong số những cộng đồng tín hữu Công giáo. Với sứ mệnh phục vụ và yêu thương, 
     chúng tôi luôn mong muốn mang lại những giá trị tốt đẹp và lan tỏa niềm tin vào Thiên Chúa 
     cho nhiều người.<br>
@@ -286,10 +286,13 @@ button[data-headphone-mau ='1']{
     từ Việt Nam nhưng cho đén nay nơi này đã hình thành một Giáo xứ phát triển phong phú.  
     Sau những năm tháng mong chờ, cuối cùng Nhà Thờ đã được xây dựng xong và khánh thành vảo ngày 24-11-2024.  . 
     </p>
+
     <br>
 </div>
 <div id='sect1en'>
 </div>
+<hr>
+<br>
 </section>
 
     <!-- Lễ và Thánh Lễ -->
@@ -297,19 +300,26 @@ button[data-headphone-mau ='1']{
     <div id='sect2vi'>
 
     <h2 class="title-sect">Lễ và Thánh Lễ</h2>
+    <h1 style="font-size:xx-large;text-align: center;">🙏</h1>    
+    <br>
     <p>Thánh Lễ được cử hành vào các ngày Chủ Nhật lúc 8:00 và 10:00. 
         Xin mời quý vị đến tham dự và cầu nguyện cùng cộng đoàn.
     </p>
 </div>
 <div id='sect2en'>
 </div>
+<hr>
+<br>
 </section>
 
 <!-- Sự kiện -->
 <section id="sect3">
     <div id='sect3vi'>
+        
 
     <h2 class="title-sect">Sự Kiện</h2>
+    <h1 style="font-size:xx-large;text-align: center;">✝️️</h1>    
+    <br>    
     <p>Hãy tham gia các sự kiện đặc biệt của chúng tôi, bao gồm các lễ hội, 
         buổi hòa nhạc và các hoạt động từ thiện.
         1. Ngày 24-11-2024 từ 10:00 - 12:00 Khánh thành Nhà Thờ mới. Kính mời tín hữu tham dự. 
@@ -317,13 +327,17 @@ button[data-headphone-mau ='1']{
 </div>
 <div id='sect3en'>
 </div>
+<hr>
+<br>
 </section>
 
 <!-- Liên hệ -->
 <section id="sect4">
     <div id='sect4vi'>
 
-    <h2 class="title-sect">Liên Hệ</h2>
+    <h2 class="title-sect">Liên Hệ </h2>
+    <h1 style="font-size:xx-large;text-align: center;">✉</h1>   
+    <br> 
     <p>Nếu bạn có bất kỳ câu hỏi hoặc muốn tham gia vào cộng đồng của chúng tôi, hãy liên hệ qua số điện thoại hoặc email bên dưới.</p>
     <button onclick="window.location.href='mailto:info@nhatho.vn'">Liên Hệ Qua Email</button>
 </div>
@@ -490,6 +504,7 @@ function nButtLang() {
 
     if (nLang%2===1){
         maLang='en';
+        dichMenu();
         //1-buttonlang ra chu en va mau blue
         document.getElementById("nButt").innerHTML=maLang;
         document.getElementById("nButt").style.color="lightblue";
@@ -529,6 +544,7 @@ function nButtLang() {
     } else {
         //thay doi mau en/vi
         maLang='vi';
+        dichMenu();
         //1-buttonlang ra chu vi va mau vang
         document.getElementById("nButt").innerHTML=maLang;
         document.getElementById("nButt").style.color="yellow";
@@ -777,7 +793,28 @@ function readSelectedText() {
 document.addEventListener('touchend', () => {
         readSelectedText();
 });
-
+//--Cho dich Menu--------------------
+function dichMenu(){
+    const menuarr = '{"dong": [{"vi": "Hình Ảnh", "en": "Images"},'+
+                            '{"vi": "Giới Thiệu", "en": "About"},'+
+                            '{"vi": "Thánh Lễ", "en": "Services"},'+
+                            '{"vi": "Sự Kiện", "en": "Events"},'+
+                            '{"vi": "Liên Hệ", "en": "Contact"}]}';
+    const obj = JSON.parse(menuarr);
+    if (maLang==='vi'){
+        document.getElementById('menu0').innerText = obj.dong[0].vi;
+        document.getElementById('menu1').innerText = obj.dong[1].vi;
+        document.getElementById('menu2').innerText = obj.dong[2].vi;
+        document.getElementById('menu3').innerText = obj.dong[3].vi;
+        document.getElementById('menu4').innerText = obj.dong[4].vi;
+    } else {
+        document.getElementById('menu0').innerText = obj.dong[0].en;
+        document.getElementById('menu1').innerText = obj.dong[1].en;
+        document.getElementById('menu2').innerText = obj.dong[2].en;
+        document.getElementById('menu3').innerText = obj.dong[3].en;
+        document.getElementById('menu4').innerText = obj.dong[4].en;
+    }
+}
 //-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
 cloneSectXToEn('sect1'); 
 cloneSectXToEn('sect2'); 
@@ -786,6 +823,7 @@ cloneSectXToEn('sect4');
 //cloneSectXToEn('sect5'); 
 //cloneSectXToEn('sect6'); 
 fchon_sec("menu0");
+dichMenu();
 document.getElementById('menu0').style.color='orange';
 
 </script>
