@@ -17,7 +17,8 @@ box-sizing: border-box;
 
 body {
 font-family: 'Times New Roman', serif;
-background-color: #f9f9f9;
+/*background-color: #f9f9f9;*/
+
 color: #2f2f2f;
 }
 
@@ -32,6 +33,92 @@ padding: 10px;
 /*text-align: center;*/
 border-bottom: 2px solid #d4af37; /* vàng ánh kim */
 }
+#headphone{
+    border:none;
+    border-radius:50% ;
+    width:30px;
+    height:30px;
+    font-size:22px;
+}
+#nButt{
+    /*background-color:transparent; */
+    border-radius:50% ;
+    font-size: 18px;
+    width:30px;
+    height:30px;
+    border:rgb(168, 165, 165);
+    color:yellow;
+    background-color: rgb(163, 161, 159);
+}
+/* chung cho cac tieu de section : doi mau ---------------------- */
+.title-sect {
+   color: blue;
+    text-align: center;
+}
+.title-sect-xanh {
+    color: darkblue;
+    text-align: center;
+}
+/* HET chung cho cac tieu de section : doi mau ---------------------- */
+
+#sect0 {
+    min-height: 65vh;
+    width: 100%;
+    margin: auto;
+    /* background-image: linear-gradient(rgba(4,9,0.7),rgba(4,9,30,0.7)), 
+    url("images/banner.png"); */
+    background-image: url("images_sect0/0.png");
+    background-position: center ;
+    background-size: cover;
+    position: relative;}
+.text-box{
+    width: 90%;
+    color: #d4af37;
+    position: absolute;
+    top: 90%;
+    left: 50%;
+    transform: translate(-50%,-50%) ;
+    text-align: center;
+}
+.text-box h1{
+    font-size: 20px;
+    color: #d4af37;
+
+}
+.text-box p{
+    margin: 10px 0 40px;
+    font-size: 14px;
+    color: #d4af37;
+
+}
+.prev, .next {
+  cursor: pointer;
+  position: absolute;
+  color: white;
+  font-weight: bold;
+  font-size: 18px;
+  width:auto;
+  bottom: 0%;
+  transition: 0.6s ease;
+  border-radius: 0 5px 5px 0;
+  margin-top: -22px;
+  padding: 6px;
+  user-select: none;
+}
+.next {
+  right: 0;
+  border-radius: 5px 0 0 5px;
+}
+/* On hover, add a black background color with a little bit see-through */
+.prev:hover, .next:hover {
+  background-color: rgba(0,0,0,0.8);
+}
+/* End Hai mui ten < > toi lui */
+footer{
+    color:rgb(225, 221, 221);
+}
+
+
 header h1 {
 font-size: 2.6em;
 color: #d4af37;
@@ -51,7 +138,7 @@ color: #d4af37;
 /* Phần nội dung chính */
 main {
 max-width: 800px;
-margin: 20px auto;
+margin: 0px auto;
 padding: 20px;
 
 }
@@ -80,7 +167,7 @@ margin-top: 20px;
 }
 
 footer p, footer a {
-color: #ffffff;
+color: #d2caca;
 font-size: 0.9em;
 }
 
@@ -109,6 +196,40 @@ button[data-headphone-mau ='0']{
 button[data-headphone-mau ='1']{
     background-color: rgb(167, 165, 165);
 }
+.menu-text{
+    text-align: center;
+}
+/* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
+@media (max-width: 600px) {
+    .menu-text {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        padding: 0;
+        margin: 0;
+        overflow: hidden;}
+    .menu-text.visible {
+        visibility: visible;
+        position: absolute;
+        background: black;
+        height: 20vh;
+        width: 100%;
+        top: 64;
+        right: 0px;
+        text-align: right;
+        z-index: 2;
+        transition: 0.3s;
+        line-height: 2.4;
+        background-image:url("images/banner2.png");  
+        padding-top: 10px;}
+    .menu-text.hidden {
+        visibility: hidden;
+        width: 0;
+        height: 0;
+        padding: 0;
+        overflow: hidden;}
+}
+/* HET sect0------------------------------------------------------ */
 
 </style>
 </head>
@@ -118,65 +239,98 @@ button[data-headphone-mau ='1']{
     <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
     <a> &nbsp;<span style="color:#ddc168;font-size: 24px;">ANRE DUNG LAC CHURCH</span></a>
     <div style="float:right;">
-        <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()" style="border:none;border-radius:50% ;width:30px;height:30px;font-size:22px;">🔈</button>
-        &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt" style="background-color:transparent; border-radius:50% ;font-size: 18px;width:30px;height:30px;color:orange;">vi</button>
+        <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()">🔈</button>
+        &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button>
     </div>
         <!--<h1>Nhà Thờ Công Giáo Anrê Dũng Lạc</h1>-->
     <br>
-    <nav class="center">
-        <a href="#about">Giới Thiệu</a>
-        <a href="#services">Thánh Lễ</a>
-        <a href="#events">Sự Kiện</a>
-        <a href="#contact">Liên Hệ</a>
+    <nav class="menu-text" id="menutext">
+        <a id="menu0" href="#sect0" onclick="fchon_sec(id)">Hình Ảnh</a>
+        <a id="menu1" href="#sect1" onclick="fchon_sec(id)">Giới Thiệu</a>
+        <a id="menu2" href="#sect2" onclick="fchon_sec(id)">Thánh Lễ</a>
+        <a id="menu3" href="#sect3" onclick="fchon_sec(id)">Sự Kiện</a>
+        <a id="menu4" href="#sect4" onclick="fchon_sec(id)">Liên Hệ</a>
     </nav>
 </header>
-<!-- Nội dung chính -->
+<!-- Nội dung chính ------------------------------------------------------------------>
 <main>
-    <!-- Giới thiệu -->
-    <section id="about" class="square">
-    <h2>Giới Thiệu</h2>
-    <div >
-        <div>
-            <img src="images/banner.png">
-        </div>
-        <p>Chào mừng đến với trang web của Nhà Thờ Công Giáo Anrê Dũng Lạc.<br> 
-            Chúng tôi là cộng đồng tín hữu Công Giáo với sứ mệnh phục vụ và yêu thương. 
-            Chúng tôi luôn mong muốn mang lại những giá trị tốt đẹp và lan tỏa niềm tin 
-            vào Thiên Chúa.<br>
-            Nhà thờ là nơi hội tụ. Được khánh thành vào tháng 11 năm 2024, tọa lạc tại 1221 Latter St. Abbevill. 
-        </p>
-    </div>    
-    </section>
+<!-- Sect0 menu - buttLang ---------------------------------------------------->
+<section id="sect0" class="header">
+    <div class="text-box">
+        <h1>Nhà Thờ Công Giáo<br>Giáo Xứ Anrê Dũng Lạc</h1>
+        <h4> 1201 Lafitte Rd. Abbeville, LA 70511-1507</h4>
+    </div> 
+    <a class="prev" onclick="changeImageSect0(-1)">❮</a>
+    <a class="next" onclick="changeImageSect0(1)">❯</a>
+<hr>    
+</section><!------------------ End sect0 ------------------------------------->
+<!-- Giới thiệu -------------------------------------------------------------->
+<section id="sect1">
+<div id='sect1vi'>
+
+    <br>
+    <h2 class="title-sect" >Giới Thiệu</h2>
+    <p>
+    Chào mừng đến với trang web của Nhà Thờ Công Giáo Anrê Dũng Lạc.<br> 
+    Chúng tôi là một trong số những cộng đồng tín hữu Công giáo. Với sứ mệnh phục vụ và yêu thương, 
+    chúng tôi luôn mong muốn mang lại những giá trị tốt đẹp và lan tỏa niềm tin vào Thiên Chúa 
+    cho nhiều người.<br>
+    Nhà Thờ Công Giáo Anrê Dũng Lạc là nơi hội tụ phụng vụ ban đầu của một số tín hữu di tản đến 
+    từ Việt Nam nhưng cho đén nay nơi này đã hình thành một Giáo xứ phát triển phong phú.  
+    Sau những năm tháng mong chờ, cuối cùng Nhà Thờ đã được xây dựng xong và khánh thành vảo ngày 24-11-2024.  . 
+    </p>
+    <br>
+</div>
+<div id='sect1en'>
+</div>
+</section>
 
     <!-- Lễ và Thánh Lễ -->
-    <section id="services">
-    <h2>Lễ và Thánh Lễ</h2>
+<section id="sect2">
+    <div id='sect2vi'>
+
+    <h2 class="title-sect">Lễ và Thánh Lễ</h2>
     <p>Thánh Lễ được cử hành vào các ngày Chủ Nhật lúc 8:00 và 10:00. 
         Xin mời quý vị đến tham dự và cầu nguyện cùng cộng đoàn.
     </p>
-    </section>
+</div>
+<div id='sect2en'>
+</div>
+</section>
 
-    <!-- Sự kiện -->
-    <section id="events">
-    <h2>Sự Kiện</h2>
+<!-- Sự kiện -->
+<section id="sect3">
+    <div id='sect3vi'>
+
+    <h2 class="title-sect">Sự Kiện</h2>
     <p>Hãy tham gia các sự kiện đặc biệt của chúng tôi, bao gồm các lễ hội, 
         buổi hòa nhạc và các hoạt động từ thiện.
         1. Ngày 24-11-2024 từ 10:00 - 12:00 Khánh thành Nhà Thờ mới. Kính mời tín hữu tham dự. 
         Để biết thêm chi tiết, vui lòng liên hệ với chúng tôi.</p>
-    </section>
+</div>
+<div id='sect3en'>
+</div>
+</section>
 
-    <!-- Liên hệ -->
-    <section id="contact">
-    <h2>Liên Hệ</h2>
+<!-- Liên hệ -->
+<section id="sect4">
+    <div id='sect4vi'>
+
+    <h2 class="title-sect">Liên Hệ</h2>
     <p>Nếu bạn có bất kỳ câu hỏi hoặc muốn tham gia vào cộng đồng của chúng tôi, hãy liên hệ qua số điện thoại hoặc email bên dưới.</p>
     <button onclick="window.location.href='mailto:info@nhatho.vn'">Liên Hệ Qua Email</button>
-    </section>
+</div>
+<div id='sect4en'>
+</div>
+
+</section>
+
 </main>
 
 <!-- Footer -->
 <footer>
-    <p>&copy; 2024 Nhà Thờ Công Giáo. Mọi quyền được bảo lưu.</p>
-    <p>Địa chỉ: 123 Đường Tín Hữu, Thành phố, Quốc gia</p>
+    <p>&copy; 2024 Nhà Thờ Công Giáo Anrê Dũng Lạc. Mọi quyền được bảo lưu.</p>
+    <p>Địa chỉ: 1201 Lafitte Rd. Abbeville, LA 70511-1507, USA</p>
     <p><a href="https://www.facebook.com/nhatho" target="_blank">Facebook</a> | <a href="https://www.instagram.com/nhatho" target="_blank">Instagram</a></p>
 </footer>
 
@@ -296,22 +450,22 @@ function cloneSectXToEn(sectX){
         enDivNhan.append(viDivChonClone)
         enDivNhan.style.display = "none";
     }
-    if (sectX==='sect5'){
-        const viDivChon = document.getElementById("sect5vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect5en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect6'){
-        const viDivChon = document.getElementById("sect6vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect6en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
+    //if (sectX==='sect5'){
+    //    const viDivChon = document.getElementById("sect5vi");
+    //    const viDivChonClone = viDivChon.cloneNode(true); 
+    //    const enDivNhan = document.getElementById("sect5en");
+    //    dich_viDivChonClone_en(viDivChonClone)
+    //    enDivNhan.append(viDivChonClone)
+    //    enDivNhan.style.display = "none";
+    //}
+    //if (sectX==='sect6'){
+    //    const viDivChon = document.getElementById("sect6vi");
+    //    const viDivChonClone = viDivChon.cloneNode(true); 
+    //    const enDivNhan = document.getElementById("sect6en");
+    //    dich_viDivChonClone_en(viDivChonClone)
+    //    enDivNhan.append(viDivChonClone)
+    //    enDivNhan.style.display = "none";
+    //}
     //None enDivNhan
     //enDivNhan.style.display = "none";
 }
@@ -331,10 +485,10 @@ function nButtLang() {
         maLang='en';
         //1-buttonlang ra chu en va mau blue
         document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="lightblue";
+        document.getElementById("nButt").style.color="blue";
         //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
         if (nMenu===0){
-            for (let i=1;i<=6;i++){
+            for (let i=1;i<=4;i++){
                 //phoi bay all sect
                 //let sectx = 'sect'+i;
                 document.getElementById('sect'+i).style.display = 'block';
@@ -346,7 +500,7 @@ function nButtLang() {
                 document.getElementById("sect"+i+"vi").style.display = 'none';
             }
         }else{//neu nMenu !== 0
-            for (let i=1; i<=6;i++){
+            for (let i=1; i<=4;i++){
                 if (i===nMenu){
                     //phoi bay 1 sect
                     document.getElementById('sect'+i).style.display = 'block';
@@ -370,10 +524,10 @@ function nButtLang() {
         maLang='vi';
         //1-buttonlang ra chu vi va mau vang
         document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="orange";
+        document.getElementById("nButt").style.color="yellow";
         //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
         if (nMenu===0){
-            for (let i=1;i<=6;i++){
+            for (let i=1;i<=4;i++){
                 //phoi bay all sect
                 document.getElementById('sect'+i).style.display = 'block';
                 //phoi bay all viDiv
@@ -382,7 +536,7 @@ function nButtLang() {
                 document.getElementById("sect"+i+"en").style.display = 'none';
             }
         }else{//neu nMenu !== 0
-            for (let i=1; i<=6;i++){
+            for (let i=1; i<=4;i++){
                 if (i===nMenu){
                     //phoi bay 1 sect
                     document.getElementById('sect'+i).style.display = 'block';
@@ -419,7 +573,7 @@ function fchon_sec(id){
         //mau text cua menu0 la vang
         document.getElementById('menu0').style.color='brown';
         if (maLang==='vi'){
-            for (let i=1;i<=6;i++){
+            for (let i=1;i<=4;i++){
                 //mau text cua menu1 - 6  la trang
                 document.getElementById('menu'+i).style.color='blue';
                 //phoi bay all sect 1 to 6
@@ -430,7 +584,7 @@ function fchon_sec(id){
                 document.getElementById("sect"+i+"en").style.display = 'none';
             }
         } else {//maLang==='en'
-            for (let i=1;i<=6;i++){
+            for (let i=1;i<=4;i++){
                 //mau text cua menu1 - 6  la trang
                 document.getElementById('menu'+i).style.color='blue';
                 //phoi bay all sect 1 to 6
@@ -449,7 +603,7 @@ function fchon_sec(id){
         
 
         if (maLang==='vi'){
-            for (let i=1;i<=6;i++){
+            for (let i=1;i<=4;i++){
                 if (i===nMenu){
                     //mau text cua menu0 la trang
                     document.getElementById('menu0').style.color='blue';
@@ -472,7 +626,7 @@ function fchon_sec(id){
                 }
             }
         } else {//maLang==='en'
-            for (let i=1;i<=6;i++){
+            for (let i=1;i<=4;i++){
                 if (i===nMenu){
                     document.getElementById('menu0').style.color='white';
                     document.getElementById('menu'+i).style.color='brown';
@@ -552,7 +706,7 @@ function changeImageSect0(n) {
         //document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
         document.getElementById('sect0').style.backgroundImage = "url('" + images_sectN + im + "')";
     } else {
-        for (let j = 0; j <= 6; j++) {
+        for (let j = 0; j <= 4; j++) {
             let images_sectN="images_sect"+String(j)+"/";
             nImage = nImage + n
             mod_nImage_8 = nImage % 8; 
@@ -611,22 +765,10 @@ function readSelectedText() {
 
 
         } 
-        //else {
-        //    let mauhead = document.querySelector("button[data-headphone-mau]")
-        //    mauhead.setAttribute('data-headphone-mau','0');
-
-        //    //alert("Vui lòng bôi chọn một đoạn văn bản.");
-        //}
-    
 }
 //--------
 document.addEventListener('touchend', () => {
         readSelectedText();
-    //let selectedText = window.getSelection().toString();
-    //if (selectedText) {
-    //    let utterance = new SpeechSynthesisUtterance(selectedText);
-    //    speechSynthesis.speak(utterance);
-    //}
 });
 
 //-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
@@ -634,8 +776,8 @@ cloneSectXToEn('sect1');
 cloneSectXToEn('sect2'); 
 cloneSectXToEn('sect3'); 
 cloneSectXToEn('sect4'); 
-cloneSectXToEn('sect5'); 
-cloneSectXToEn('sect6'); 
+//cloneSectXToEn('sect5'); 
+//cloneSectXToEn('sect6'); 
 document.getElementById('menu0').style.color='brown';
 fchon_sec("menu0");
 
