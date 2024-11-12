@@ -33,6 +33,10 @@ padding: 10px;
 /*text-align: center;*/
 border-bottom: 2px solid #d4af37; /* vàng ánh kim */
 }
+#toggle-icon{
+    font-size:x-large;
+    color:gray;
+}
 #headphone{
     border:none;
     border-radius:50% ;
@@ -114,9 +118,7 @@ border-bottom: 2px solid #d4af37; /* vàng ánh kim */
   background-color: rgba(0,0,0,0.8);
 }
 /* End Hai mui ten < > toi lui */
-footer{
-    color:rgb(225, 221, 221);
-}
+
 
 
 header h1 {
@@ -157,8 +159,7 @@ font-size: 20px;
 
 /* Footer */
 footer {
-
- background-image:url("images/banner2.png");  
+background-image:url("images/banner2.png");  
 /*background-color: #2f2f2f;*/
 color: #ffffff;
 text-align: center;
@@ -182,10 +183,6 @@ height:auto;
 }
 nav a{
     color:rgb(189, 187, 187);
-}
-#toggle-icon{
-    font-size:xx-large;
-    color:gray;
 }
 .center{
     text-align: center;
@@ -212,11 +209,11 @@ button[data-headphone-mau ='1']{
         visibility: visible;
         position: absolute;
         background: black;
-        height: 20vh;
+        height: 48vh;
         width: 100%;
         top: 64;
         right: 0px;
-        text-align: right;
+        text-align: center;
         z-index: 2;
         transition: 0.3s;
         line-height: 2.4;
@@ -240,16 +237,16 @@ button[data-headphone-mau ='1']{
     <a> &nbsp;<span style="color:#ddc168;font-size: 24px;">ANRE DUNG LAC CHURCH</span></a>
     <div style="float:right;">
         <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()">🔈</button>
-        &nbsp;&nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button>
+        &nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button>
     </div>
         <!--<h1>Nhà Thờ Công Giáo Anrê Dũng Lạc</h1>-->
     <br>
     <nav class="menu-text" id="menutext">
-        <a id="menu0" href="#sect0" onclick="fchon_sec(id)">Hình Ảnh</a>
-        <a id="menu1" href="#sect1" onclick="fchon_sec(id)">Giới Thiệu</a>
-        <a id="menu2" href="#sect2" onclick="fchon_sec(id)">Thánh Lễ</a>
-        <a id="menu3" href="#sect3" onclick="fchon_sec(id)">Sự Kiện</a>
-        <a id="menu4" href="#sect4" onclick="fchon_sec(id)">Liên Hệ</a>
+        <li><a id="menu0" href="#sect0" onclick="fchon_sec(id)">Hình Ảnh</a></li>
+        <li><a id="menu1" href="#sect1" onclick="fchon_sec(id)">Giới Thiệu</a></li>
+        <li><a id="menu2" href="#sect2" onclick="fchon_sec(id)">Thánh Lễ</a></li>
+        <li><a id="menu3" href="#sect3" onclick="fchon_sec(id)">Sự Kiện</a></li>
+        <li><a id="menu4" href="#sect4" onclick="fchon_sec(id)">Liên Hệ</a></li>
     </nav>
 </header>
 <!-- Nội dung chính ------------------------------------------------------------------>
