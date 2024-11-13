@@ -329,7 +329,8 @@ button[data-headphone-mau ='1']{
         Để biết thêm chi tiết, vui lòng liên hệ với chúng tôi.
     </p>
     <!--<iframe src="pdf/pdf1.pdf" style="width:100%; height:100vh" frameborder="0"></iframe>-->
-    <canvas id="pdf-canvas" style="width:100%; height:100vh" frameborder="0"></canvas>
+    <!--<canvas id="pdf-canvas" style="width:100%; height:100vh" frameborder="0"></canvas>-->
+    <div id="pdf-container" style="width:100%; height:600px; overflow-y: scroll; border: 1px solid #ccc;"></div></div>
 
 
 </div>
@@ -824,26 +825,56 @@ function dichMenu(){
     }
 }
 //--Cho pdf--
-const url = 'pdf/pdf1.pdf';
+//const url = 'pdf/lecunghien-2411.pdf';
+
+//pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
+
+//pdfjsLib.getDocument(url).promise.then((pdf) => {
+//    pdf.getPage(2).then((page) => {
+//        const scale = 1.5; // Độ phóng đại
+//        const viewport = page.getViewport({ scale: scale });
+//        const canvas = document.getElementById('pdf-canvas');
+//        const context = canvas.getContext('2d');
+
+//        canvas.height = viewport.height;
+//        canvas.width = viewport.width;
+
+//        const renderContext = {
+//            canvasContext: context,
+//            viewport: viewport
+//        };
+//        page.render(renderContext);
+//    });
+//});
+
+const url = 'pdf/lecunghien-2411.pdf';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
 pdfjsLib.getDocument(url).promise.then((pdf) => {
-    pdf.getPage(1).then((page) => {
-        const scale = 1.5; // Độ phóng đại
-        const viewport = page.getViewport({ scale: scale });
-        const canvas = document.getElementById('pdf-canvas');
-        const context = canvas.getContext('2d');
+    const pdfContainer = document.getElementById("pdf-container");
 
-        canvas.height = viewport.height;
-        canvas.width = viewport.width;
+    for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
+        pdf.getPage(pageNum).then((page) => {
+            const scale = 1.5;
+            const viewport = page.getViewport({ scale: scale });
 
-        const renderContext = {
-            canvasContext: context,
-            viewport: viewport
-        };
-        page.render(renderContext);
-    });
+            // Tạo phần tử canvas cho mỗi trang
+            const canvas = document.createElement("canvas");
+            const context = canvas.getContext("2d");
+            canvas.height = viewport.height;
+            canvas.width = viewport.width;
+
+            // Thêm canvas vào container
+            pdfContainer.appendChild(canvas);
+
+            const renderContext = {
+                canvasContext: context,
+                viewport: viewport
+            };
+            page.render(renderContext);
+        });
+    }
 });
 
 //-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
