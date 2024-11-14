@@ -216,6 +216,8 @@ canvas{
     display:block;
     margin: 0 auto 20px auto;
     max-width: 100%;
+    border-bottom:2px solid #ccc;
+    padding-bottom:20px;
 }
 /* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
 @media (max-width: 600px) {
@@ -867,7 +869,7 @@ pdfjsLib.getDocument(url).promise.then((pdf) => {
 
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         pdf.getPage(pageNum).then((page) => {
-            const scale = 1.8;
+            const scale = 1.8;//16:9 la tot nhat tren mang
             const viewport = page.getViewport({ scale: scale });
 
             // Tạo phần tử canvas cho mỗi trang
