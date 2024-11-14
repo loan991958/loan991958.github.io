@@ -204,7 +204,19 @@ button[data-headphone-mau ='1']{
 .menu-text{
     text-align: center;
 }
+#pdf-container{
+    height: 100vh;
+    overflow-y: scroll;
+    -webkit-overflow-scrolling: touch;
+    padding: 10px;
+    box-sizing: border-box;
 
+}
+canvas{
+    display:block;
+    margin: 0 auto 20px auto;
+    max-width: 100%;
+}
 /* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
 @media (max-width: 600px) {
     .menu-text {
@@ -329,7 +341,7 @@ button[data-headphone-mau ='1']{
     </p>
     <!--<iframe src="pdf/pdf1.pdf" style="width:100%; height:100vh" frameborder="0"></iframe>-->
     <!--<canvas id="pdf-canvas" style="width:100%; height:100vh" frameborder="0"></canvas>-->
-    <div id="pdf-container" style="width:100%; height:75vh; overflow-y: scroll; border: 1px solid #ccc;"></div></div>
+    <div id="pdf-container" ></div></div>
 
 
 </div>
@@ -846,7 +858,7 @@ function dichMenu(){
 //    });
 //});
 
-const url = 'pdf/Lecunghien-2411.pdf';
+const url = 'pdf/Microsoft Word - Lecunghien1.pdf';
 
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
 
