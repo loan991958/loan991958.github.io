@@ -216,8 +216,8 @@ canvas{
     display:block;
     margin: 0 auto 20px auto;
     max-width: 100%;
-    border-bottom:2px solid #ccc;
-    padding-bottom:20px;
+    /*border-bottom:2px solid #ccc;bo cai nay de cho js lam, de tranh trang cuoi cung co ke thi khong dep*/
+    padding-bottom:20px; 
 }
 /* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
 @media (max-width: 600px) {
@@ -888,6 +888,14 @@ pdfjsLib.getDocument(url).promise.then((pdf) => {
             // Thêm canvas vào container
             pdfContainer.appendChild(canvas);
 
+            //them gach ngang giua cac trang nhung trang ccung khong them
+            if (pageNum < pdf.numPages){
+                const hr = document.createElement("hr");
+                hr.style.border = "1px solid #ccc";
+                hr.style.margin = "20px 0";
+                pdfContainer.appendChild(hr);
+            }
+
             const renderContext = {
                 canvasContext: context,
                 viewport: viewport
@@ -899,7 +907,8 @@ pdfjsLib.getDocument(url).promise.then((pdf) => {
 </script>
 
 <script type="module">//-----rut text tu pdf de doc nghe ----
-//tai CDN ve
+//tai hai dong nay global de phuc vu ham extractText ben duoi
+//ham nay se duoc goi khi nhap nut docNghePdf
     import * as pdfjsLib from 'https://mozilla.github.io/pdf.js/build/pdf.mjs';
 
     pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -938,7 +947,8 @@ function extractText(pdfUrl) {
         });
     });
 }
-//--------------------
+//---ham nay lam viec khi nhap nut button docnghepdf, no se goi ham extractText o tren
+//de ham extractText rut text ra tu pdf roi doc bang giong viet hoac anh tuy maLang dat truoc khi goi ham 
 function docNghePdf(){
     const urlpdf ='pdf/pdf1.pdf';
     //const urlpdf ='pdf/pdf1.pdf';
@@ -948,8 +958,10 @@ function docNghePdf(){
             if (maLang==='vi'){
                 speakViEn(text,'vi-VN');
             }else{
-                let txttien = text;
-                dichViToEn_pdf(txttien,textdich);
+                //let txttien = text;
+                //dichViToEn_pdf(txttien,textdich);xoa do khong the dich
+                speakViEn(text,'en-US');
+
             }
         },
         function (reason) {
