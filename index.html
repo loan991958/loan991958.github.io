@@ -347,7 +347,7 @@ canvas{
     <br>
     <button onclick="docNghePdf()" > 📚🎧Read pdf </button>
     <br>
-    <div id="pdf-container" ></div></div>
+    <div id="pdf-container" ></div>
     
 
 </div>
@@ -864,33 +864,13 @@ function dichMenu(){
         document.getElementById('menu4').innerText = obj.dong[4].en;
     }
 }
-//--Cho pdf--
-//const url = 'pdf/lecunghien-2411.pdf';
-
-//pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
-//pdfjsLib.getDocument(url).promise.then((pdf) => {
-//    pdf.getPage(2).then((page) => {
-//        const scale = 1.5; // Độ phóng đại
-//        const viewport = page.getViewport({ scale: scale });
-//        const canvas = document.getElementById('pdf-canvas');
-//        const context = canvas.getContext('2d');
-
-//        canvas.height = viewport.height;
-//        canvas.width = viewport.width;
-
-//        const renderContext = {
-//            canvasContext: context,
-//            viewport: viewport
-//        };
-//        page.render(renderContext);
-//    });
-//});
-
-const url = 'pdf/Lecunghien-2411.pdf';
-
+//--Cho pdf----------------------------
+// Sau khi dat tai html cai nay <div id="pdf-container" ></div>
+// now : tai tep pdf len de tao thanh image canvas cho thich hop
+const url = 'pdf/pdf1.pdf';
+//CDN lam viec phai tai ve
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-
+//tao cac canvas tu moi trang pdf
 pdfjsLib.getDocument(url).promise.then((pdf) => {
     const pdfContainer = document.getElementById("pdf-container");
 
@@ -919,6 +899,7 @@ pdfjsLib.getDocument(url).promise.then((pdf) => {
 </script>
 
 <script type="module">//-----rut text tu pdf de doc nghe ----
+//tai CDN ve
     import * as pdfjsLib from 'https://mozilla.github.io/pdf.js/build/pdf.mjs';
 
     pdfjsLib.GlobalWorkerOptions.workerSrc =
@@ -926,7 +907,7 @@ pdfjsLib.getDocument(url).promise.then((pdf) => {
 </script>
 
 <script>
-
+//-------ham rut text tu voi thong so pdfUrl cua pdf khi goi ham
 function extractText(pdfUrl) {
     var pdf = pdfjsLib.getDocument(pdfUrl);
     return pdf.promise.then(function (pdf) {
@@ -957,7 +938,7 @@ function extractText(pdfUrl) {
         });
     });
 }
-//------
+//--------------------
 function docNghePdf(){
     const urlpdf ='pdf/pdf1.pdf';
     //const urlpdf ='pdf/pdf1.pdf';
