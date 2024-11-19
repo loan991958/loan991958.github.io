@@ -7,7 +7,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <!--tai cai sau fuc vu cho hthi pdf cua firefox lam-->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.min.js"></script>
-<title>Nhà Thờ Công Giáo</title>
+<title>ST. ANDREW DUNG-LAC CHURCH</title>
 <style>
 /* Reset mặc định */
 * {
@@ -18,7 +18,7 @@ box-sizing: border-box;
 
 body {
 font-family: 'Times New Roman', serif;
-/*background-color: #f9f9f9;*/
+background-color: #f9f9f9;
 
 color: #2f2f2f;
 }
@@ -204,7 +204,8 @@ button[data-headphone-mau ='1']{
 .menu-text{
     text-align: center;
 }
-#pdf-container{
+
+#pdf-container-vi,#pdf-container-en {
     height: 100vh;
     overflow-y: scroll;
     -webkit-overflow-scrolling: touch;
@@ -212,13 +213,23 @@ button[data-headphone-mau ='1']{
     box-sizing: border-box;
 
 }
+
 canvas{
     display:block;
     margin: 0 auto 20px auto;
     max-width: 100%;
-    /*border-bottom:2px solid #ccc;bo cai nay de cho js lam, de tranh trang cuoi cung co ke thi khong dep*/
     padding-bottom:20px; 
+    /*border-bottom:2px solid #ccc; bo cai nay de cho js lam, de tranh trang cuoi cung co ke thi khong dep*/
 }
+#chua-textruttu-pdf-vi{
+    display: none;
+}    
+#chua-text-dich-ra-en{
+    display: none;
+
+}
+
+
 /* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
 @media (max-width: 600px) {
     .menu-text {
@@ -256,7 +267,8 @@ canvas{
 <!-- Header -->
 <header class="sticky">
     <i id="toggle-icon" class="fa fa-bars menu-icon"></i>
-    <a> &nbsp;<span style="color:#ddc168;font-size: 20px;">ANRE DUNG LAC CHURCH</span></a>
+    <a> &nbsp;<span style="color:#ddc168;font-size: 16
+    px;">ST. ANDREW DUNG-LAC CATHOLIC CHURCH</span></a>
     <div style="float:right;">
         <button data-headphone-mau ='0' id="headphone" onclick="readSelectedText()">🔈</button>
         &nbsp;&nbsp;<button class="buttlang" onclick="nButtLang();" id="nButt">vi</button>
@@ -278,8 +290,8 @@ canvas{
 <!-- Sect0 menu - buttLang ---------------------------------------------------->
 <section id="sect0" class="header">
     <div class="text-box">
-        <h1>Nhà Thờ Công Giáo<br>Giáo Xứ Anrê Dũng Lạc</h1>
-        <h4> 1201 Lafitte Rd. Abbeville, LA 70511-1507</h4>
+        <h1>ST. ANDREW DŨNG-LẠC<br>CATHOLIC CHURCH</h1>
+        <h4> 1201 Lafitte Rd. Abbeville, Louisana 70510</h4>
     </div> 
     <a class="prev" onclick="changeImageSect0(-1)">❮</a>
     <a class="next" onclick="changeImageSect0(1)">❯</a>
@@ -294,13 +306,20 @@ canvas{
     <h1 style="font-size:xx-large;text-align: center;">⛪</h1>
     <br>
     <p>
-    Chào mừng qúy vị đến với trang web của Nhà Thờ Công Giáo Anrê Dũng Lạc.<br> 
-    Chúng tôi là một trong số những cộng đồng tín hữu Công giáo tại Hoa Kỳ. Với sứ mệnh 
-    phục vụ và yêu thương, chúng tôi luôn mong muốn mang lại những giá trị tốt đẹp và 
-    lan tỏa niềm tin vào Thiên Chúa cho nhiều người.<br>
-    Nhà Thờ Công Giáo Anrê Dũng Lạc là nơi hội tụ phụng vụ ban đầu của một số tín hữu di tản đến 
-    từ Việt Nam nhưng cho đén nay nơi này đã hình thành một Giáo xứ phát triển phong phú.  
-    Sau những năm tháng mong chờ, cuối cùng Nhà Thờ đã được xây dựng xong và khánh thành vảo ngày 24-11-2024.  . 
+        <span style="color:blue;">Chào mừng</span> đến với blog chia sẻ thông tin về <span style="color:red;">Nhà Thờ Công Giáo Thánh Andrew Dũng Lạc</span>.<br> 
+    Chúng tôi là một nhóm tín hữu thuộc Giáo Xứ Thánh Andrew Dũng-Lạc. Với sứ mệnh 
+    phục vụ và yêu thương, trong khi chờ đợi Giáo xứ có trang web chính thức, chúng tôi 
+    làm blog này để chia sẻ một số thông tin về mục vụ và phụng vụ cho cộng đồng với 
+    mong muốn mang lại những giá trị tốt đẹp và lan tỏa niềm tin vào <span style="color:red;">Thiên Chúa</span> cho 
+    nhiều người.<br>
+    Hình ảnh trên đây là Nhà Thờ Công Giáo Thánh Andrew Dũng-Lạc, là nơi hội tụ 
+    phụng vụ của Cộng đồng Giáo xứ Thánh Andrew Dũng-Lạc. Ban đầu Giáo xứ này chỉ gồm một số tín hữu 
+    di tản đến từ Việt Nam, nhưng cho đén nay nơi này đã hình thành một Giáo xứ phát triển 
+    phong phú.<br>  
+    Sau những năm tháng mong chờ, Nhà Thờ đã được xây dựng xong 
+    tại <span style="color:blue;">1201 Lafitte Rd. Abbeville, Louisana 70510</span> và khánh thành vảo ngày 
+    24-11-2024.<br>
+
     </p>
 
     <br>
@@ -318,7 +337,9 @@ canvas{
     <h2 class="title-sect">Lễ và Thánh Lễ</h2>
     <h1 style="font-size:xx-large;text-align: center;">🙏</h1>    
     <br>
-    <p>Thánh Lễ được cử hành vào các ngày Chủ Nhật lúc 8:00 và 10:00. 
+    <p>Thánh Lễ được cử hành vào các ngày trong tuần:<br>
+        - <b><span style="color:blue;">Chủ Nhật:</span> 11:30 am.</b><br> 
+        - <b><span style="color:red">Thứ Sáu:</span> 6:00 pm.</b><br>
         Xin mời quý vị đến tham dự và cầu nguyện cùng cộng đoàn.
     </p>
 </div>
@@ -338,20 +359,22 @@ canvas{
     <br>
         
     <p>Hãy tham gia các sự kiện đặc biệt của chúng tôi, bao gồm các lễ hội, 
-        buổi hòa nhạc và các hoạt động từ thiện.
-        1. Ngày 24-11-2024 từ 10:00 - 12:00 Khánh thành Nhà Thờ mới. Kính mời tín hữu tham dự. 
-        Để biết thêm chi tiết, vui lòng liên hệ với chúng tôi.
+        buổi hòa nhạc và các hoạt động từ thiện.<br>
+        <span style="color:blue;">Ngày 24-11-2024 từ 10:00 - 12:00 Khánh thành Nhà Thờ mới.</span> Kính mời các tín hữu tham dự.<br>
+        Nhà Thờ mang tên Thánh Andrew Dũng-Lạc. Một người Việt Nam chịu tử vì đạo ở Thế kỷ 18.:<br>
+        Dưới đây là lịch sử Thánh Andrew Dũng-Lạc: <br>
     </p>
     <!--<iframe src="pdf/pdf1.pdf" style="width:100%; height:100vh" frameborder="0"></iframe>-->
     <!--<canvas id="pdf-canvas" style="width:100%; height:100vh" frameborder="0"></canvas>-->
     <br>
     <button onclick="docNghePdf()" > 📚🎧Read pdf </button>
     <br>
-    <div id="pdf-container" ></div>
+    <div id='pdf-container'></div>
     
 
 </div>
 <div id='sect3en'>
+
 </div>
 <hr>
 <br>
@@ -396,6 +419,7 @@ const languagebrowse = document.getElementById('languagebrowse');
 let isMenuOpen = false;
 var idsectht, idsectht2;
 var textdich = '';
+var elemChuaTextTuPdf;
 
 //--2- Quan trong Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
 //--Khi click vao 3 gach o goc trai se dieu khien menu nho--
@@ -441,7 +465,7 @@ function dichViToEn(textCanDich,ptnode){
     xhttp.send();
 }
 //---
-function dichViToEn_pdf(textCanDich,textdich){
+function dichViToEn_pdf(textCanDich, ptchua){
     const inputText = textCanDich;
     let sourceLanguage = 'vi';
     let targetLanguage = 'en';
@@ -454,7 +478,8 @@ function dichViToEn_pdf(textCanDich,textdich){
             const responseReturned = JSON.parse(this.responseText);
             const translations = responseReturned[0].map((text) => text[0]);
             const outputText = translations.join(" ");
-            speakViEn(outputText,'en-US');
+            console.log(outputText);
+            ptchua.innerText= ' '+outputText;
         }
     };
     //---------------------
@@ -476,11 +501,12 @@ function dich_viDivChonClone_en(content){
         if (node.nodeType === Node.TEXT_NODE) {
             if (node.nodeValue.trim() !== ''){
                 dichViToEn(node.nodeValue,node);
-                //da dem dich vao nodeValue
+                //da dem dich vao nodeValue  
             }else{
                 node.nodeValue=' ';      
             }    
         } else if (node.nodeType === Node.ELEMENT_NODE) {
+            //console.log('Tien xem:',node.id);
             console.log(' ');
         }
     });
@@ -492,48 +518,48 @@ function cloneSectXToEn(sectX){
         const viDivChon = document.getElementById("sect1vi");
         const viDivChonClone = viDivChon.cloneNode(true); 
         const enDivNhan = document.getElementById("sect1en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
+        dich_viDivChonClone_en(viDivChonClone);
+        enDivNhan.append(viDivChonClone);
         enDivNhan.style.display = "none";
     }
     if (sectX==='sect2'){
         const viDivChon = document.getElementById("sect2vi");
         const viDivChonClone = viDivChon.cloneNode(true); 
         const enDivNhan = document.getElementById("sect2en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
+        dich_viDivChonClone_en(viDivChonClone);
+        enDivNhan.append(viDivChonClone);
         enDivNhan.style.display = "none";
     }
     if (sectX==='sect3'){
         const viDivChon = document.getElementById("sect3vi");
         const viDivChonClone = viDivChon.cloneNode(true); 
         const enDivNhan = document.getElementById("sect3en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
+        dich_viDivChonClone_en(viDivChonClone);
+        enDivNhan.append(viDivChonClone);
         enDivNhan.style.display = "none";
     }
     if (sectX==='sect4'){
         const viDivChon = document.getElementById("sect4vi");
         const viDivChonClone = viDivChon.cloneNode(true); 
         const enDivNhan = document.getElementById("sect4en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
+        dich_viDivChonClone_en(viDivChonClone);
+        enDivNhan.append(viDivChonClone);
         enDivNhan.style.display = "none";
     }
     //if (sectX==='sect5'){
     //    const viDivChon = document.getElementById("sect5vi");
     //    const viDivChonClone = viDivChon.cloneNode(true); 
     //    const enDivNhan = document.getElementById("sect5en");
-    //    dich_viDivChonClone_en(viDivChonClone)
-    //    enDivNhan.append(viDivChonClone)
+    //    dich_viDivChonClone_en(viDivChonClone);
+    //    enDivNhan.append(viDivChonClone);
     //    enDivNhan.style.display = "none";
     //}
     //if (sectX==='sect6'){
     //    const viDivChon = document.getElementById("sect6vi");
     //    const viDivChonClone = viDivChon.cloneNode(true); 
     //    const enDivNhan = document.getElementById("sect6en");
-    //    dich_viDivChonClone_en(viDivChonClone)
-    //    enDivNhan.append(viDivChonClone)
+    //    dich_viDivChonClone_en(viDivChonClone);
+    //    enDivNhan.append(viDivChonClone);
     //    enDivNhan.style.display = "none";
     //}
     //None enDivNhan
@@ -570,6 +596,7 @@ function nButtLang() {
                 //let idsectvi="#sect"+i+"vi";
                 document.getElementById("sect"+i+"vi").style.display = 'none';
             }
+
         }else{//neu nMenu !== 0
             for (let i=1; i<=4;i++){
                 if (i===nMenu){
@@ -589,7 +616,7 @@ function nButtLang() {
 
                 }
             }
-        }    
+        }
     } else {
         //thay doi mau en/vi
         maLang='vi';
@@ -867,27 +894,25 @@ function dichMenu(){
 //--Cho pdf----------------------------
 // Sau khi dat tai html cai nay <div id="pdf-container" ></div>
 // now : tai tep pdf len de tao thanh image canvas cho thich hop
-const url = 'pdf/pdf1.pdf';
+//const url = 'pdf/pdf1.pdf';
 //CDN lam viec phai tai ve
 pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.4.120/pdf.worker.min.js';
-//tao cac canvas tu moi trang pdf
-pdfjsLib.getDocument(url).promise.then((pdf) => {
-    const pdfContainer = document.getElementById("pdf-container");
 
+function taoCanvasPdf(urlpdf,idpdfcontainer){
+//tao cac canvas tu moi trang pdf
+pdfjsLib.getDocument(urlpdf).promise.then((pdf) => {
+    const pdfContainer = document.getElementById(idpdfcontainer);
     for (let pageNum = 1; pageNum <= pdf.numPages; pageNum++) {
         pdf.getPage(pageNum).then((page) => {
             const scale = 1.8;//16:9 la tot nhat tren mang
             const viewport = page.getViewport({ scale: scale });
-
             // Tạo phần tử canvas cho mỗi trang
             const canvas = document.createElement("canvas");
             const context = canvas.getContext("2d");
             canvas.height = viewport.height;
             canvas.width = viewport.width;
-
             // Thêm canvas vào container
             pdfContainer.appendChild(canvas);
-
             //them gach ngang giua cac trang nhung trang ccung khong them
             if (pageNum < pdf.numPages){
                 const hr = document.createElement("hr");
@@ -904,6 +929,10 @@ pdfjsLib.getDocument(url).promise.then((pdf) => {
         });
     }
 });
+}
+taoCanvasPdf('pdf/lsthanhdunglac.pdf','pdf-container');
+//----pdfen
+
 </script>
 
 <script type="module">//-----rut text tu pdf de doc nghe ----
@@ -936,48 +965,74 @@ function extractText(pdfUrl) {
                             .map(function (s) {
                                 return s.str;
                             })
-                            .join('');
+                            .join(' ');
                     });
                 }),
             );
         }
 
         return Promise.all(countPromises).then(function (texts) {
-            return texts.join('');
+            return texts.join(' ');
         });
     });
 }
 //---ham nay lam viec khi nhap nut button docnghepdf, no se goi ham extractText o tren
 //de ham extractText rut text ra tu pdf roi doc bang giong viet hoac anh tuy maLang dat truoc khi goi ham 
 function docNghePdf(){
-    const urlpdf ='pdf/pdf1.pdf';
-    //const urlpdf ='pdf/pdf1.pdf';
-	extractText(urlpdf).then(
-        function (text) {
-            console.log('parse ' + text);
-            if (maLang==='vi'){
-                speakViEn(text,'vi-VN');
-            }else{
-                //let txttien = text;
-                //dichViToEn_pdf(txttien,textdich);xoa do khong the dich
-                speakViEn(text,'en-US');
+    if (maLang==='vi'){
+        let text = document.getElementById("chua-textruttu-pdf-vi").innerText;
+        speakViEn(text,'vi-VN');
+    }else{
+        let text = document.getElementById("chua-text-dich-ra-en").innerText;
+        speakViEn(text,'en-US');
 
-            }
+    }
+}
+//--HET rut text tu pdf de doc nghe ----
+function addElement() {
+    //them pt chua text rut ra tu pdf vi roi dua text rut vao do
+    const newDiv1 = document.createElement("div");
+    newDiv1.id = 'chua-textruttu-pdf-vi';
+    document.getElementById("sect3vi").append(newDiv1);
+
+    elemChuaTextTuPdf=newDiv1;
+
+    const urlpdf ='pdf/lsthanhdunglac.pdf';
+    extractText(urlpdf).then(
+        function (text) {
+            elemChuaTextTuPdf.innerText=text;
+            //console.log(elemChuaTextTuPdf.innerText);
+            //them pt chua canvas pdf trong sect3en roi tao canvas dem vao do  
+            const newDiv2 = document.createElement("div");
+            newDiv2.id = 'pdf-container-en';
+            document.getElementById("sect3en").append(newDiv2);
+            taoCanvasPdf('pdf/lsthanhdunglac.pdf','pdf-container-en');
+
+            //them pt chua text rut ra tu pdf vi roi dua text rut vao do
+            const newDiv3 = document.createElement("div");
+            newDiv3.id = 'chua-text-dich-ra-en';
+            document.getElementById("sect3en").append(newDiv3);
+            const textCanDich =  elemChuaTextTuPdf.innerText;
+            console.log(textCanDich);   
+            dichViToEn_pdf(textCanDich, newDiv3);
+
+
         },
         function (reason) {
             console.error(reason);
         },
     );
-
 }
-//--HET rut text tu pdf de doc nghe ----
+//--
 </script>
+
 
     
 <script>
 //---Doc nghe PDF---
 
 //-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
+
 cloneSectXToEn('sect1'); 
 cloneSectXToEn('sect2'); 
 cloneSectXToEn('sect3'); 
@@ -988,6 +1043,15 @@ fchon_sec("menu0");
 dichMenu();
 document.getElementById('menu0').style.color='orange';
 
+//them element div vao cuoi div sect3 va dat id cua no la pdf-container-en
+//vi khong the nhan ban pdf-container ma khong sua id
+addElement();
+//tao canvas pdf trong pdf-container-en
+//taoCanvasPdf('pdf/lsthanhdunglac1.pdf','pdf-container-en');
+//them div chua text rut ra tu pdf vi
+
+//themDivChuaTextRutTuPdf();
+//dichTextViRaEnVaChua();
 
 </script>
 
