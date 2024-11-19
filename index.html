@@ -184,12 +184,12 @@ font-size: 0.9em;
 footer a:hover {
 color: #d4af37;
 }
-img {
+/*img {
 float: right;
 margin: 0px;
 width:200px;
 height:auto;
-}
+}*/
 nav a{
     color:rgb(189, 187, 187);
 }
@@ -229,7 +229,55 @@ canvas{
     display: none;
 
 }
+.center{
+    text-align: center;
+}
+.row{
+    margin-top: 5%;
+    display: flex;
+    justify-content: space-between;
+}
+.giomucvu-col{
+    flex-basis: 26%;
+    background: #fff3f3;
+    border-radius: 10px;
+    margin-bottom: 5%;
+    padding: 10px 10px;
+    box-sizing: border-box;
+    transition: 0.5s;
+}
 
+.anh-tc{
+    width:50px;
+    height:50px;
+    border-radius: 50%;
+}
+table:nth-of-type(1) {
+        font-family: arial, sans-serif;
+        border: none;
+        text-align: center;
+        color: brown;
+        width: 100%;
+}
+table:nth-of-type(2) {
+        text-align: left;
+        color: green;
+        width: 100%;
+}
+table:nth-of-type(2) td {
+    text-align: right;
+
+}
+table:nth-of-type(3) {
+        text-align: left;
+        color: blue;
+        width: 100%;
+}
+table:nth-of-type(3) td {
+    text-align: right;
+
+}
+      
 
 /* Ẩn menu văn bản khi kích thước màn hình nhỏ hơn 600px cho sec1*/
 @media (max-width: 600px) {
@@ -387,9 +435,66 @@ canvas{
     <h2 class="title-sect">Liên Hệ </h2>
     <h1 style="font-size:xx-large;text-align: center;">📧</h1>   
     <br> 
-    <p>Nếu bạn có bất kỳ câu hỏi hoặc muốn tham gia vào cộng đồng của chúng tôi, hãy liên hệ qua số điện thoại hoặc email bên dưới.</p>
-    <button onclick="window.location.href='mailto:info@nhatho.vn'">Liên Hệ Qua Email</button>
-</div>
+    <p>Nếu bạn có bất kỳ câu hỏi hoặc muốn tham gia vào cộng đồng của chúng tôi, 
+        xin liên lạc qua điện thoại hoặc email với Giáo xứ qua số : <br>
+        <h4 class="center" ><b></bo>337-740-4649<br></h4>
+        <h4 class="center" >P.O Box 715<br></h4>
+        <h4 class="center" >Abbeville, Louisana 70511<br></b></h4>
+    </p>
+    <h4 class="center" ><buttononclick="window.location.href='mailto:tiensg89@gmail.com';">Email: yyyy@gmail.com</button></h4>
+    <br><br><br>
+    <h3 class='center'>HỘI ĐỒNG MỤC VỤ GIÁO XỨ THÁNH ANDREW DŨNG LẠC</h3>
+    <br>
+    <table>
+        <tr><th >Linh mục Chánh xứ</th><th>&nbsp;&nbsp;&nbsp;&nbsp;</th><th>Chủ tịch Gíao xứ</th></tr>
+        <tr><td>⭐⭐⭐⭐⭐</td><td></td><td>⭐⭐⭐⭐</td></tr>
+        <tr><td><img class='anh-tc' src="images/cha-adl.png"></td><td></td><td><img class='anh-tc' src="images/hau-adl.png"></td></tr>
+        <tr><td>James Bẩm Nguyễn</td><td></td><td>Đoàn Đức Hậu</td></tr>
+        <tr><td>Email: xxxx@gmail.com</td><td></td><td>Email: zzzz@gmail.com</td></tr>
+    </table>
+    <br>
+
+    <h3 class="center">Và các vị :</h3>
+    <br>
+    <table>
+        <tr><th ><hr></th><td><hr></td></tr>
+        <tr><th >Phó Chủ Tịch Nội Vụ :</th><td>Nguyễn Công Bình</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+        <tr><th >Phó Chủ Tịch Ngoại Vụ :</th><td>Nguyễn Tuân Anh</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+        <tr><th >Thư Ký Giáo Xứ :</th><td>Nguyễn Elisabeth Nga</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+        <tr><th >Thủ Quỹ :</th><td>Bùi Thị Ninh</td></tr>
+        <tr><th ></th><td>Bùi Kim Loan</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+    </table>
+    <br><br>
+    <h3 class="center">Và các vị khác :</h3>
+    <br>
+    <table>
+        <tr><th ><hr></th><td><hr></td></tr>
+        <tr><th >Thầy Phó Tế :</th><td>Trần M. Tam</td></tr>
+        <tr><th ></th><td>Nguyễn M. Cường</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+        
+        <tr><th >Trustee :</th><td>Trần Văn Vinh</td></tr>
+        <tr><th ></th><td>Ngô Nguyên Đạm</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+
+        <tr><th >Book keeping Giáo Xứ :</th><td>Bùi Thanh Thu</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+        <tr><th >Thư Ký Hội Đồng Mục Vụ :</th><td>Doàn Văn Quang</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+        <tr><th >Ban Tài Chánh :</th><td>Bùi Văn Nuôi</td></tr>
+        <tr><th ></th><td>Nguyễn Văn Tâm</td></tr>
+        <tr><th ></th><td>Nguyễn Bá Tàu</td></tr>
+        <tr><th ><hr></th><td><hr></td></tr>
+
+    </table>
+
+    <br>
+
+
 <div id='sect4en'>
 </div>
 
