@@ -1,435 +1,252 @@
-//-- Cho sect0--------------------------------------------------------
-//--1-Cac bien global----------------
-var nSect=0;
-var nMenu=0;
-var nImage=8; // so nay 8 mod 8 bang 0 ung anh goc 0.png la nha tho
-var nLang=0;
-var maLang='vi';
-const toggleIcon = document.getElementById('toggle-icon');
-const menuText = document.getElementById('menutext');
-const languagebrowse = document.getElementById('languagebrowse');
-let isMenuOpen = false;
-var idsectht, idsectht2;
+let listUrlYt = [
+"",    
+"https://youtu.be/Xj8Amv0Z52w?si=N7RCH2QWFryI2os8",
+"https://youtu.be/lfEy2xMmv0Y?si=XbVE7st0EsCahPaM",
+"https://youtu.be/ltKWFehkvVU?si=89YOlYywQw9GyVQR",
+"https://youtu.be/Zb6isCtPnEI?si=W0m_A7Sa0VAuSucR",
+"https://youtu.be/dDCfehYsrgk?si=O5SJta58aaOnuDAd",
+"https://youtu.be/vr9iQtbb6I8?si=p-fNncDUKp14lPks",
+"https://youtu.be/TLDAAk_lpyY?si=krQJdz1dXYS_9N4e",
+"https://youtu.be/C2amKJcCSFU?si=b8B0EWEdQradSZol",
+"https://youtu.be/qO8aWZ-sfTI?si=iBV4_3PcBGGovCaw",
+"https://youtu.be/K2O-8dSTmGM?si=DSEkSzg8Vio_t_Zn",
+"https://youtu.be/GOa65ir00m8?si=ah7EGu_S8p087sqR",
 
-//--2- Quan trong Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
-//--Khi click vao 3 gach o goc trai se dieu khien menu nho--
-toggleIcon.addEventListener('click', function () {
-    alert('TEST');
-    // Chỉ điều khiển việc ẩn/hiện menu-text khi ở chế độ mobile (media query)
-    if (window.innerWidth <= 600) {
-        if (isMenuOpen) {
-            menuText.classList.remove('visible');
-            menuText.classList.add('hidden');
-            toggleIcon.classList.remove('fa-times');
-            toggleIcon.classList.add('fa-bars');
-        } else {
-            menuText.classList.remove('hidden');
-            menuText.classList.add('visible');
-            toggleIcon.classList.remove('fa-bars');
-            toggleIcon.classList.add('fa-times');
-        }
-        isMenuOpen = !isMenuOpen;
-    }
-});//-------------------------------------------------------------
+"https://youtu.be/rvavpRuzHfY?si=VohF584qqKUy_ne1",
+"https://youtu.be/BlM-Syj6bP0?si=UhE7LKIaHNc-40TW",
+"https://youtu.be/Bjc6UI5YgDQ?si=6KhZraOa93lWanfm",
+"https://youtu.be/G1pQ1E7pYHw?si=b-zpv5KozlH5aGTy",
+"https://youtu.be/hA8HdVq3fNc?si=98-EBJpRaBXn8-TR",
+"https://youtu.be/djNclWnIvHw?si=08hIcMU1BZsrdttO",
+"https://youtu.be/vXrLxdliCiw?si=lPEqPhCWWwI5YVJ6",
+"https://youtu.be/pxLEhCufVPc?si=Ori4PlnwWzs9tkr8",
+"https://youtu.be/VMhPHWI7yvQ?si=D3QWpX99GXjAjP57",
+"https://youtu.be/hUJDSGI64pQ?si=mzckx8TcJGojLc9z",
+"https://youtu.be/iPKQCpZJTvw?si=Mk8CK9HxMjzwDtFj",
+"https://youtu.be/58geqDklMLU?si=wtFIcM-7tqgoR6cN",
+"https://youtu.be/XUIOdZj5Ni4?si=KD9ukiYJBvD8hXiT",
+"https://youtu.be/CXYoUA37Xas?si=KqE_YPkoDSiJJ_ir",
 
-//--3-Ham nay duoc goi boi ham ben duoi-----------------------------------
-function dichViToEn(textCanDich,ptnode){
-    const inputText = textCanDich;
-    let sourceLanguage = 'vi';
-    let targetLanguage = 'en';
+"https://youtu.be/mreFzGaKLpY?si=0karBzNpkwubwRQP",
+"https://youtu.be/85GZKHYwJ1A?si=_UpY-sO_4rfupXa_",
+"https://youtu.be/M6XIzsOTdQQ?si=2kf64eY8gAdPKiC9",
+"https://youtu.be/kNZKCk6WPEo?si=XXlL5v0w5mHE-Mhd",
+"https://youtu.be/grllLeqd8pw?si=N60TGISSZdJ1c382",
+"https://youtu.be/CPGoFenijc4?si=I3vVxgdAmO4-JJwD",
+"https://youtu.be/jfztr4grDuw?si=t2jBTEEuXZUsZAwo",
+"https://youtu.be/VjnxaTriZM0?si=RMjUuAR6oFXa-T-Z",
+"https://youtu.be/6wXRxUa4wyU?si=3QcGJoxFaWIWlNUD",
+"https://youtu.be/f-Qx2UhtSEY?si=SbttDKOM9gTfZsGq",
+"https://youtu.be/DqHu21-GwBc?si=SqirGuYUBUg6wJi8",
+"https://youtu.be/YYoa2yVGymM?si=ZmIOIAhR6bafwsjm",
+"https://youtu.be/ObNoRKjfYxo?si=S9Sne-ajXasgyIMa",
+"https://youtu.be/ULo3ZCbK474?si=pWcOqBFC9Cb2Ssdp",
+"https://youtu.be/Dme7NDF-Big?si=m5cKbxaiVugUmX4C",
+"https://youtu.be/T_P6kqCQjb0?si=G1G6Obd6QorKwRL5",
+"https://youtu.be/Lpn3vGsN4bc?si=JGLLXsCdLAsPbbrn",
+"https://youtu.be/Sr9HGGU0AP4?si=wdmoj1K6Bzpc6OmD",
+"https://youtu.be/PpBNHLJ_Bdc?si=R-KD5hLNq6ALvkZc",
+"https://youtu.be/wWUTbBJnSrw?si=Q8WOHPxGwbkzsdzW",
+"https://youtu.be/6DCcF5iq9eY?si=35nznnFCrwkvOnSF",
+"https://youtu.be/MqT42QVxPV0?si=9UTJSjIzJBE4tuLP",
+"https://youtu.be/Qnj8j4Y1CIk?si=NFwDeW_nhLI9CVpG",
+"https://youtu.be/M7NHT21Udfo?si=_7eDTYcDjH9tMirK",
 
-    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+"https://youtu.be/vG7bD1V1vYM?si=vcWo1GmILTMLhW25",
+"https://youtu.be/PBpCh6ZOOYA?si=wQEyNTFB5cxqxmO3",
+"https://youtu.be/jOHp6EqEJz0?si=Z3VZUCHMqHc59myV",
+"https://youtu.be/gXk71msBMgo?si=T2oq74NbA-AHYXjt",
+"https://youtu.be/ff3VrHmFirs?si=40PXpqNt78n3X1M_",
+"https://youtu.be/ZKb2zpoEKbg?si=T0wArJBDozwTqJDX",
+"https://youtu.be/CXWlHOjTMBM?si=GwMBw6c1rr4-yktH",
+"https://youtu.be/nz0VIbZUpPI?si=fWQDq8XH5EpaByuC",
+"https://youtu.be/2p6LN506wN0?si=foRYxUz35nc9xHsl",
+"https://youtu.be/94p8nPfEdu0?si=-1SsBYSTYU_6HkEy",
+"https://youtu.be/HPUu7Eu5bdo?si=7nLdefi_sZPFMrC_",
+"https://youtu.be/B_Fh21CwXi0?si=JNYK5_8r3HMz9_gW",
+"https://youtu.be/pjdRa8-4QCE?si=MpW76qkWuTvo2adm",
+"https://youtu.be/Mt8LcfwkfDc?si=Fxe8Hn4aS0f__HBR",
+"https://youtu.be/ZqqsH2jSxEo?si=MAOorfabrMt7JadW",
+"https://youtu.be/l92O_ie7T7o?si=3mnsM6_P7cAZ0NIx",
+"https://youtu.be/1PpuwIWJ_AU?si=Ds44pSmard2VNuAA",
+"https://youtu.be/BN1g_G_ATGc?si=0xclFCyknbaje-Bl",
+"https://youtu.be/W3vY8AB4YxQ?si=gvvU7Xk5sY_eD6Gu",
+"https://youtu.be/mkWhUuveuCo?si=B0GVbfyqlj9lPzQ-",
+"https://youtu.be/PjNfRrbSu-E?si=lniJIkM4ARXVradL",
+"https://youtu.be/toEv7eDDxPE?si=3hoJGt0Qzb_XvIzo",
+"https://youtu.be/NkJjcGoum-U?si=qlkjRDzGXgEAi41E",
+"https://youtu.be/qaFcCN23JiQ?si=VyTTQXB3NgXRC3dO"];
 
-    const xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function () {
-        if (this.readyState == 4 && this.status == 200){
-            const responseReturned = JSON.parse(this.responseText);
-            const translations = responseReturned[0].map((text) => text[0]);
-            const outputText = translations.join(" ");
-            ptnode.nodeValue = ' '+outputText;
-            //console.log(ptnode.nodeValue);
-        }
-    };
-    //---------------------
-    xhttp.open("GET", url);
-    xhttp.send();
-}
-//---4- Ham de quy nhan ban cac node con cua moi node----------------------------------
-function traverseNodes(node, callback) {
-    // Gọi callback cho node hiện tại (có thể là phần tử hoặc văn bản)
-    callback(node);
-    // Duyệt qua tất cả các node con
-    node.childNodes.forEach(child => traverseNodes(child, callback));
-}
-//--5-----------------------------------
-function dich_viDivChonClone_en(content){
-    //const content = document.querySelector("[data-vi='sect1']");
-    traverseNodes(content, node => {
-        if (node.nodeType === Node.TEXT_NODE) {
-            if (node.nodeValue.trim() !== ''){
-                dichViToEn(node.nodeValue,node);
-                //da dem dich vao nodeValue
-            }else{
-                node.nodeValue=' ';      
-            }    
-        } else if (node.nodeType === Node.ELEMENT_NODE) {
-            console.log(' ');
-        }
-    });
- }    
-
-//--6--Khi goi ham nay (ngay luc dau) thi no se nhan ban viDiv vao enDiv tuong ung roi dich ra En---
-function cloneSectXToEn(sectX){
-    if (sectX==='sect1'){
-        const viDivChon = document.getElementById("sect1vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect1en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect2'){
-        const viDivChon = document.getElementById("sect2vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect2en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect3'){
-        const viDivChon = document.getElementById("sect3vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect3en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect4'){
-        const viDivChon = document.getElementById("sect4vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect4en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect5'){
-        const viDivChon = document.getElementById("sect5vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect5en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    if (sectX==='sect6'){
-        const viDivChon = document.getElementById("sect6vi");
-        const viDivChonClone = viDivChon.cloneNode(true); 
-        const enDivNhan = document.getElementById("sect6en");
-        dich_viDivChonClone_en(viDivChonClone)
-        enDivNhan.append(viDivChonClone)
-        enDivNhan.style.display = "none";
-    }
-    //None enDivNhan
-    //enDivNhan.style.display = "none";
-}
-//--7-Ham nay thuc thi khi click vao nut nBuuton------------------------------
-function nButtLang() { 
-    //0-TAT OFF am speaker neu dang noi moi lan thay doi Lang
-    const synth = window.speechSynthesis;
-    if (synth.speaking) {
-        synth.cancel(); // Dừng văn bản hiện tại
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','0');
-    }
-
-    nLang=nLang+1;
-
-    if (nLang%2===1){
-        maLang='en';
-        //1-buttonlang ra chu en va mau blue
-        document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="blue";
-        //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
-        if (nMenu===0){
-            for (let i=1;i<=6;i++){
-                //phoi bay all sect
-                //let sectx = 'sect'+i;
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all enDiv
-                //let idsecten="#sect"+i+"en";
-                document.getElementById("sect"+i+"en").style.display = 'block';
-                //che all viDiv
-                //let idsectvi="#sect"+i+"vi";
-                document.getElementById("sect"+i+"vi").style.display = 'none';
-            }
-        }else{//neu nMenu !== 0
-            for (let i=1; i<=6;i++){
-                if (i===nMenu){
-                    //phoi bay 1 sect
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay 1 enDiv
-                    document.getElementById("sect"+i+"en").style.display = 'block';
-                    //che 1 viDiv
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-                }else{
-                    //che cac sect con lai
-                    document.getElementById('sect'+i).style.display = 'none';
-                    //che cac enDiv con lai
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                    //che cac viDiv con lai
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-
-                }
-            }
-        }    
-    } else {
-        //thay doi mau en/vi
-        maLang='vi';
-        //1-buttonlang ra chu vi va mau vang
-        document.getElementById("nButt").innerHTML=maLang;
-        document.getElementById("nButt").style.color="brown";
-        //2-Neu chon Toan trang thi phoi bay all sect va phoi bay all enDiv va che all viDiv
-        if (nMenu===0){
-            for (let i=1;i<=6;i++){
-                //phoi bay all sect
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all viDiv
-                document.getElementById("sect"+i+"vi").style.display = 'block';
-                //che all viDiv
-                document.getElementById("sect"+i+"en").style.display = 'none';
-            }
-        }else{//neu nMenu !== 0
-            for (let i=1; i<=6;i++){
-                if (i===nMenu){
-                    //phoi bay 1 sect
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay 1 viDiv
-                    document.getElementById("sect"+i+"vi").style.display = 'block';
-                    //che 1 enDiv
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                }else{
-                    //che cac sect con lai
-                    document.getElementById('sect'+i).style.display = 'none';
-                    //che cac enDiv con lai
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                    //che cac viDiv con lai
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-
-                }
-            }
-        }    
-    }
-}
-//--8- Ham chon de muc Menu ----------------------------------------------------
-function fchon_sec(id){ 
-    maLang=document.getElementById('nButt').innerText;
-    console.log(id,maLang);
-    //lay ki tu cuoi lam chuong so global
-    let nsectstr = id.replace("menu", ""); 
-    nSect=parseInt(nsectstr);
-    nMenu = nSect;
-    if (nMenu===0){
-        //Doi ten class title-sect thanh title-sect-xanhdam 
-        let a = document.getElementsByClassName( "title-sect" );
-        [...a].forEach( x => x.className += " title-sect-xanh" );
-        [...a].forEach( x => x.classList.remove("title-sect") );
-        //mau text cua menu0 la vang
-        document.getElementById('menu0').style.color='brown';
-        if (maLang==='vi'){
-            for (let i=1;i<=6;i++){
-                //mau text cua menu1 - 6  la trang
-                document.getElementById('menu'+i).style.color='blue';
-                //phoi bay all sect 1 to 6
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all enDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"vi").style.display = 'block';
-                //che all viDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"en").style.display = 'none';
-            }
-        } else {//maLang==='en'
-            for (let i=1;i<=6;i++){
-                //mau text cua menu1 - 6  la trang
-                document.getElementById('menu'+i).style.color='blue';
-                //phoi bay all sect 1 to 6
-                document.getElementById('sect'+i).style.display = 'block';
-                //phoi bay all enDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"en").style.display = 'block';
-                //che all viDiv trong cac sect 1 to 6
-                document.getElementById("sect"+i+"vi").style.display = 'none';
-            }
-        }
-    }else{//nMenu !== 0
-        //Doi ten class title-sect thanh title-sect-xanh
-        let a = document.getElementsByClassName( "title-sect-xanh" );
-        [...a].forEach( x => x.className += " title-sect" );
-        [...a].forEach( x => x.classList.remove("title-sect-xanh") );
-        
-
-        if (maLang==='vi'){
-            for (let i=1;i<=6;i++){
-                if (i===nMenu){
-                    //mau text cua menu0 la trang
-                    document.getElementById('menu0').style.color='blue';
-                    //mau text cua menuChon la vang
-                    document.getElementById('menu'+i).style.color='brown';
-                    //phoi bay 1 sect chon
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay 1 viDiv cua 1 sect chon
-                    document.getElementById("sect"+i+"vi").style.display = 'block';
-                    //che all enDiv cua cac sect ko chon 
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                }else{//i !== nMenu
-                    //mau text cua menu0 la trang
-                    document.getElementById('menu0').style.color='blue';
-                    document.getElementById('menu'+i).style.color='blue';
-                    document.getElementById('sect'+i).style.display = 'none';
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-
-                }
-            }
-        } else {//maLang==='en'
-            for (let i=1;i<=6;i++){
-                if (i===nMenu){
-                    document.getElementById('menu0').style.color='white';
-                    document.getElementById('menu'+i).style.color='brown';
-                    //phoi bay all sect
-                    document.getElementById('sect'+i).style.display = 'block';
-                    //phoi bay all enDiv
-                    document.getElementById("sect"+i+"en").style.display = 'block';
-                    //che all viDiv
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-                }else{
-                    document.getElementById('menu0').style.color='white';
-                    document.getElementById('menu'+i).style.color='white';
-                    document.getElementById('sect'+i).style.display = 'none';
-                    document.getElementById("sect"+i+"en").style.display = 'none';
-                    document.getElementById("sect"+i+"vi").style.display = 'none';
-
-                }
-            }
-        }
+let list_id = ["", 
+    'Xj8Amv0Z52w', 'lfEy2xMmv0Y', 'ltKWFehkvVU', 'Zb6isCtPnEI', 'dDCfehYsrgk', 'vr9iQtbb6I8', 
+    'TLDAAk_lpyY', 'C2amKJcCSFU', 'qO8aWZ-sfTI', 'K2O-8dSTmGM', 'GOa65ir00m8', 'BlM-Syj6bP0',
+    'Bjc6UI5YgDQ', 'G1pQ1E7pYHw', 'hA8HdVq3fNc', 'djNclWnIvHw', 'vXrLxdliCiw', 'pxLEhCufVPc', 
+    'VMhPHWI7yvQ', 'hUJDSGI64pQ', 'iPKQCpZJTvw', '58geqDklMLU', 'XUIOdZj5Ni4', 'CXYoUA37Xas', 
+    'mreFzGaKLpY', '85GZKHYwJ1A', 'M6XIzsOTdQQ', 'kNZKCk6WPEo', 'grllLeqd8pw', 'CPGoFenijc4', 
+    'jfztr4grDuw', 'VjnxaTriZM0', '6wXRxUa4wyU', 'f-Qx2UhtSEY', 'DqHu21-GwBc', 'YYoa2yVGymM', 
+    'ObNoRKjfYxo', 'ULo3ZCbK474', 'Dme7NDF-Big', 'T_P6kqCQjb0', 'Lpn3vGsN4bc', 'Sr9HGGU0AP4', 
+    'PpBNHLJ_Bdc', 'wWUTbBJnSrw', '6DCcF5iq9eY', 'MqT42QVxPV0', 'Qnj8j4Y1CIk', 'M7NHT21Udfo', 
+    'vG7bD1V1vYM', 'PBpCh6ZOOYA', 'jOHp6EqEJz0', 'gXk71msBMgo', 'ff3VrHmFirs', 'ZKb2zpoEKbg', 
+    'CXWlHOjTMBM', 'nz0VIbZUpPI', '2p6LN506wN0', '94p8nPfEdu0', 'HPUu7Eu5bdo', 'B_Fh21CwXi0', 
+    'pjdRa8-4QCE', 'Mt8LcfwkfDc', 'ZqqsH2jSxEo', 'l92O_ie7T7o', '1PpuwIWJ_AU', 'BN1g_G_ATGc', 
+    'W3vY8AB4YxQ', 'mkWhUuveuCo', 'PjNfRrbSu-E', 'toEv7eDDxPE', 'NkJjcGoum-U', 'qaFcCN23JiQ'];
 
 
+let listMenuSelect = [
+    'Basic Unit 1 : Introductions and Names', 
+    'Basic Unit 2 : Describing people', 
+    'Basic Unit 3 : Clothes', 
+    'Basic Unit 4 : Routines', 
+    'Basic Unit 5 : Dates', 
+    'Basic Unit 6 : Jobs', 
+    'Basic Unit 7 : Favorites', 
+    'Basic Unit 8 : Sports and Excercise', 
+    'Basic Unit 9 : Locations', 
+    'Basic Unit 10 : The family', 
+    'Basic Unit 11 : Entertainment', 
+    'Basic Unit 12 : Prices', 
+    'Basic Unit 13 : Restaurants', 
+    'Basic Unit 14 : Small Talk', 
+    'Basic Unit 15 : Vacations', 
+    'Basic Unit 16 : Apartment Living', 
+    'Basic Unit 17 : Hopes and Plans', 
+    'Basic Unit 18 : The Weather', 
+    'Basic Unit 19 : Shopping', 
+    'Basic Unit 20 : Describing Things', 
+    'Basic Unit 21 : Direction', 
+    'Basic Unit 22 : People We Know', 
+    'Basic Unit 23 : Places', 
+    'Basic Unit 24 : Health', 
+    'Developing Unit 1 : The Weekend', 
+    'Developing Unit 2 : City Transportation', 
+    'Developing Unit 3 : Neighbors', 
+    'Developing Unit 4 : Celebrations', 
+    'Developing Unit 5 : Restaurants', 
+    'Developing Unit 6 : Gifts', 
+    'Developing Unit 7 : Air Travel', 
+    'Developing Unit 8 : Mishaps', 
+    'Developing Unit 9 : Jobs', 
+    'Developing Unit 10 : Keeping Fit', 
+    'Developing Unit 11 : Invitations', 
+    'Developing Unit 12 : Campus Life', 
+    'Developing Unit 13 : Hobbies & Pastimes', 
+    'Developing Unit 14 : Shopping Problems', 
+    'Developing Unit 15 : Hotel Services', 
+    'Developing Unit 16 : Movies', 
+    'Developing Unit 17 : Fears', 
+    'Developing Unit 18 : Phone Messages', 
+    'Developing Unit 19 : Touring a City', 
+    'Developing Unit 20 : Airports', 
+    'Developing Unit 21 : Hotels', 
+    'Developing Unit 22 : Traffic', 
+    'Developing Unit 23 : Roommates', 
+    'Developing Unit 24 : Travel', 
+    'Expanding Unit 1 : Small Talk', 
+    'Expanding Unit 2 : Plans', 
+    'Expanding Unit 3 : Successful Businesses', 
+    'Expanding Unit 4 : Apologies and Excuses', 
+    'Expanding Unit 5 : Character Traits', 
+    'Expanding Unit 6 : Travel', 
+    'Expanding Unit 7 : Housing', 
+    'Expanding Unit 8 : Can you believe it', 
+    'Expanding Unit 9 : Friendship', 
+    'Expanding Unit 10 : Television', 
+    'Expanding Unit 11 : Cities', 
+    'Expanding Unit 12 : Urban Life', 
+    'Expanding Unit 13 : Special Days', 
+    'Expanding Unit 14 : Fashion', 
+    'Expanding Unit 15 : Favorites', 
+    'Expanding Unit 16 : Phone Message', 
+    'Expanding Unit 17 : Past Events', 
+    'Expanding Unit 18 : Vacations', 
+    'Expanding Unit 19 : The News', 
+    'Expanding Unit 20 : Opinions', 
+    'Expanding Unit 21 : Famous People', 
+    'Expanding Unit 22 : Food and Nutrition', 
+    'Expanding Unit 23 : Predicaments', 
+    'Expanding Unit 24 : Global Issues'];
+
+let elmts = ['Basic Unit 1 : Introductions and Names', 
+'Basic Unit 2 : Describing people', 
+'Basic Unit 3 : Clothes', 
+'Basic Unit 4 : Routines', 
+'Basic Unit 5 : Dates', 
+'Basic Unit 6 : Jobs', 
+'Basic Unit 7 : Favorites', 
+'Basic Unit 8 : Sports and Excercise', 
+'Basic Unit 9 : Locations', 
+'Basic Unit 10 : The family', 
+'Basic Unit 11 : Entertainment', 
+'Basic Unit 12 : Prices', 
+'Basic Unit 13 : Restaurants', 
+'Basic Unit 14 : Small Talk', 
+'Basic Unit 15 : Vacations', 
+'Basic Unit 16 : Apartment Living', 
+'Basic Unit 17 : Hopes and Plans', 
+'Basic Unit 18 : The Weather', 
+'Basic Unit 19 : Shopping', 
+'Basic Unit 20 : Describing Things', 
+'Basic Unit 21 : Direction', 
+'Basic Unit 22 : People We Know', 
+'Basic Unit 23 : Places', 
+'Basic Unit 24 : Health', 
+'Developing Unit 1 : The Weekend', 
+'Developing Unit 2 : City Transportation', 
+'Developing Unit 3 : Neighbors', 
+'Developing Unit 4 : Celebrations', 
+'Developing Unit 5 : Restaurants', 
+'Developing Unit 6 : Gifts', 
+'Developing Unit 7 : Air Travel', 
+'Developing Unit 8 : Mishaps', 
+'Developing Unit 9 : Jobs', 
+'Developing Unit 10 : Keeping Fit', 
+'Developing Unit 11 : Invitations', 
+'Developing Unit 12 : Campus Life', 
+'Developing Unit 13 : Hobbies & Pastimes', 
+'Developing Unit 14 : Shopping Problems', 
+'Developing Unit 15 : Hotel Services', 
+'Developing Unit 16 : Movies', 
+'Developing Unit 17 : Fears', 
+'Developing Unit 18 : Phone Messages', 
+'Developing Unit 19 : Touring a City', 
+'Developing Unit 20 : Airports', 
+'Developing Unit 21 : Hotels', 
+'Developing Unit 22 : Traffic', 
+'Developing Unit 23 : Roommates', 
+'Developing Unit 24 : Travel', 
+'Expanding Unit 1 : Small Talk', 
+'Expanding Unit 2 : Plans', 
+'Expanding Unit 3 : Successful Businesses', 
+'Expanding Unit 4 : Apologies and Excuses', 
+'Expanding Unit 5 : Character Traits', 
+'Expanding Unit 6 : Travel', 
+'Expanding Unit 7 : Housing', 
+'Expanding Unit 8 : Can you believe it', 
+'Expanding Unit 9 : Friendship', 
+'Expanding Unit 10 : Television', 
+'Expanding Unit 11 : Cities', 
+'Expanding Unit 12 : Urban Life', 
+'Expanding Unit 13 : Special Days', 
+'Expanding Unit 14 : Fashion', 
+'Expanding Unit 15 : Favorites', 
+'Expanding Unit 16 : Phone Message', 
+'Expanding Unit 17 : Past Events', 
+'Expanding Unit 18 : Vacations', 
+'Expanding Unit 19 : The News', 
+'Expanding Unit 20 : Opinions', 
+'Expanding Unit 21 : Famous People', 
+'Expanding Unit 22 : Food and Nutrition', 
+'Expanding Unit 23 : Predicaments', 
+'Expanding Unit 24 : Global Issues'];
+
+// Main function
+function GFG_Fun() {
+    for (let i = 0; i < elmts.length; i++) {
+        let optn = elmts[i];
+        let el = document.createElement("option");
+        el.textContent = optn;
+        el.value = optn;
+        selectb.appendChild(el);
     }
 }
-//--9- Ham doc tieng Anh ỏ Viet theo giọng doc da cai trong may, co the khac nhau hoac chua cai-🎧
-function speakViEn(text,malang){
-    const message = new SpeechSynthesisUtterance(text);
-    message.lang = malang;
-    const voices = speechSynthesis
-                    .getVoices()
-                    .filter(voice => {
-                        voice.lang = malang;});
-    message.voice = voices[0];
-    speechSynthesis.speak(message);
-}
-
-//-10- ---------------------------
-function speakerViEnSectX(maLang, sectX){
-    //alert(sectX.slice(-1));
-    if (maLang === 'vi'){
-        let maLangNoi = 'vi-VN';
-        const content = document.getElementById(sectX+'vi');
-        let textvi='';
-        traverseNodes(content, node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                if (node.nodeValue.trim() !== ''){
-                    textvi += node.nodeValue.trim()+' ';
-                }
-            }
-        });
-        textvi = textvi.replace(/🎧/g,'');
-        speakViEn(textvi,maLangNoi);   
-    }
-    if (maLang === 'en'){
-        let maLangNoi = 'en-US';
-
-        const content = document.getElementById(sectX+'en');
-        let texten='';
-        traverseNodes(content, node => {
-            if (node.nodeType === Node.TEXT_NODE) {
-                if (node.nodeValue.trim() !== ''){
-                    texten += node.nodeValue.trim()+' ';
-                    //da dem dich vao nodeValue
-                }
-            }
-        });
-        texten = texten.replace(/🎧/g,'');
-        speakViEn(texten,maLangNoi);   
-    }
-}
-//--Xem hinh anh khi click < hoac > ---------------
-function changeImageSect0(n) { 
-    if (nSect !== 0){
-        let images_sectN="images_sect"+String(nSect)+"/";
-        nImage = nImage + n
-        mod_nImage_8 = nImage % 8; 
-        let im = String(mod_nImage_8)+'.png';
-        //document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
-        document.getElementById('sect0').style.backgroundImage = "url('" + images_sectN + im + "')";
-    } else {
-        for (let j = 0; j <= 6; j++) {
-            let images_sectN="images_sect"+String(j)+"/";
-            nImage = nImage + n
-            mod_nImage_8 = nImage % 8; 
-            let im = String(mod_nImage_8)+'.png';
-            //document.getElementById('sect0').style.backgroundImage = "url('images_sect0/" + im + "')";
-            document.getElementById('sect0').style.backgroundImage = "url('" + images_sectN + im + "')";
-    
-        }
-    }    
-}
-//---------
-function readSelectedText() {
-    // Lấy đoạn văn bản đã chọn
-    const selectedText = window.getSelection().toString();
-
-    // Kiểm tra xem người dùng có chọn văn bản nào không
-    if (selectedText) {
-        // Tạo một đối tượng SpeechSynthesisUtterance để đọc văn bản
-        const speech = new SpeechSynthesisUtterance(selectedText);
-
-        // Chọn ngôn ngữ (ví dụ: tiếng Việt)
-        if (document.getElementById('nButt').innerText==='vi'){
-            speech.lang = 'vi-VN';
-        }else{
-            speech.lang = 'en-US';
-        }
-
-        speech.onend = function(){
-            let mauhead = document.querySelector("button[data-headphone-mau]")
-            mauhead.setAttribute('data-headphone-mau','0');
-
-        }
-        // Đọc văn bản
-        window.speechSynthesis.speak(speech);
-
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','1');
-
-        if (! window.speechSynthesis.speaking) {
-            window.speechSynthesis.cancel(); // Dừng văn bản hiện tại
-            mauhead.setAttribute('data-headphone-mau','0');
-
-        }
-
-
-
-    } else {
-        let mauhead = document.querySelector("button[data-headphone-mau]")
-        mauhead.setAttribute('data-headphone-mau','0');
-
-        //alert("Vui lòng bôi chọn một đoạn văn bản.");
-    }
-}
-
-
-//-- can dat cuoi tep 6 lenh thuc thu ham cloneSectXToEn() voi doi so la cac sectx 
-cloneSectXToEn('sect1'); 
-cloneSectXToEn('sect2'); 
-cloneSectXToEn('sect3'); 
-cloneSectXToEn('sect4'); 
-cloneSectXToEn('sect5'); 
-cloneSectXToEn('sect6'); 
-document.getElementById('menu0').style.color='brown';
-fchon_sec("menu0");
+GFG_Fun();
