@@ -21,7 +21,7 @@ body{
     height: 100%;}
 .unit_chons{text-align: center;}  
 h2{text-align: center; color: green;}  
-.about{height:50px;width:50px;border-radius: 50%;border:none;color:aliceblue;background: darkgrey;margin-left: 45%;}
+.about{text-align:center;height:50px;width:50px;border-radius: 50%;border:none;color:darkgreen ;background: darkgray;margin-left: 45%;}
 </style>    
 </head>
 <body>
@@ -53,7 +53,7 @@ h2{text-align: center; color: green;}
         EXPANDING Tactics For Listening 3-nd Edition PDF</a>
     </button>
     <br><br><br><br><br>
-    <button class="about">About</button>
+    <button class="about" onclick="aboutapp()">About</button>
 
     <script>//Ma duoi day bat buoc phai dat o html, neu dat trong tep js ben ngoai (hoc_en_tactics) se khong chay
         let id = "Xj8Amv0Z52w";
@@ -66,7 +66,14 @@ h2{text-align: center; color: green;}
             //alert(videoIDcurrent); src embed co dang do yt quy dinh : "https://youtube.com/embed/"+id_yt
             document.getElementById("iframe_yt").src="https://youtube.com/embed/" + videoIDcurrent;
         }
-
+        //----------
+        function aboutapp(){
+            var dong1 = "- Bộ sách 'Tactics for lístening' của Jack C. Richards do Đại học Oxford phát hành lần thứ 3 được rất nhiêu người dùng.\n";
+            var dong2 = "- tiensg89@gmail.com tìm thấy trên mạng nên góp nhặt tải về và lập trang web này để thuận tiện sử dụng và giúp người khác trong việc tự học nghe tiếng Anh.\n";
+            var dong3 = "- Nó có 3 cuốn, mỗi cuốn có 24 unit kèm theo audio để nghe. Sách có dạng 'pdf flip' rất hay.\n";
+            var dong4 = "- Cách sử dụng để học là do người dùng tự khám phá và hoạch định. Bộ tài liệu nảy rất tuyệt.";
+            alert(dong1+dong2+dong3+dong4);
+        }
     </script>
 <script src="index.js"></script>
 
