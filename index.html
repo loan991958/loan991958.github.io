@@ -80,7 +80,7 @@ h3{text-align: center; color: green;}
           <tr> 
             <td class="alignL"><button id="start-btn">User<img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
             <td id="output"></td>
-            <td class="alignR"><button id="stop-btn" disabled ><img id="answer_img" src="icons/bot.jpg" alt="Answer" onclick="speakTextRe()">Gpt</button></td>
+            <td class="alignR"><button id="stop-btn" disabled><img id="answer_img" src="icons/bot.jpg" alt="Answer">Gpt</button></td>
           </tr> 
           <tr> 
             <td>...</td>
@@ -93,6 +93,7 @@ h3{text-align: center; color: green;}
     <br><br>
     <button class="about" onclick="aboutapp()">About</button>
     <!-- ------------------------------------------------ -->
+    
 
     <script>//Ma duoi day bat buoc phai dat o html, neu dat trong tep js ben ngoai (hoc_en_tactics) se khong chay
         let id = "Xj8Amv0Z52w";
@@ -119,9 +120,8 @@ h3{text-align: center; color: green;}
 const startBtn = document.getElementById('start-btn');
 const stopBtn = document.getElementById('stop-btn');
 const output = document.getElementById('output');
-const outputgpt = document.getElementById('outputgpt');
+
 let recognition;
-let text='';
 
 if ('webkitSpeechRecognition' in window) {
   recognition = new webkitSpeechRecognition(); // For Chrome
@@ -172,19 +172,13 @@ if (recognition) {
 </script>    
 
 <script>
-function speakTextRe() {
-  text = outputgpt.textContent;
-  //alert(text);
-  let utterance = new SpeechSynthesisUtterance(text);
-  utterance.lang = 'en-US';
-  speechSynthesis.speak(utterance);
-}
 
 //  <input type="text" id="userInput" placeholder="Nhập tin nhắn của bạn...">
 //<button onclick="sendMessage()">Gửi</button>
 
 //const apiKey = "YOUR_OPENAI_API_KEY"; // Thay bằng API Key của bạn
-const apiKey = "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"; 
+const apiKey = "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"; // Thay bằng API Key của bạn
+
 async function sendMessage(transcript) {
   let userInput = transcript;
   //alert(userInput);
@@ -224,7 +218,7 @@ async function sendMessage(transcript) {
 
 </script>
 
-<script src="chatgpt.js"></script>
+<script src="index.js"></script>
 
 </body>
 </html>
