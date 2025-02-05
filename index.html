@@ -2,8 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Let's learn English with Tactics For Listening</title>
+
 <style>
 body{
     background:lightgray;
@@ -22,9 +22,31 @@ body{
 .unit_chons{text-align: center;}  
 h2{text-align: center; color: green;}  
 .about{text-align:center;height:50px;width:50px;border-radius: 50%;border:none;color:white ;background: darkgray;margin-left: 45%;}
+h3{text-align: center; color: green;}  
+.wrapper {
+    display: grid;
+    gap: 4px;
+    width: 100%;
+    max-width: calc(100vw - 0px);
+    padding: 0x;
+    font-size: 16px;
+    border-radius: 0px;
+    background-color: darkgreen;
+}
+.alignL { text-align: left; color:lightgreen;}
+.alignC { text-align: center; color:pink;}
+.alignR { text-align: right; color:orange;}
+#output{color: whitesmoke;}
+#outputgpt{color: yellow;}
+#start-btn{width:84px; height: 84px; border-radius: 50%;background-color: whitesmoke;}
+#stop-btn{width:84px; height: 84px; border-radius: 50%;background-color: whitesmoke;}
+
+
+
 </style>    
 </head>
 <body>
+
     <h2>Let's learn English with "Tactics for Listening"</h2>
     <div class="unit_chons">
     <select id="unit_chon" onchange="chonUnit()">
@@ -35,7 +57,7 @@ h2{text-align: center; color: green;}
     <div class="video-wrapper">
         <iframe id="iframe_yt" src="" >
         </iframe>
-    </div><br><br>
+    </div><br>
     
     <button style="background-color:Gold;text-align:left;width:75%;">
         <a href="https://online.flipbuilder.com/sdtta/fpva/mobile/index.html">
@@ -51,8 +73,26 @@ h2{text-align: center; color: green;}
         <a href="https://online.flipbuilder.com/sdtta/vlyh/">
         EXPANDING Tactics For Listening 3-nd Edition PDF</a>
     </button>
-    <br><br><br><br><br>
+    <br><br>
+    <h3>Let's practice to talk in English with GPT</h3>
+    <button class="wrapper" >
+        <table >
+          <tr> 
+            <td class="alignL"><button id="start-btn">User<img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
+            <td id="output"></td>
+            <td class="alignR"><button id="stop-btn" disabled ><img id="answer_img" src="icons/bot.jpg" alt="Answer" onclick="speakTextRe()">Gpt</button></td>
+          </tr> 
+          <tr> 
+            <td>...</td>
+            <td id="outputgpt"></td>
+            <td>...</td>
+          </tr> 
+
+        </table>
+    </button>
+    <br><br>
     <button class="about" onclick="aboutapp()">About</button>
+    <!-- ------------------------------------------------ -->
 
     <script>//Ma duoi day bat buoc phai dat o html, neu dat trong tep js ben ngoai (hoc_en_tactics) se khong chay
         let id = "Xj8Amv0Z52w";
@@ -74,7 +114,117 @@ h2{text-align: center; color: green;}
             alert(dong1+dong2+dong3+dong4);
         }
     </script>
-<script src="index.js"></script>
+<script>
+//chatGPT
+const startBtn = document.getElementById('start-btn');
+const stopBtn = document.getElementById('stop-btn');
+const output = document.getElementById('output');
+const outputgpt = document.getElementById('outputgpt');
+let recognition;
+let text='';
+
+if ('webkitSpeechRecognition' in window) {
+  recognition = new webkitSpeechRecognition(); // For Chrome
+} else if ('SpeechRecognition' in window) {
+  recognition = new SpeechRecognition(); // Other browsers
+} else {
+  alert("Your browser does not support Speech Recognition.");
+}
+
+if (recognition) {
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.lang = "en-US";
+
+  recognition.onstart = () => {
+    //output.textContent = "Listening...";
+    output.textContent = "";
+    outputgpt.textContent = "";
+    startBtn.disabled = true;
+    stopBtn.disabled = false;
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    output.textContent = "📝 " + transcript;
+    sendMessage(transcript);
+  };
+
+  recognition.onerror = (event) => {
+    console.error("Speech recognition error:", event.error);
+    output.textContent = "❌ Error: " + event.error;
+  };
+
+  recognition.onend = () => {
+    startBtn.disabled = false;
+    stopBtn.disabled = true;
+  };
+
+  startBtn.addEventListener('click', () => {
+    recognition.start();
+  });
+
+  stopBtn.addEventListener('click', () => {
+    recognition.stop();
+  });
+}
+
+</script>    
+
+<script>
+function speakTextRe() {
+  text = outputgpt.textContent;
+  //alert(text);
+  let utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  speechSynthesis.speak(utterance);
+}
+
+//  <input type="text" id="userInput" placeholder="Nhập tin nhắn của bạn...">
+//<button onclick="sendMessage()">Gửi</button>
+
+//const apiKey = "YOUR_OPENAI_API_KEY"; // Thay bằng API Key của bạn
+const apiKey = "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"; 
+async function sendMessage(transcript) {
+  let userInput = transcript;
+  //alert(userInput);
+  if (!userInput) return;
+
+  //let chatbox = document.getElementById("chatbox");
+  //chatbox.innerHTML += `<p><strong>Bạn:</strong> ${userInput}</p>`;
+
+  // Gửi tin nhắn đến OpenAI API
+  let response = await fetch("https://api.openai.com/v1/chat/completions", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Authorization": `Bearer ${apiKey}`
+    },
+    body: JSON.stringify({
+      model: "gpt-4o-mini",
+      messages: [{ role: "user", content: userInput }]
+    })
+  });
+
+  let data = await response.json();
+  let reply = data.choices[0].message.content;
+  outputgpt.textContent = reply;
+  
+  function speakText(text) {
+    let utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    speechSynthesis.speak(utterance);
+  }
+  speakText(reply);
+
+  //chatbox.innerHTML += `<p><strong>ChatGPT:</strong> ${reply}</p>`;
+  //document.getElementById("userInput").value = "";
+  //chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+</script>
+
+<script src="chatgpt.js"></script>
 
 </body>
 </html>
