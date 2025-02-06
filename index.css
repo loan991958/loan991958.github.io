@@ -9,35 +9,53 @@
 
 body {
     display: grid;
-    background-image: linear-gradient(45deg, #4158d0, #c850c0, #ffcc70);
+background-image: linear-gradient(-45deg, #f4d03f, #16a085); 
 
     background-attachment: fixed;
     background-size: cover;
     justify-content: center;
     align-items: center;
     margin: 0;
-    padding: 10px;
+    padding: 2px;
     color: #fff;
     font: 1rem/1 'Poppins', sans-serif;
 }
 .wrapper {
     display: grid;
-    gap: 4px;
+    gap: 2px;
     width: 600px;
     max-width: calc(100vw - 0px);
-    padding: 20x;
+    padding: 2x;
     font-size: 16px;
     border-radius: 0px;
     background-color: #0003;
 }
 #wrapper-text {
     display: grid;
-    gap: 4px;
+    gap: 2px;
     width: 600px;
     max-width: calc(100vw - 0px);
-    padding: 14px;
+    padding: 2px;
     background-color: #0003}
-#sophie {
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;}
+.video-wrapper iframe {
+    position: absolute;
+    top:0;
+    left: 0;
+    width: 100%;
+    height: 100%;}
+.unit_chons{text-align: center;}  
+h2{text-align: center; color: green;}  
+.about{text-align:center;height:50px;width:50px;border-radius: 50%;border:none;color:white ;background: darkgray;margin-left: 45%;}
+h3{text-align: center; color: green;}  
+
+
+    #sophie {
     display: grid;
     justify-content: center;
     }
@@ -51,9 +69,9 @@ body {
     display: grid;
     grid-template-columns: max-content minmax(0, auto) 40px;
     gap: 10px;
-    padding:20px 40px 10px 40px;
+    padding:10px 10px 10px 10px;
     background-color: #0003;
-    font-size: 16px;
+    font-size: 14px;
     border-radius: 0px;
     color: lightgreen;
     }
@@ -84,7 +102,7 @@ body {
 
 .buttons4 {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     gap: 10px;
     margin-top: 10px;
@@ -136,12 +154,7 @@ textarea {
 .f-grid {display: flex;justify-content: space-between;margin-left:-0.5rem;flex-flow: row wrap;}
 .f-grid-coll {flex: 4 4;background-color:none; margin-left: 0.5rem;margin-bottom: 1rem;padding: 1rem;font-size: 14pt;}
 .f-grid-colr {flex: 4 4;color:yellow;background-color: none; margin-left: 0.5rem;margin-bottom: 1rem;padding: 1rem;font-size: 14pt;}
-
-.f-gridn {display: flex;justify-content: space-between;margin-left:0rem;flex-flow: row wrap;}
-.youtube-marker-l {text-align:left; flex: 4 4;background-color:none; margin-left: 0.5rem;margin-bottom: 0.2rem;padding: 0.2rem;font-size: 12pt;}
-.youtube-marker-r {text-align:left;flex: 4 4;color:yellow;background-color: none; margin-left: 0.5rem;margin-bottom: 0.2rem;padding: 0.2rem;font-size: 12pt;}
-
-#info{color:pink;margin-left: 1rem;}
+#info{color:pink;text-align: center;font-size: large;}
 #icontieude_img{
     width:100%;
     height:6%;
@@ -151,4 +164,3 @@ mark {color: #000; background-color: lightgreen}
 #voice{padding-left: 1rem;}
 /* xanh la cay mo cho f-grid-lr = rgba(144, 192, 96, 0.883) */
 /* vang nghe lat cho f-grid-collr = #f7e6cd */
-#datUrlYt{text-align: center;}
