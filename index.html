@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tiensg89's Learn English App</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="nhiChat.css">
 
 </head>
 <body>
@@ -37,16 +37,19 @@
 <div class="wrapper">
   <table > 
     <tr class="center">
-      <td class="alignL">&nbsp;&nbsp;<button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
+      <td class="alignL" >&nbsp;&nbsp;<button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
 
-      <td class="alignC" id="output" style="color:white";>user</td>
+      <td id="results" class="alignC" style="color:white";>
+        <span id="final_span" class="final"></span>
+        <span id="interim_span" class="interim"></span>
+      </td>
 
       <td class="alignR"><button id="listen_button" onclick="readTextQuick()"><img id="start_img" src="icons/bot.png" alt="Respeak"></button>&nbsp;&nbsp;</td>
     </tr>
     <tr class="center">
         <td class="alignL">&nbsp;&nbsp;&nbsp;&nbsp;user</td>
 
-        <td class="alignC" id="outputgpt" style="color:yellow";>text gpt</td>
+        <td class="alignC" id="resultsdich" style="color:yellow";>text gpt</td>
   
         <td class="alignR">gpt&nbsp;&nbsp;&nbsp;&nbsp;</td>
   
@@ -112,6 +115,208 @@
 
 </script>
 
-<script src="index.js"></script>
+<script>
+
+
+//------------cac thong bao nho---------------------------
+var messages = {
+    "start": {
+      msg: 'Click on the microphone icon and begin speaking.',
+      class: 'alert-success'},
+    "speak_now": {
+      msg: 'Speak now.',
+      class: 'alert-success'},
+    "no_speech": {
+      msg: 'No speech was detected. You may need to adjust your <a href="//support.google.com/chrome/answer/2693767" target="_blank">microphone settings</a>.',
+      class: 'alert-danger'},
+    "no_microphone": {
+      msg: 'No microphone was found. Ensure that a microphone is installed and that <a href="//support.google.com/chrome/answer/2693767" target="_blank">microphone settings</a> are configured correctly.',
+      class: 'alert-danger'},
+    "allow": {
+      msg: 'Click the "Allow" button above to enable your microphone.',
+      class: 'alert-warning'},
+    "denied": {
+      msg: 'Permission to use microphone was denied.',
+      class: 'alert-danger'},
+    "blocked": {
+      msg: 'Permission to use microphone is blocked. To change, go to chrome://settings/content/microphone',
+      class: 'alert-danger'},
+    "upgrade": {
+      msg: 'Web Speech API is not supported by this browser. It is only supported by <a href="//www.google.com/chrome">Chrome</a> version 25 or later on desktop and Android mobile.',
+      class: 'alert-danger'},
+    "stop": {
+        msg: 'Stop listening, click on the microphone icon to restart',
+        class: 'alert-success'},
+    "copy": {
+      msg: 'Content copy to clipboard successfully.',
+      class: 'alert-success'},
+}
+//cac bien global
+var final_transcript = '';
+
+var recognizing = false;
+var ignore_onend;
+var start_timestamp;
+var recognition;
+  
+//cac ham ung voi cac su kien
+$( document ).ready(function() {
+    if (!('webkitSpeechRecognition' in window)) {
+      upgrade();
+    } else {
+      showInfo('start'); 
+      resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+      start_button.style.display = 'inline-block';
+      recognition = new webkitSpeechRecognition();
+      recognition.continuous = true;
+      recognition.interimResults = true;
+  
+      recognition.onstart = function() {
+
+        recognizing = true;
+        showInfo('speak_now');
+        resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+        start_img.src = 'icons/mic-animation.gif';
+      };
+  
+      recognition.onerror = function(event) {
+        if (event.error == 'no-speech') {
+          start_img.src = 'icons/mic.gif';
+          showInfo('no_speech');
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+          ignore_onend = true;
+        }
+        if (event.error == 'audio-capture') {
+          start_img.src = 'icons/mic.gif';
+          showInfo('no_microphone');
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+          ignore_onend = true;
+        }
+        if (event.error == 'not-allowed') {
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+          if (event.timeStamp - start_timestamp < 100) {
+            showInfo('blocked');
+          } else {
+            showInfo('denied');
+          }
+          ignore_onend = true;
+        }
+      };
+  
+      recognition.onend = function() {
+        recognizing = false;
+        if (ignore_onend) {
+          return;
+        }
+        start_img.src = 'icons/mic.gif';
+        if (!final_transcript) {
+          showInfo('start');
+          return;
+        }
+        showInfo('stop');
+        //translate();
+      };
+  
+      recognition.onresult = function(event) {
+          var interim_transcript = '';
+          resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
+          //chu y rang van de kq trung gian va cuoi cung hien ra cho ta thay ct dang chay
+          //nhung cuoi cung thi dich moi hien ra 
+          for (var i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                  final_transcript += event.results[i][0].transcript;
+              } else {
+                  interim_transcript += event.results[i][0].transcript; 
+              }
+          }
+          final_transcript = capitalize(final_transcript);
+          final_span.innerHTML = linebreak(final_transcript);
+          interim_span.innerHTML = linebreak(interim_transcript);
+      
+        //final_transcript la global nen no van ton tai ca cac thay doi, den khi ta click nghe thi moi dich
+        //resultsdich.innerHTML=translate(final_transcript);     
+        //translate(final_transcript);     
+      };
+
+    }
+});
+  
+  
+  
+  
+function upgrade() {
+    start_button.style.visibility = 'hidden';
+    showInfo('upgrade');
+}
+  
+var two_line = /\n\n/g;
+var one_line = /\n/g;
+function linebreak(s) {
+    return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+}
+  
+var first_char = /\S/;
+function capitalize(s) {
+    return s.replace(first_char, function(m) { return m.toUpperCase(); });
+}
+  
+$("#start_button").click(function () {
+    if (recognizing) {
+      recognition.stop();
+      return;
+    }
+    final_transcript = '';
+    
+    
+    //alert(recognition.lang); //thu cho nay thay dung roi khi nhap nut button start
+    recognition.start();
+    ignore_onend = false;
+    final_span.innerHTML = '';
+    interim_span.innerHTML = '';
+    //start_img.src = 'icons/mic-slash.gif';
+    document.getElementById("start_img").src='icons/mic-slash.gif';
+    showInfo('allow');
+    start_timestamp = event.timeStamp;
+});
+  
+  
+function showInfo(s) {
+    if (s) {
+      var message = messages[s];
+      $("#info").html(message.msg);
+      $("#info").removeClass();
+      $("#info").addClass('alert');
+      $("#info").addClass(message.class);
+    } else {
+      $("#info").removeClass();
+      $("#info").addClass('d-none');
+    }
+}
+
+//xu li pit/rate/vol ----------------------------------------------------------------------------------
+//khai bao cac bien toan cuc va gan gitri dau
+const pitchInEl = document.getElementById('pitch');
+const rateInEl = document.getElementById('rate');
+
+const pitchOutEl = document.querySelector('output[for="pitch"]');
+const rateOutEl = document.querySelector('output[for="rate"]');
+
+function updateOutputs() {//---------
+    // display current values of all range inputs, phoi bay gtri hien huu
+    pitchOutEl.textContent = pitchInEl.value;
+    rateOutEl.textContent = rateInEl.value;
+}
+
+// add UI event handlers, khi pit/rate/vol thay doi thi chay ham updateOutputs() o tren de lay gt moi
+pitchInEl.addEventListener('change', updateOutputs);
+rateInEl.addEventListener('change', updateOutputs);
+
+
+
+
+
+
+</script> 
+
 </body>
 </html>
