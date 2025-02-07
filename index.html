@@ -11,15 +11,15 @@
 </head>
 <body>
 <!--  
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
+ 
+ <script src="https://cdnjs.cloudflare.com/ajax/libs/tesseract.js/4.1.1/tesseract.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
 -->
 
-<h2 class="center" id="tieude" translate="no" onclick="hdansd()">Learn on Tactics for Listening</h2>  
+<h2 class="center" id="tieude" translate="no" onclick="aboutapp()">Learn on Tactics for Listening</h2>  
 <div class="unit_chons">
     <select id="unit_chon" onchange="chonUnit()">
-        <option value="">--Select a Unit--</option>
+        <option style="text-align: center;color:blue;" value="" translate="no">--Select a Unit--</option>
     </select>
 </div><br>
 
@@ -29,54 +29,44 @@
         </iframe>
     </div><br>
 <div class="wrapper">
-  <div  id="info">Practice to speak English with chatGPT</div>
+  <div  id="infoB" translate="no">Practice to speak English with chatGPT</div>
 </div>
-<br>
+<hr>
 
 <!--START textarea-----😎🎤🙋‍♂️🎧↩️↪️⇄---recognition.lang = "en-US"; de chi cho js loi noi la ngon ngu en-Us cho le va phan ung mau hon----------------------------------------------->  
 <div class="wrapper">
   <table > 
     <tr class="center">
-      <td class="alignL" >&nbsp;&nbsp;<button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
+      <td translate="no" class="alignL" >&nbsp;&nbsp;user<button id="start_button"><img id="start_img" src="icons/mic.gif" alt="Start"></button></td>
 
-      <td id="results" class="alignC" style="color:white";>
+      <td translate="no" id="results" class="alignC" style="color:white";>
         <span id="final_span" class="final"></span>
         <span id="interim_span" class="interim"></span>
       </td>
 
-      <td class="alignR"><button id="listen_button" onclick="readTextQuick()"><img id="start_img" src="icons/bot.png" alt="Respeak"></button>&nbsp;&nbsp;</td>
+      <td translate="no" class="alignR"><button id="listen_button" onclick="reSpeak()"><img id="start_img" src="icons/bot.png" alt="Respeak"></button>gpt&nbsp;&nbsp;</td>
+
     </tr>
     <tr class="center">
-        <td class="alignL">&nbsp;&nbsp;&nbsp;&nbsp;user</td>
+        <td class="alignL"></td>
 
-        <td class="alignC" id="resultsdich" style="color:yellow";>text gpt</td>
+        <td translate="no" class="alignC" id="resultsdich" style="color:yellow";></td>
   
-        <td class="alignR">gpt&nbsp;&nbsp;&nbsp;&nbsp;</td>
+        <td class="alignR"></td>
   
     </tr>
 
   </table>
-
-  <div class="f-grid">
-    <div id="results" class="f-grid-coll">
-        <span id="final_span" class="final"></span>
-        <span id="interim_span" class="interim"></span>
-        <p>
-    </div>
-    <div id="resultsdich" class="f-grid-colr"></div>
-  </div>
-
-
-
 </div> <!--end div class="wrapper"-->
+
 
 <hr>
 <div class="properties">
-  <label for="pitch" translate="no">Pitch:</label>
+  <label for="pitch" translate="no">&nbsp;&nbsp;Pitch:</label>
   <input id="pitch" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
   <output for="pitch" translate="no">1</output>
   
-  <label for="rate" translate="no">Rate:</label>
+  <label for="rate" translate="no">&nbsp;&nbsp;Rate:</label>
   <input id="rate" type="range" min="0.1" max="2" step="0.1" value="1" translate="no">
   <output for="rate" translate="no">1</output>
   
@@ -84,26 +74,28 @@
 
 <div class="wrapper">
 <div class="buttons4">
-  <button><a href="https://online.flipbuilder.com/sdtta/fpva/mobile/index.html" style="color:lightgreen; font-size: small;"  >BASIC Tactics For Listening PDF</a></button>
-  <button><a href="https://online.flipbuilder.com/sdtta/kjol/" style="color:rgb(236, 194, 179);font-size: small;">DEVELOPING Tactics For Listening PDF</a></button>
-  <button><a href="https://online.flipbuilder.com/sdtta/vlyh/" style="color:rgb(206, 206, 244);font-size: small;">EXPANDING Tactics For Listening PDF</a></button>
+  <button translate="no"><a href="https://online.flipbuilder.com/sdtta/fpva/mobile/index.html" style="color:lightgreen; font-size: small;"  >BASIC Tactics For Listening PDF</a></button>
+  <button translate="no"><a href="https://online.flipbuilder.com/sdtta/kjol/" style="color:rgb(236, 194, 179);font-size: small;">DEVELOPING Tactics For Listening PDF</a></button>
+  <button translate="no"><a href="https://online.flipbuilder.com/sdtta/vlyh/" style="color:rgb(206, 206, 244);font-size: small;">EXPANDING Tactics For Listening PDF</a></button>
 </div>
 </div>
 
+<!-- ----------------------------Phan Javascript---------------------------------------------------------- -->
 <script>//Ma duoi day bat buoc phai dat o html, neu dat trong tep js ben ngoai (hoc_en_tactics) se khong chay
+    //-- Cho NEN video ifram youtube-----------------------
     let id = "Xj8Amv0Z52w";
     const selectb = document.getElementById("unit_chon");
     var videoIDcurrent="Xj8Amv0Z52w"; //nen la id luu last
     document.getElementById("iframe_yt").src="https://youtube.com/embed/" + videoIDcurrent;
-    //------------------
+    //----Ham chon bai YT
     function chonUnit(){ //chon unit khac va update iframe
         videoIDcurrent = list_id[selectb.selectedIndex];
         //alert(videoIDcurrent); src embed co dang do yt quy dinh : "https://youtube.com/embed/"+id_yt
         document.getElementById("iframe_yt").src="https://youtube.com/embed/" + videoIDcurrent;
     }
-    //----------
+    //---About App------
     function aboutapp(){
-        var dong1 = "- Bộ sách 'Tactics for lístening' của Jack C. Richards do Đại học Oxford phát hành lần thứ 3 được rất nhiêu người dùng.\n";
+        var dong1 = "- Bộ sách 'Tactics for lístening' của Jack C. Richards do Đại học Oxford  phát hành, được rất nhiều người dùng .\n";
         var dong2 = "- tiensg89@gmail.com tìm thấy trên mạng nên góp nhặt tải về và lập trang web này để thuận tiện sử dụng và giúp người khác trong việc tự học nghe tiếng Anh.\n";
         var dong3 = "- Nó có 3 cuốn, mỗi cuốn có 24 unit kèm theo audio để nghe. Sách có dạng 'pdf flip' rất hay.\n";
         var dong4 = "- Cách sử dụng để học là do người dùng tự khám phá và hoạch định. Bộ tài liệu nảy rất tuyệt.";
@@ -111,15 +103,12 @@
     }
 </script>
 
-<script>
-
-</script>
 
 <script>
-
-
-//------------cac thong bao nho---------------------------
-var messages = {
+//------------------------------------ CHO CHAT GPT----------------------------------------------------------------
+//--Cac bien toan cuc--
+var text='';
+var messages = {//kieu dic
     "start": {
       msg: 'Click on the microphone icon and begin speaking.',
       class: 'alert-success'},
@@ -151,9 +140,7 @@ var messages = {
       msg: 'Content copy to clipboard successfully.',
       class: 'alert-success'},
 }
-//cac bien global
 var final_transcript = '';
-
 var recognizing = false;
 var ignore_onend;
 var start_timestamp;
@@ -172,7 +159,6 @@ $( document ).ready(function() {
       recognition.interimResults = true;
   
       recognition.onstart = function() {
-
         recognizing = true;
         showInfo('speak_now');
         resultsdich.innerHTML=''; //khi dang chuan bi thi cai nay phai empty
@@ -232,6 +218,8 @@ $( document ).ready(function() {
           final_transcript = capitalize(final_transcript);
           final_span.innerHTML = linebreak(final_transcript);
           interim_span.innerHTML = linebreak(interim_transcript);
+
+          sendMessage(final_transcript);
       
         //final_transcript la global nen no van ton tai ca cac thay doi, den khi ta click nghe thi moi dich
         //resultsdich.innerHTML=translate(final_transcript);     
@@ -240,8 +228,6 @@ $( document ).ready(function() {
 
     }
 });
-  
-  
   
   
 function upgrade() {
@@ -259,7 +245,8 @@ var first_char = /\S/;
 function capitalize(s) {
     return s.replace(first_char, function(m) { return m.toUpperCase(); });
 }
-  
+
+//---Khi micro duoc click ------------
 $("#start_button").click(function () {
     if (recognizing) {
       recognition.stop();
@@ -267,14 +254,13 @@ $("#start_button").click(function () {
     }
     final_transcript = '';
     
-    
+    //recognition.lang = select_source_dialect.value;
     //alert(recognition.lang); //thu cho nay thay dung roi khi nhap nut button start
     recognition.start();
     ignore_onend = false;
     final_span.innerHTML = '';
     interim_span.innerHTML = '';
-    //start_img.src = 'icons/mic-slash.gif';
-    document.getElementById("start_img").src='icons/mic-slash.gif';
+    start_img.src = 'icons/mic-slash.gif';
     showInfo('allow');
     start_timestamp = event.timeStamp;
 });
@@ -311,13 +297,70 @@ function updateOutputs() {//---------
 pitchInEl.addEventListener('change', updateOutputs);
 rateInEl.addEventListener('change', updateOutputs);
 
+//----------------------------------------
+    //utterance.pitch = pitchInEl.value;
+    //utterance.rate = rateInEl.value;
+    //utterance.volume = volumeInEl.value;
+    //utterance.volume = 1;
+    
+//window.speechSynthesis.speak(utterance);
 
+</script>
 
+<script>//--Chat GPT---------------------------------------------
 
+  //  <input type="text" id="userInput" placeholder="Nhập tin nhắn của bạn...">
+  //<button onclick="sendMessage()">Gửi</button>
+  
+  //const apiKey = "YOUR_OPENAI_API_KEY"; // Thay bằng API Key của bạn
+  const apiKey = ""; 
+  async function sendMessage(transcript) {
+    let userInput = transcript;
+    //alert(userInput);
+    if (!userInput) return;
+  
+    //let chatbox = document.getElementById("chatbox");
+    //chatbox.innerHTML += `<p><strong>Bạn:</strong> ${userInput}</p>`;
+  
+    // Gửi tin nhắn đến OpenAI API
+    
+    let response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: userInput }]
+      })
+    });
+  
+    let data = await response.json();
+    let reply = data.choices[0].message.content;
+    resultsdich.textContent = reply;
+    
+    function speakText(text) {
+      let utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = 'en-US';
+      speechSynthesis.speak(utterance);
+    }
+    speakText(reply);
+  
+    //chatbox.innerHTML += `<p><strong>ChatGPT:</strong> ${reply}</p>`;
+    //document.getElementById("userInput").value = "";
+    //chatbox.scrollTop = chatbox.scrollHeight;
+}
 
+function reSpeak(){
+  let text = resultsdich.textContent;
+  let utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = 'en-US';
+  speechSynthesis.speak(utterance);
+}
 
-</script> 
-<script src="index.js"></script>
-
+</script>
+  
+<script src="index.js"></script> 
 </body>
 </html>
