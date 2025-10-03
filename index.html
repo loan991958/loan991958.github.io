@@ -1,37 +1,98 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Đọc tệp Excel</title>
-<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/xlsx.mini.min.js"></script>
+  <meta charset="UTF-8">
+  <title>Hiển thị Excel bằng JS</title>
+
+  <!-- Thư viện SheetJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+  <!-- Thư viện Danfo.js (giống pandas cho JS) -->
+  <script src="https://cdn.jsdelivr.net/npm/danfojs@1.1.2/lib/bundle.min.js"></script>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    table {
+      border-collapse: collapse;
+      margin-top: 10px;
+      max-width: 100%;
+      overflow-x: auto;
+    }
+    th, td {
+      border: 1px solid #aaa;
+      padding: 4px 8px;
+      font-size: 13px;
+    }
+    th {
+      background-color: #eee;
+    }
+    #info {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+  </style>
 </head>
 <body>
-<h2>Chọn tệp Excel để xem nội dung</h2>
-<input type="file" id="excelFile" accept=".xlsx, .xls" />
-<pre id="output"></pre>
+  <h2>📊 Hiển thị dữ liệu từ e1.xlsx</h2>
+  <div id="info">Đang tải file...</div>
+  <div id="excelData"></div>
 
-<script>
-document.getElementById('excelFile').addEventListener('change', function (e) {
-const file = e.target.files[0];
-const reader = new FileReader();
+  <script>
+    async function loadExcel() {
+      const url = "Excel/e1.xlsx"; // file excel nằm trong thư mục Excel
 
-reader.onload = function (event) {
-const data = new Uint8Array(event.target.result);
-const workbook = XLSX.read(data, { type: 'array' });
+      try {
+        // Tải file Excel
+        const response = await fetch(url);
+        const arrayBuffer = await response.arrayBuffer();
 
-// Lấy tên sheet đầu tiên
-const firstSheetName = workbook.SheetNames[0];
-const worksheet = workbook.Sheets[firstSheetName];
+        // Đọc bằng SheetJS
+        const workbook = XLSX.read(arrayBuffer, { type: "array" });
+        const sheetName = workbook.SheetNames[0];
+        const sheet = workbook.Sheets[sheetName];
 
-// Chuyển dữ liệu sheet thành JSON
-const jsonData = XLSX.utils.sheet_to_json(worksheet, { header: 1 });
+        // Chuyển thành JSON (array of arrays)
+        const data = XLSX.utils.sheet_to_json(sheet, { header: 1 });
 
-// Hiển thị dữ liệu
-document.getElementById('output').textContent = JSON.stringify(jsonData, null, 2);
-};
+        // Nếu file rỗng
+        if (data.length === 0) {
+          document.getElementById("info").innerText = "❌ File Excel trống.";
+          return;
+        }
 
-reader.readAsArrayBuffer(file);
-});
-</script>
+        // Dùng Danfo.js để xử lý
+        let df = new dfd.DataFrame(data.slice(1), { columns: data[0] });
+
+        // Hiển thị thông tin
+        document.getElementById("info").innerText =
+          `✅ Đã tải ${url} | Rows: ${df.shape[0]} | Cols: ${df.shape[1]}`;
+
+        // Xuất bảng HTML (chỉ hiển thị 50 dòng đầu cho nhẹ)
+        let table = "<table><thead><tr>";
+        df.columns.forEach(col => table += `<th>${col}</th>`);
+        table += "</tr></thead><tbody>";
+
+        df.head(50).values.forEach(row => {
+          table += "<tr>";
+          row.forEach(cell => {
+            table += `<td>${cell !== undefined ? cell : ""}</td>`;
+          });
+          table += "</tr>";
+        });
+        table += "</tbody></table>";
+
+        document.getElementById("excelData").innerHTML = table;
+
+      } catch (err) {
+        document.getElementById("info").innerText = "❌ Lỗi: " + err.message;
+        console.error(err);
+      }
+    }
+
+    loadExcel();
+  </script>
 </body>
 </html>
+
