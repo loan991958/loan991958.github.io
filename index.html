@@ -19,6 +19,7 @@
       margin-top: 10px;
       max-width: 100%;
       overflow-x: auto;
+      overflow-y: auto;
     }
     th, td {
       border: 1px solid #aaa;
@@ -74,7 +75,7 @@
         df.columns.forEach(col => table += `<th>${col}</th>`);
         table += "</tr></thead><tbody>";
 
-        df.head(50).values.forEach(row => {
+        df.values.forEach(row => {
           table += "<tr>";
           row.forEach(cell => {
             table += `<td>${cell !== undefined ? cell : ""}</td>`;
