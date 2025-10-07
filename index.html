@@ -2,9 +2,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talk With Foreigners</title>
+    <title>Document</title>
 <style>
 body {
     background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
@@ -42,8 +41,8 @@ h2 { text-align: center; color:darkblue}
   padding: 10px 0px; /* tuỳ chỉnh khoảng cách lề */
 }
 #mic1_button {
-    width: 50px; /* Kích thước nút */
-    height: 50px;
+    width: 60px; /* Kích thước nút */
+    height: 60px;
     border-radius: 50%; /* Làm cho nút tròn */
     /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
     background-image:  "url('')"; /* Ảnh bên trong */
@@ -55,8 +54,8 @@ h2 { text-align: center; color:darkblue}
     justify-content: center;
 }
 #mic2_button {
-    width: 50px; /* Kích thước nút */
-    height: 50px;
+    width: 60px; /* Kích thước nút */
+    height: 60px;
     border-radius: 50%; /* Làm cho nút tròn */
     /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
     background-image:  "url('')"; /* Ảnh bên trong */
@@ -84,6 +83,7 @@ h2 { text-align: center; color:darkblue}
 }
 
 </style>
+
 </head>
 <body>
 <h2 >🗣️Talk With Foreigners👤</h2>
@@ -100,172 +100,102 @@ h2 { text-align: center; color:darkblue}
     <button id="loa_button" onclick="repeatText()" ></button>
     <button id="mic2_button" onclick="toggleMic2()" >🎙️</button>
 </div>
-<script>
-//===Tien them
-const mic1_button = document.getElementById("mic1_button");
-const mic2_button = document.getElementById("mic2_button");
-const loa_button = document.getElementById("loa_button");
 
-function reSpeak(lastreply){
+
+
+
+<script>
+//--menu unit
+let listUrlYt = ["https://youtu.be/sk=proj=epXwjLAeKPLBuTFMvjDmdQAhDVbhKcSZJ60xkDI4iF419uvhXC7GZ7jS7CHl8=OCemM293KtU5T3BlbkFJJ14i4QAWBYiJQbPMNBOMtspp8QL==mVbG2uig2oq44YGtjW9TFb3DdQuIrKYm7kNvvTnUqKoUA"];
+///GFG_FunBo();
+function maHoaLaiAK(){
+    let ch = listUrlYt[listUrlYt.length - 1].split("be/")[1].replaceAll("=","-");
+    //console.log(ch);
+    return ch;
+}
+var apiKey=maHoaLaiAK();
+
+//--chatgpt-----------------------------
+async function sendMessage(transcript) {
+    let userInput = transcript;
+    //alert(userInput);
+    if (!userInput) return;
+    //let chatbox = document.getElementById("chatbox");
+    //chatbox.innerHTML += `<p><strong>Bạn:</strong> ${userInput}</p>`;
+  
+    // Gửi tin nhắn đến OpenAI API
+    let response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: userInput }]
+      })
+    });
+  
+    let data = await response.json();
+    //console.log(data);
+    let reply = data.choices[0].message.content;
+  
+    if (transcript.search("giải thích từ ngữ tiếng Anh sau đây và định dạng kết quả bằng Markdown")>0){
+      //console.log(reply);
+      HienThiTrongSwal(reply);
+    }else{
+      resultsdichEl.innerText = reply;
+  
+      let textCanDich = resultsdichEl.innerText.trim() ;
+      let ptchua = resultsdichViaEl;
+      if (langNoi==='en-US'){
+        dichRaVi(textCanDich,ptchua);
+      }else{
+        dichRaEn(textCanDich,ptchua);
+  
+      }  
+    
+    speakText(resultsdichEl.innerText);
+  }
+  
+  }
+  
+  function reSpeak(text){
+  
     if (window.speechSynthesis.speaking) {
         window.speechSynthesis.cancel();
-        loa_button.style.backgroundImage = "url('icons/loa.png')"; // Set the background image
-        //resultsdichEl.innerHTML =   resultsdichEl.innerText;
+        //listen_imgEl.src = 'icons/bot.png';
+        loa.style.backgroundImage = "url('icons/loa.png')"; // Set the background image
         return;
     }
-
+  
     window.speechSynthesis.cancel();
-
-    text = lastreply;
+  
     const utterance = new SpeechSynthesisUtterance(text);
-    //const detectedLang = detectLanguage(text);
-    utterance.lang = 'en-US';
+    const detectedLang = 'en-US'; //detectLanguage(text);
+    utterance.lang = detectedLang; // 'vi-VN' hoặc 'en-US'
+
     utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+
     speechSynthesis.speak(utterance);
-    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')"; // Set the background image
-  }
-
-//Giai ma-bmat
-const dnaToBinaryMap = {
-'A': '00',
-'C': '01',
-'G': '10',
-'T': '11'
-};
-
-function dnaToBinarySequence(dna) {
-    return dna
-    .split('')
-    .map(base => dnaToBinaryMap[base] || '')
-    .join('');
+    loa.style.backgroundImage = "url('icons/loa-animation.gif')"; // Set the background image
 }
-
-function binaryToText(binary) {
-    let text = '';
-    for (let i = 0; i < binary.length; i += 8) {
-        const byte = binary.slice(i, i + 8);
-        text += String.fromCharCode(parseInt(byte, 2));
-    }
-    return text;
-}
-
-function decodeDNA(textkhoaapi) {
-    const binary = dnaToBinarySequence(textkhoaapi);
-    const text = binaryToText(binary);
-    return text;
-}
-//End Giai ma-bmat
-
-let langChatN = 0;
-let langChatSpeak1 = 'vi-VN';
-let langChatSpeak2 = 'en-US';
-let langChatText = 'vi';
-
-const textkhoaapi = "CTATCGGTAGTCCTAACTAGCGTTCGGGAGTCCGCCCTAACCGACTCTCGGGCATACAACCGCCCAGTCCAACATACAAGCTCCCCCACACGCATCCTCGCGGGCACACGTCCGCACCACCAACCGGACACACCCGCGAGCGGACAGTCGATCCATCCGGCAGGATCGATAACTGACGGTCACACAGCATCACGGCCACGATCAATACATGCCTCCCTCGCGGACCGACAATATCTCACTCCGGATCTCGGGCCATATCTCAATCAGACGTAATGAAGTCCATTCAATCGCCCGTCCATCATAGATGCATATCAGTCTCACCCCATCCCCCAATATCAAGCGTACGAGCGGTCACGCAGGCAGGATACATCACGGCATCACCACCAACCCCTCAAGCCGCCGGCCAGGCCACCGAGCCAACATCCATGCAAGCATTCATCCTCACTATCTAACTAAATGACCACCATAAGTCAGTCCGTCCCCGCGAGCACTATAGCTCCCGGCCGCTATAGCGTTCTACATCAATCACCGCCACTCTCACGGGCCCTATGCCCCACACGCGAGATATCACACGCACCACCTCCCAGCCTAGCAGTCCGCCGTCATCTCGGTCATGCTCGCTCGCCCACGTGCCCCCTACCAGTCGTTCCCCCAAC";
-//===Tien them
-
-const apiKey = decodeDNA(textkhoaapi)
-
-const chatbox = document.getElementById("chatbox");
-const textInput = document.getElementById("textInput");
-
-//chatbox.innerHTML += `<div class="user" style="text-align:right;"><b>❔</b> ${pair.user}</div>`;
-//chatbox.innerHTML += `<div class="bot" style="text-align:left;"><b>💬</b> ${pair.bot}</div>`;
 
 function addMessage(role, text) {
     const div = document.createElement("div");
     div.innerHTML = `<span class="${role}">${role === "user" ? "<br>❔" : "💬"} ${text}</span>`;
     chatbox.appendChild(div);
+    //Neu role === "gpt"  thi doc toan bo cau tra loi o day 
+    if (role === "gpt") {
+        mic1_button.style.backgroundImage = "url('')";//cho mic1 thoi nhap nhay
+        loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";//cho loa nhap nhay
+
+        reSpeak(text);
+    }
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 const hauto = "Dịch câu trên đây sang tiếng Anh mà không cần giải thích." 
 
-async function sendToGPT(message) {
-    const res = await fetch("https://your-server.com/chat", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ message })
-    });
-    const data = await res.json();
-    return data.reply;
-}
-
-async function sendText() {
-    const msg = textInput.value.trim();
-    if (!msg) return;
-    msg = msg + hauto;
-    alert(msg);
-    addMessage("user", msg);
-    textInput.value = "";
-    const reply = await sendToGPT(msg);
-    addMessage("gpt", reply);
-    speak(reply);
-}
-
-// SPEECH TO TEXT (Voice Input)
-let recognition1;
-let listening1 = false;
-
-function toggleMic1() {
-    if (!listening1) {//neu chua lang nghe thi bat dau lang nghe
-        mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; // Set the background image
-        startRecognition1();
-        startVoiceChat1();
-    } else {//neu dang lang nghe thi dung lang nghe
-        stopRecognition1();
-        mic1_button.style.backgroundImage = "url('')"; // Set the background image
-    }
-}
-
-function startRecognition1() {
-    if (!('webkitSpeechRecognition' in window)) {
-        alert("Trình duyệt không hỗ trợ SpeechRecognition.");
-        return;
-    }
-    mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')";
-    recognition1 = new webkitSpeechRecognition();
-    recognition1.lang = langChatSpeak1;
-    recognition1.continuous = false;
-    recognition1.interimResults = false;
-
-    recognition1.onresult = async (event) => {
-    const transcript = event.results[0][0].transcript;
-    
-
-    addMessage("user", transcript);//them tin nhan vao chatbox,xem nhu yeu cau cua user
-    const reply = await sendToGPT(transcript + hauto);//tra ve hoi dap cua GPT
-    addMessage("gpt", reply);//them tin nhan vao chatbox,xem nhu tra loi cua gpt
-    mic1_button.style.backgroundImage = "url('')";//cho mic1 thoi nhap nhay
-    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";//cho loa nhap nhay
-
-    
-    reSpeak(reply);//doc toan bo cau tra loi
-
-    };
-
-    recognition1.onstart = () => listening1 = true;
-    recognition1.onend = () => listening1 = false;
-
-    recognition1.start();
-}
-
-function stopRecognition1() {
-    if (recognition1) {
-        recognition1.stop();
-        listening1 = false;
-        mic1_button.style.backgroundImage = "url('')"; // Set the background image}
-    }
-}
-
-// TEXT TO SPEECH
-function speak(text) {
-    const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = langChatSpeak2;
-    utter.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
-    speechSynthesis.speak(utter);
-}
-
-//DN ham sendToGPT
 async function sendToGPT(prompt) {
     const res = await fetch("https://api.openai.com/v1/chat/completions", {
         method: "POST",
@@ -284,23 +214,42 @@ async function sendToGPT(prompt) {
     return reply;
 }
 
-
-//DN ham handleUserSpeech
-async function handleUserSpeech(text) {
-    log(`<b>Bạn:</b> ${text}`);
-
-    const reply = await sendToGPT(text);
-    log(`<b>GPT:</b> ${reply}`);
-
-    return new Promise((resolve) => {
-        const utter = new SpeechSynthesisUtterance(reply);
-        utter.lang = langChatSpeak1;
-        utter.onend = () => resolve();
-        speechSynthesis.speak(utter);
-    });
+async function sendText() {
+    const msg = textInput.value.trim();
+    if (!msg) return;
+    msg = msg + hauto;
+    alert(msg);
+    addMessage("user", msg);
+    textInput.value = "";
+    const reply = await sendToGPT(msg);
+    addMessage("gpt", reply);
+    //speak(reply);
 }
 
-//DN ham recordOnce
+function startRecognition1() {
+    if (!('webkitSpeechRecognition' in window)) {
+        alert("Trình duyệt không hỗ trợ SpeechRecognition.");
+        return;
+    }
+    mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')";
+    recognition1 = new webkitSpeechRecognition();
+    recognition1.lang = 'vi-VN';
+    recognition1.continuous = false;
+    recognition1.interimResults = false;
+
+    recognition1.onresult = async (event) => {
+        const transcript = event.results[0][0].transcript;
+        addMessage("user", transcript);//them tin nhan vao chatbox,xem nhu yeu cau cua user
+        const reply = await sendToGPT(transcript + hauto);//tra ve hoi dap cua GPT
+        addMessage("gpt", reply);//them tin nhan vao chatbox,xem nhu tra loi cua gpt
+        //reSpeak(reply);//doc toan bo cau tra loi
+    };
+
+    recognition1.onstart = () => listening1 = true;
+    recognition1.onend = () => listening1 = false;
+
+    recognition1.start();
+}
 function recordOnce() {
     return new Promise((resolve, reject) => {
         recognition1.start();
@@ -318,54 +267,63 @@ function recordOnce() {
         };
     });
 }
+async function handleUserSpeech(text) {
+    log(`<b>Bạn:</b> ${text}`);
 
-// khi nhap mic thi thuc thi ham sau:
+    const reply = await sendToGPT(text);
+    log(`<b>GPT:</b> ${reply}`);
+
+    return new Promise((resolve) => {
+        const utter = new SpeechSynthesisUtterance(reply);
+        utter.lang = langChatSpeak1;
+        utter.onend = () => resolve();
+        speechSynthesis.speak(utter);
+    });
+}
+
 async function startVoiceChat1() {
-
     log("⏳ Đang lắng nghe bạn...");
     while (true) {
         try {
-            const userSpeech = await recordOnce();
-            await handleUserSpeech(userSpeech);
+            const userSpeech = await recordOnce();//cho phep nguoi dung noi 1 lan,ghi vao bien 
+            await handleUserSpeech(userSpeech);//gui van ban do den GPT de tra loi
         } catch (err) {
             console.error("Lỗi:", err);
             break;
         }
     }
 }
-//DN ham tieng_chon_chat
-function tieng_chon_chat(){
-    langChatN += 1; 
-    if (langChatN % 7 === 1) {
-        langChatSpeak = 'en-US';
-        langChatText = 'en';
-        document.getElementById("langChonText").innerText="English";
-    } else if (langChatN % 7 === 2) {
-        langChatSpeak = 'fr-FR';
-        langChatText = 'fr';
-        document.getElementById("langChonText").innerText="French";
-    } else if (langChatN % 7 === 3) {
-        langChatSpeak = 'da-DK';
-        langChatText = 'da';
-        document.getElementById("langChonText").innerText="Denmark";
-    } else if (langChatN % 7 === 4) {
-        langChatSpeak = 'nl-NL';
-        langChatText = 'nl';
-        document.getElementById("langChonText").innerText="Nederlands";
-    } else if (langChatN % 7 === 5) {
-        langChatSpeak = 'de-DE';
-        langChatText = 'de';
-        document.getElementById("langChonText").innerText="German";
-    } else if (langChatN % 7 === 6) {
-        langChatSpeak = 'zh-TW';
-        langChatText = 'zh';
-        document.getElementById("langChonText").innerText="Taiwan";
-    } else if (langChatN % 7 === 0) {
-        langChatSpeak = 'vi-VN';
-        langChatText = 'vi';
-        document.getElementById("langChonText").innerText="Vietnamese";
-    }; 
+
+function stopRecognition1() {
+    if (recognition1) {
+        recognition1.stop();
+        listening1 = false;
+        mic1_button.style.backgroundImage = "url('')"; // Set the background image}
+    }
 }
-</script>
+
+function toggleMic1() {
+    if (!listening1) {//neu chua lang nghe thi bat dau lang nghe
+        mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; // Set the background image
+        startRecognition1();
+        startVoiceChat1();
+    } else {//neu dang lang nghe thi dung lang nghe
+        stopRecognition1();
+        mic1_button.style.backgroundImage = "url('')"; // Set the background image
+    }
+}
+
+//=====Main=================
+let mic1_button = document.getElementById("mic1_button");
+let loa_button = document.getElementById("loa_button");
+let mic2_button = document.getElementById("mic2_button");
+let recognition1;
+let listening1 = false;
+
+mic1_button.onclick = toggleMic1;
+
+
+
+</script>    
 </body>
 </html>
