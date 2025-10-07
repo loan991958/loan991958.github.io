@@ -186,7 +186,9 @@ mic1_button.onclick = () => {
         console.error("Lỗi nhận giọng nói:", e.error);
     };
     recognition.onend = () => {
-        mic1_button.style.backgroundImage = "none";
+      recognition.stop();// Dừng nhận giọng nói khi kết thúc va tat mic
+      mic1_button.style.backgroundImage = "none";
+
     };
 
     recognition.start();
