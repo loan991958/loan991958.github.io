@@ -1,15 +1,114 @@
 <!DOCTYPE html>
-<html lang="vi">
+<html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Dịch và phát lại bằng tiếng Anh</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+<style>
+body {
+    background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
+    color: #fff;
+    font: 1rem/1 'Poppins', sans-serif;
+    height:100%;
+    padding: 20px;
+    max-width: 700px; 
+    margin: auto;
+}
+
+h2 { text-align: center; color:darkblue}
+#chatbox { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
+
+.menu-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10%; /* cách biên trái và phải 20px */
+  width: 100%;
+  box-sizing: border-box;
+}
+
+
+.menu-group select {
+  width: 30%; /* hoặc tuỳ chỉnh theo nhu cầu */
+  padding: 8px;
+  font-size: 16px;
+  background-color: transparent;
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* hoặc đặt chiều rộng cụ thể */
+  padding: 10px 0px; /* tuỳ chỉnh khoảng cách lề */
+}
+#mic1_button {
+    width: 60px; /* Kích thước nút */
+    height: 60px;
+    border-radius: 50%; /* Làm cho nút tròn */
+    /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
+    background-image:  "url('')"; /* Ảnh bên trong */
+    background-size: cover; /* Đảm bảo ảnh phủ đầy */
+    background-position: center;
+    border: 3px solid #333; /* Viền */
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+#mic2_button {
+    width: 60px; /* Kích thước nút */
+    height: 60px;
+    border-radius: 50%; /* Làm cho nút tròn */
+    /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
+    background-image:  "url('')"; /* Ảnh bên trong */
+    background-size: cover; /* Đảm bảo ảnh phủ đầy */
+    background-position: center;
+    border: 3px solid #333; /* Viền */
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+
+
+#loa_button {
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #ccc;
+  background-image: url("icons/loa.png");
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+
+</style>
+
 </head>
 <body>
-  <h2>🎤 Nói bằng tiếng Việt → 🔊 Nghe bằng tiếng Anh</h2>
-  <button id="mic1_button">🎙️ Nói tiếng Việt</button>
-  <button id="mic2_button" style="display:none;">🔊 Nghe tiếng Anh</button>
+<h2 >🗣️Talk With Foreigners👤</h2>
 
-<script >//--------
+<div id="chatbox"></div>
+
+<div class="menu-group">
+    <select id="lang-left" onclick="toggleMenuL()" ></select>
+    <select id="lang-right" onclick="toggleMenuR()" ></select>
+</div>
+
+<div class="button-group">
+    <button id="mic1_button" onclick="toggleMic1()" >🎤</button>
+    <button id="loa_button" onclick="repeatText()" ></button>
+    <button id="mic2_button" onclick="toggleMic2()" >🎙️</button>
+</div>
+
+
+
+
+<script>
+const mic1_button = document.getElementById("mic1_button");
+const mic2_button = document.getElementById("mic2_button");  
+const loa_button = document.getElementById("loa_button");
+
 let listUrlYt = ["https://youtu.be/sk=proj=epXwjLAeKPLBuTFMvjDmdQAhDVbhKcSZJ60xkDI4iF419uvhXC7GZ7jS7CHl8=OCemM293KtU5T3BlbkFJJ14i4QAWBYiJQbPMNBOMtspp8QL==mVbG2uig2oq44YGtjW9TFb3DdQuIrKYm7kNvvTnUqKoUA"];
 ///GFG_FunBo();
 function maHoaLaiAK(){
@@ -52,42 +151,47 @@ function speakEnglish(text) {
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';
+    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
     speechSynthesis.speak(utterance);
+    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
   } else {
     console.log("Trình duyệt không hỗ trợ speechSynthesis");
   }
 }
 
 // Nhận giọng nói tiếng Việt từ mic1
-document.getElementById("mic1_button").onclick = () => {
-  const recognition = new webkitSpeechRecognition();
-  recognition.lang = 'vi-VN';
-  recognition.continuous = false;
-  recognition.interimResults = false;
+mic1_button.onclick = () => {
+    mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; 
 
-  recognition.onresult = async (event) => {
-    const vietnameseText = event.results[0][0].transcript;
-    console.log("Bạn nói:", vietnameseText);
-    //alert(vietnameseText);
+    const recognition = new webkitSpeechRecognition();
+    recognition.lang = 'vi-VN';
+    recognition.continuous = false;
+    recognition.interimResults = false;
 
-    // Dịch bằng GPT
-    const englishText = await translateWithGPT(vietnameseText);
-    console.log("GPT dịch:", englishText);
+    recognition.onresult = async (event) => {
+        const vietnameseText = event.results[0][0].transcript;
+        console.log("Bạn nói:", vietnameseText);
+        //alert(vietnameseText);
 
-    // Gán hành động cho mic2 để phát lại
-    const mic2 = document.getElementById("mic2_button");
-    mic2.style.display = "inline";
-    mic2.onclick = () => speakEnglish(englishText);
-    mic2.click(); // tự động phát luôn
-  };
+        // Dịch bằng GPT
+        const englishText = await translateWithGPT(vietnameseText);
+        console.log("GPT dịch:", englishText);
 
-  recognition.onerror = (e) => {
-    console.error("Lỗi nhận giọng nói:", e.error);
-  };
+        // Gán hành động cho loa_button để phát lại
+        loa_button.onclick = () => speakEnglish(englishText);
+        loa_button.click(); // tự động phát luôn
+    };
 
-  recognition.start();
+    recognition.onerror = (e) => {
+        console.error("Lỗi nhận giọng nói:", e.error);
+    };
+    recognition.onend = () => {
+        mic1_button.style.backgroundImage = "none";
+    };
+
+    recognition.start();
 };
-</script>
 
-<body>
+</script>    
+</body>
 </html>
