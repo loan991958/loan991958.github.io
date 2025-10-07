@@ -175,10 +175,11 @@ async function sendMessage(transcript) {
     const detectedLang = 'en-US'; //detectLanguage(text);
     utterance.lang = detectedLang; // 'vi-VN' hoặc 'en-US'
 
-    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
-
-    speechSynthesis.speak(utterance);
-    loa.style.backgroundImage = "url('icons/loa-animation.gif')"; // Set the background image
+    loa_button.onclick = () => {
+        utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+        speechSynthesis.speak(utterance);
+        loa_button.style.backgroundImage = "url('icons/loa-animation.gif')"; // Set the background image
+    };
 }
 
 function addMessage(role, text) {
@@ -273,12 +274,12 @@ async function handleUserSpeech(text) {
     const reply = await sendToGPT(text);
     log(`<b>GPT:</b> ${reply}`);
 
-    return new Promise((resolve) => {
-        const utter = new SpeechSynthesisUtterance(reply);
-        utter.lang = langChatSpeak1;
-        utter.onend = () => resolve();
-        speechSynthesis.speak(utter);
-    });
+    //return new Promise((resolve) => {
+    //    const utter = new SpeechSynthesisUtterance(reply);
+    //    utter.lang = langChatSpeak1;
+    //    utter.onend = () => resolve();
+    //    speechSynthesis.speak(utter);
+    //});
 }
 
 async function startVoiceChat1() {
