@@ -40,7 +40,7 @@ async function sendToGPT(prompt) {
 
 
 async function translateWithGPT(vietnameseText) {
-  const prompt = `Dịch câu sau sang tiếng Anh một cách tự nhiên: "${vietnameseText}"`;
+  const prompt = `"${vietnameseText}". Dịch câu trên sang tiếng Anh một cách tự nhiên mà không cần giải thích.`;
   
   const englishText = await sendToGPT(prompt); // Hàm này bạn đã có
   //alert(englishText);
