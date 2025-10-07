@@ -1,112 +1,87 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Talk With Foreigners</title>
+<meta charset="UTF-8">
+<title>Chat với GPT (Giọng nói + Bàn phím)</title>
 <style>
-body {
-    background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
-    color: #fff;
-    font: 1rem/1 'Poppins', sans-serif;
-    height:100%;
-    padding: 20px;
-    max-width: 700px; 
-    margin: auto;
-}
-
-h2 { text-align: center; color:darkblue}
+body { font-family: Arial, sans-serif; padding: 20px; max-width: 700px; margin: auto; }
 #chatbox { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
 
-.menu-group {
+#inputArea {
   display: flex;
   justify-content: space-between;
-  padding: 0 10%; /* cách biên trái và phải 20px */
-  width: 100%;
-  box-sizing: border-box;
+  align-items: center;
+  gap: 8px;
 }
 
-
-.menu-group select {
-  width: 30%; /* hoặc tuỳ chỉnh theo nhu cầu */
-  padding: 8px;
-  font-size: 16px;
-  background-color: transparent;
+textarea {
+  flex: 1;
+  min-width: 0;
+  height: 36px;
 }
+
 .button-group {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%; /* hoặc đặt chiều rộng cụ thể */
-  padding: 10px 0px; /* tuỳ chỉnh khoảng cách lề */
-}
-#mic1_button {
-    width: 50px; /* Kích thước nút */
-    height: 50px;
-    border-radius: 50%; /* Làm cho nút tròn */
-    /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
-    background-image:  "url('')"; /* Ảnh bên trong */
-    background-size: cover; /* Đảm bảo ảnh phủ đầy */
-    background-position: center;
-    border: 3px solid #333; /* Viền */
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-}
-#mic2_button {
-    width: 50px; /* Kích thước nút */
-    height: 50px;
-    border-radius: 50%; /* Làm cho nút tròn */
-    /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
-    background-image:  "url('')"; /* Ảnh bên trong */
-    background-size: cover; /* Đảm bảo ảnh phủ đầy */
-    background-position: center;
-    border: 3px solid #333; /* Viền */
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
+  gap: 4px; /* khoảng cách giữa 2 nút */
 }
 
+button {
+  height: 42px;
+  white-space: nowrap;
+}
+/*
+.user { color: blue; font-weight: bold; }
+.gpt { color: green; font-weight: bold; }
+*/
+.user {
+  color: gray;
+}
 
-#loa_button {
-  padding: 10px 20px;
-  font-size: 16px;
-  width: 50px;
-  height: 50px;
-  border: 2px solid #ccc;
-  background-image: url("icons/loa.png");
-  background-size: cover;
-  background-position: center;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
+#start_button{
+width: 42px; /* Kích thước nút */
+height: 42px;
+border-radius: 0%; /* Làm cho nút tròn */
+background-image: url("icons/mic.gif"); /* Ảnh bên trong */
+background-size: cover; /* Đảm bảo ảnh phủ đầy */
+background-position: center;
+border: 3px solid #333; /* Viền */
+cursor: pointer;
+align-items: center;
+justify-content: center;
+}
+
+#listen_button {
+width: 42px; /* Kích thước nút */
+height: 42px;
+border-radius: 0%; /* Làm cho nút tròn */
+background-image: url("icons/bot.png"); /* Ảnh bên trong */
+background-size: cover; /* Đảm bảo ảnh phủ đầy */
+background-position: center;
+border: 3px solid #333; /* Viền */
+cursor: pointer;
+display: flex;
+align-items: center;
+justify-content: center;
 }
 
 </style>
 </head>
 <body>
-<h2 >🗣️Talk With Foreigners👤</h2>
+<h2 onclick="tieng_chon_chat()">🤖 Chat with GPT in <button id="langChonText" style="color: blue;font-size:20px">Vietnamese</button></h2>
 
 <div id="chatbox"></div>
 
-<div class="menu-group">
-    <select id="lang-left" onclick="toggleMenuL()" ></select>
-    <select id="lang-right" onclick="toggleMenuR()" ></select>
+<div id="inputArea">
+    <textarea id="textInput" type="text" placeholder="Gõ tin nhắn hoặc bấm mic để nói..." /></textarea>
+    <div class="button-group">
+        <button onclick="sendText()"> ➤ </button>
+        <button id="start_button" onclick="toggleMic()" ></button>
+        <button id="listen_button"></button>
+    </div>
 </div>
 
-<div class="button-group">
-    <button id="mic1_button" onclick="toggleMic1()" >🎤</button>
-    <button id="loa_button" onclick="repeatText()" ></button>
-    <button id="mic2_button" onclick="toggleMic2()" >🎙️</button>
-</div>
 <script>
 //===Tien them
-const mic1_button = document.getElementById("mic1_button");
-const mic2_button = document.getElementById("mic2_button");
-
-
-//Giai ma-bmat
 const dnaToBinaryMap = {
 'A': '00',
 'C': '01',
@@ -135,11 +110,9 @@ function decodeDNA(textkhoaapi) {
     const text = binaryToText(binary);
     return text;
 }
-//End Giai ma-bmat
 
 let langChatN = 0;
-let langChatSpeak1 = 'vi-VN';
-let langChatSpeak2 = 'en-US';
+let langChatSpeak = 'vi-VN';
 let langChatText = 'vi';
 
 const textkhoaapi = "CTATCGGTAGTCCTAACTAGCGTTCGGGAGTCCGCCCTAACCGACTCTCGGGCATACAACCGCCCAGTCCAACATACAAGCTCCCCCACACGCATCCTCGCGGGCACACGTCCGCACCACCAACCGGACACACCCGCGAGCGGACAGTCGATCCATCCGGCAGGATCGATAACTGACGGTCACACAGCATCACGGCCACGATCAATACATGCCTCCCTCGCGGACCGACAATATCTCACTCCGGATCTCGGGCCATATCTCAATCAGACGTAATGAAGTCCATTCAATCGCCCGTCCATCATAGATGCATATCAGTCTCACCCCATCCCCCAATATCAAGCGTACGAGCGGTCACGCAGGCAGGATACATCACGGCATCACCACCAACCCCTCAAGCCGCCGGCCAGGCCACCGAGCCAACATCCATGCAAGCATTCATCCTCACTATCTAACTAAATGACCACCATAAGTCAGTCCGTCCCCGCGAGCACTATAGCTCCCGGCCGCTATAGCGTTCTACATCAATCACCGCCACTCTCACGGGCCCTATGCCCCACACGCGAGATATCACACGCACCACCTCCCAGCCTAGCAGTCCGCCGTCATCTCGGTCATGCTCGCTCGCCCACGTGCCCCCTACCAGTCGTTCCCCCAAC";
@@ -184,62 +157,50 @@ async function sendText() {
 }
 
 // SPEECH TO TEXT (Voice Input)
-let recognition1;
-let listening1 = false;
+let recognition;
+let listening = false;
 
-function toggleMic1() {
-    if (!listening1) {//neu chua lang nghe thi bat dau lang nghe
-        mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; // Set the background image
-        startRecognition1();
-        startVoiceChat1();
-    } else {//neu dang lang nghe thi dung lang nghe
-        stopRecognition1();
-        mic1_button.style.backgroundImage = "url('')"; // Set the background image
+function toggleMic() {
+    if (!listening) {
+        startRecognition();
+        startVoiceChat();
+    } else {
+        stopRecognition();
     }
 }
 
-function startRecognition1() {
+function startRecognition() {
     if (!('webkitSpeechRecognition' in window)) {
         alert("Trình duyệt không hỗ trợ SpeechRecognition.");
         return;
     }
-    mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')";
-    recognition1 = new webkitSpeechRecognition();
-    recognition1.lang = langChatSpeak1;
-    recognition1.continuous = false;
-    recognition1.interimResults = false;
+    recognition = new webkitSpeechRecognition();
+    recognition.lang = langChatSpeak;
+    recognition.continuous = false;
+    recognition.interimResults = false;
 
-    recognition1.onresult = async (event) => {
+    recognition.onresult = async (event) => {
     const transcript = event.results[0][0].transcript;
-    
-
     addMessage("user", transcript);
     const reply = await sendToGPT(transcript + hauto);
     addMessage("gpt", reply);
-    mic1_button.style.backgroundImage = "url('')";
-    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
     speak(reply);
     };
 
-    recognition1.onstart = () => listening1 = true;
-    recognition1.onend = () => listening1 = false;
+    recognition.onstart = () => listening = true;
+    recognition.onend = () => listening = false;
 
-    recognition1.start();
+    recognition.start();
 }
 
-function stopRecognition1() {
-    if (recognition1) {
-        recognition1.stop();
-        listening1 = false;
-        mic1_button.style.backgroundImage = "url('')"; // Set the background image}
-    }
+function stopRecognition() {
+    if (recognition) recognition.stop();
 }
 
 // TEXT TO SPEECH
 function speak(text) {
     const utter = new SpeechSynthesisUtterance(text);
-    utter.lang = langChatSpeak2;
-    utter.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+    utter.lang = langChatSpeak;
     speechSynthesis.speak(utter);
 }
 
@@ -272,7 +233,7 @@ async function handleUserSpeech(text) {
 
     return new Promise((resolve) => {
         const utter = new SpeechSynthesisUtterance(reply);
-        utter.lang = langChatSpeak1;
+        utter.lang = langChatSpeak;
         utter.onend = () => resolve();
         speechSynthesis.speak(utter);
     });
@@ -281,25 +242,23 @@ async function handleUserSpeech(text) {
 //DN ham recordOnce
 function recordOnce() {
     return new Promise((resolve, reject) => {
-        recognition1.start();
+        recognition.start();
 
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
-            recognition1.stop();
+            recognition.stop();
             resolve(transcript);
         };
 
-        recognition1.onerror = (e) => {
-            recognition1.stop();
-            mic1_button.style.backgroundImage = "url('')"; // Set the background image
+        recognition.onerror = (e) => {
+            recognition.stop();
             reject(e);
         };
     });
 }
 
 // khi nhap mic thi thuc thi ham sau:
-async function startVoiceChat1() {
-
+async function startVoiceChat() {
     log("⏳ Đang lắng nghe bạn...");
     while (true) {
         try {
