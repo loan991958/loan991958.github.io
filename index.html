@@ -217,11 +217,9 @@ function startRecognition1() {
     const reply = await sendToGPT(transcript + hauto);//tra ve hoi dap cua GPT
     addMessage("gpt", reply);//them tin nhan vao chatbox,xem nhu tra loi cua gpt
     mic1_button.style.backgroundImage = "url('')";//cho mic1 thoi nhap nhay
-    loa_button.click();
-    {
-        speak(reply);//doc toan bo cau tra loi
-        loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";//cho loa nhap nhay
-    };
+    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";//cho loa nhap nhay
+    
+    speak(reply);//doc toan bo cau tra loi
 
     };
 
@@ -287,7 +285,7 @@ function recordOnce() {
     return new Promise((resolve, reject) => {
         recognition1.start();
 
-        recognition.onresult = (event) => {
+        recognition1.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
             recognition1.stop();
             resolve(transcript);
