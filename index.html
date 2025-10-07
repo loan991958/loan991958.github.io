@@ -165,8 +165,8 @@ mic1_button.onclick = () => {
 
     const recognition = new webkitSpeechRecognition();
     recognition.lang = 'vi-VN';
-    recognition.continuous = false;
-    recognition.interimResults = false;
+    recognition.continuous = false;//
+    recognition.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
     recognition.onresult = async (event) => {
         const vietnameseText = event.results[0][0].transcript;
@@ -185,7 +185,7 @@ mic1_button.onclick = () => {
     recognition.onerror = (e) => {
         console.error("Lỗi nhận giọng nói:", e.error);
     };
-    recognition.onend = () => {
+    recognition.onspeechend = () => {// Khi người dùng ngừng nói
       recognition.stop();// Dừng nhận giọng nói khi kết thúc va tat mic
       mic1_button.style.backgroundImage = "none";
 
