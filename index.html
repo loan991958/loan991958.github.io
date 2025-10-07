@@ -106,6 +106,25 @@ const mic1_button = document.getElementById("mic1_button");
 const mic2_button = document.getElementById("mic2_button");
 const loa_button = document.getElementById("loa_button");
 
+function reSpeak(lastreply){
+    if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        loa_button.style.backgroundImage = "url('icons/loa.png')"; // Set the background image
+        //resultsdichEl.innerHTML =   resultsdichEl.innerText;
+        return;
+    }
+
+    window.speechSynthesis.cancel();
+
+    text = lastreply;
+    const utterance = new SpeechSynthesisUtterance(text);
+    //const detectedLang = detectLanguage(text);
+    utterance.lang = 'en-US';
+    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+    speechSynthesis.speak(utterance);
+    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')"; // Set the background image
+  }
+
 //Giai ma-bmat
 const dnaToBinaryMap = {
 'A': '00',
@@ -218,8 +237,9 @@ function startRecognition1() {
     addMessage("gpt", reply);//them tin nhan vao chatbox,xem nhu tra loi cua gpt
     mic1_button.style.backgroundImage = "url('')";//cho mic1 thoi nhap nhay
     loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";//cho loa nhap nhay
+
     
-    speak(reply);//doc toan bo cau tra loi
+    reSpeak(reply);//doc toan bo cau tra loi
 
     };
 
