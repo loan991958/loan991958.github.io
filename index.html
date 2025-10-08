@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Conversation in 2 languages</title>
 <style>
 body {
     background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
@@ -16,6 +16,7 @@ body {
 }
 
 h2 { text-align: center; color:darkblue}
+
 #chatbox { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
 
 .menu-group {
@@ -41,8 +42,8 @@ h2 { text-align: center; color:darkblue}
   padding: 10px 0px; /* tuỳ chỉnh khoảng cách lề */
 }
 #mic1_button {
-    width: 60px; /* Kích thước nút */
-    height: 60px;
+    width: 70px; /* Kích thước nút */
+    height: 70px;
     border-radius: 50%; /* Làm cho nút tròn */
     /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
     background-image:  "url('')"; /* Ảnh bên trong */
@@ -54,8 +55,8 @@ h2 { text-align: center; color:darkblue}
     justify-content: center;
 }
 #mic2_button {
-    width: 60px; /* Kích thước nút */
-    height: 60px;
+    width: 70px; /* Kích thước nút */
+    height: 70px;
     border-radius: 50%; /* Làm cho nút tròn */
     /*background-image: url("icons/mic1-animation.gif");  Ảnh bên trong */
     background-image:  "url('')"; /* Ảnh bên trong */
@@ -81,12 +82,18 @@ h2 { text-align: center; color:darkblue}
   align-items: center;
   justify-content: center;
 }
-
+.mic1-vi {
+    color: rgb(226, 218, 218);
+}
+.mic1-en {
+    color: darkgreen;
+    font-size: xx-large;
+}
 </style>
 
 </head>
 <body>
-<h2 >🗣️Talk With Foreigners👤</h2>
+<h2 >🗣️Conversation in 2 languages👤</h2>
 
 <div id="chatbox"></div>
 
@@ -105,6 +112,7 @@ h2 { text-align: center; color:darkblue}
 
 
 <script>
+const chatbox = document.getElementById("chatbox");
 const mic1_button = document.getElementById("mic1_button");
 const mic2_button = document.getElementById("mic2_button");  
 const loa_button = document.getElementById("loa_button");
@@ -118,6 +126,17 @@ function maHoaLaiAK(){
     return ch;
 }
 let apiKey=maHoaLaiAK();
+
+function addMessage(role, text) {
+    text = text.replace(/^"(.*)"$/, '$1');// bỏ dấu ngoặc kép ở đầu và cuối nếu có
+    const div = document.createElement("div");
+    //div.innerHTML = `<span class='${role}'>${text}</span> <br>`;
+    div.innerHTML = `<span class="${role}">${role === "mic1-vi" ? "<br>" : ""} ${text}</span>`;
+
+    chatbox.appendChild(div);
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
 
 // Hàm gọi GPT để dịch tiếng Việt sang tiếng Anh
 async function sendToGPT(prompt) {
@@ -162,39 +181,42 @@ function speakEnglish(text) {
 // Nhận giọng nói tiếng Việt từ mic1
 mic1_button.onclick = () => {
 
-    const recognition = new webkitSpeechRecognition();
-    recognition.lang = 'vi-VN';
-    recognition.continuous = false;//
-    recognition.interimResults = false;// Chỉ lấy kết quả cuối cùng
+    const recognition1 = new webkitSpeechRecognition();
+    recognition1.lang = 'vi-VN';
+    recognition1.continuous = false;//
+    recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
 
-    recognition.onresult = async (event) => {
+    recognition1.onresult = async (event) => {
         const vietnameseText = event.results[0][0].transcript;
         console.log("Bạn nói:", vietnameseText);
-        recognition.stop();// Dừng nhận giọng nói khi kết thúc 
+        addMessage("mic1-vi", vietnameseText);
+
+        recognition1.stop();// Dừng nhận giọng nói khi kết thúc 
 
         //alert(vietnameseText);
 
         // Dịch bằng GPT
         const englishText = await translateWithGPT(vietnameseText);
         console.log("GPT dịch:", englishText);
+        addMessage("mic1-en", englishText);
 
         // Gán hành động cho loa_button để phát lại
         loa_button.onclick = () => speakEnglish(englishText);
         loa_button.click(); // tự động phát luôn
     };
 
-    recognition.onerror = (e) => {
+    recognition1.onerror = (e) => {
         console.error("Lỗi nhận giọng nói:", e.error);
     };
-    recognition.onend = () => {
+    recognition1.onend = () => {
       mic1_button.style.backgroundImage = "none";
     };
-    recognition.onstart = function() {// đang nhận giọng nói sau khi bấm mic1
+    recognition1.onstart = function() {// đang nhận giọng nói sau khi bấm mic1
       mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; 
     };
 
-    recognition.start();// Bắt đầu nhận giọng nói
+    recognition1.start();// Bắt đầu nhận giọng nói
 };
 
 </script>    
