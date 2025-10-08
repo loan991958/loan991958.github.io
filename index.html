@@ -108,7 +108,6 @@ h2 { text-align: center; color:darkblue}
 const mic1_button = document.getElementById("mic1_button");
 const mic2_button = document.getElementById("mic2_button");  
 const loa_button = document.getElementById("loa_button");
-var recognizing = false; // Biến trạng thái nhận diện giọng nói
 
 let listUrlYt = ["https://youtu.be/sk=proj=epXwjLAeKPLBuTFMvjDmdQAhDVbhKcSZJ60xkDI4iF419uvhXC7GZ7jS7CHl8=OCemM293KtU5T3BlbkFJJ14i4QAWBYiJQbPMNBOMtspp8QL==mVbG2uig2oq44YGtjW9TFb3DdQuIrKYm7kNvvTnUqKoUA"];
 ///GFG_FunBo();
@@ -168,10 +167,6 @@ mic1_button.onclick = () => {
     recognition.continuous = false;//
     recognition.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
-    recognition.onstart = function() {
-      recognizing = true;
-      mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; 
-    };
 
     recognition.onresult = async (event) => {
         const vietnameseText = event.results[0][0].transcript;
@@ -191,14 +186,18 @@ mic1_button.onclick = () => {
         console.error("Lỗi nhận giọng nói:", e.error);
     };
     recognition.onend = () => {
-      recognizing = false;
       recognition.stop();// Dừng nhận giọng nói khi kết thúc 
       mic1_button.style.backgroundImage = "none";
-
+      recognition.abort();
+      //alert("Kết thúc nhận giọng nói! Bạn có thể bấm lại nút mic để nói tiếp.");
+    };
+    recognition.onstart = function() {// đang nhận giọng nói sau khi bấm mic1
+      mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; 
     };
 
-    recognition.start();
+    recognition.start();// Bắt đầu nhận giọng nói
 };
+
 
 </script>    
 </body>
