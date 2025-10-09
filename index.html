@@ -67,6 +67,20 @@ h2 { text-align: center; color:darkblue}
     align-items: center;
     justify-content: center;
 }
+#start_button {
+    width: 30px; /* Kích thước nút */
+    height: 30px;
+    border-radius: 50%; /* Làm cho nút tròn */
+    font-size: 16px;
+    /*background-image: url("icons/started.png");  Ảnh bên trong */
+    background-image:  url('icons/start.png'); /* Ảnh bên trong */
+    background-size: cover; /* Đảm bảo ảnh phủ đầy */
+    background-position: center;
+    border: none; /* Viền */
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
 
 
 #loa_button {
@@ -89,12 +103,14 @@ h2 { text-align: center; color:darkblue}
     color: darkgreen;
     font-size: xx-large;
 }
+
+
 </style>
 
 </head>
 <body>
 <h2 >Conversation in 2 languages</h2>
-<h2 >🗣️🟢👤</h2>
+<h2 >🗣️<button id="start_button"></button>👤</h2>
 
 
 <div id="chatbox"></div>
@@ -113,6 +129,7 @@ h2 { text-align: center; color:darkblue}
 
 
 <script>
+const start_button = document.getElementById("start_button");
 const chatbox = document.getElementById("chatbox");
 const mic1_button = document.getElementById("mic1_button");
 const mic2_button = document.getElementById("mic2_button");  
@@ -219,7 +236,14 @@ mic1_button.onclick = () => {
 
     recognition1.start();// Bắt đầu nhận giọng nói
 };
-
+start_button.onclick=()=>{
+  const recognition = new webkitSpeechRecognition();// Khởi tạo đối tượng nhận giọng nói de mo mic trong ios
+  recognition.stop();
+  loa_button.onclick = () => speakEnglish("Let's get started!");
+  loa_button.click(); // tự động phát luôn
+  start_button.style.backgroundImage = "url('icons/started.png')";
+  start_button.disabled = true;
+}
 </script>    
 </body>
 </html>
