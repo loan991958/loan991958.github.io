@@ -17,7 +17,7 @@ body {
 
 h2 { text-align: center; color:darkblue}
 
-#chatbox { border: 1px solid #ccc; padding: 10px; height: 300px; overflow-y: scroll; margin-bottom: 10px; }
+#chatbox { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; margin-bottom: 10px; }
 
 .menu-group {
   display: flex;
@@ -93,10 +93,12 @@ h2 { text-align: center; color:darkblue}
 
 </head>
 <body>
-<h2 >🗣️Conversation in 2 languages👤</h2>
+<h2 >Conversation in 2 languages</h2>
+<h2 >🗣️🟢👤</h2>
+
 
 <div id="chatbox"></div>
-
+<br>
 <div class="menu-group">
     <select id="lang-left" onclick="toggleMenuL()" ></select>
     <select id="lang-right" onclick="toggleMenuR()" ></select>
@@ -108,7 +110,6 @@ h2 { text-align: center; color:darkblue}
     <button id="mic2_button" >🎙️</button>
 </div>
 
-<br><br><br><br><br><br><br><br><br><br>
 
 
 <script>
