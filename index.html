@@ -238,7 +238,13 @@ mic1_button.onclick = () => {
 };
 
 start_button.onclick=()=>{
-  mic1_button.click();
+  const recognition = new webkitSpeechRecognition();
+  recognition.onresult = e => {
+    console.log(e.results[0][0].transcript);
+    recognition.stop();
+  };  
+
+  recognition.start();
 
   loa_button.onclick = () => speakEnglish("Let's begin!");
   loa_button.click(); // tự động phát luôn
