@@ -103,6 +103,17 @@ h2 { text-align: center; color:darkblue}
     color: darkgreen;
     font-size: xx-large;
 }
+.mic2-noi {
+    color: #71759f;
+}
+.mic2-dich {
+    color: darkblue;
+    font-size: xx-large;
+}
+#lang2_select {
+  text-align: right;       /* Căn nội dung sang phải */
+  direction: rtl;          /* Đảo hướng dòng để option hiển thị sát phải */
+}
 
 
 </style>
@@ -116,8 +127,8 @@ h2 { text-align: center; color:darkblue}
 <div id="chatbox"></div>
 <br>
 <div class="menu-group">
-    <select id="lang-left" onclick="toggleMenuL()" ></select>
-    <select id="lang-right" onclick="toggleMenuR()" ></select>
+    <select id="lang1_select" onclick="toggleMenu1()" ></select>
+    <select id="lang2_select" onclick="toggleMenu2()" ></select>
 </div>
 
 <div class="button-group">
@@ -134,6 +145,69 @@ const chatbox = document.getElementById("chatbox");
 const mic1_button = document.getElementById("mic1_button");
 const mic2_button = document.getElementById("mic2_button");  
 const loa_button = document.getElementById("loa_button");
+const lang1_select =  document.getElementById("lang1_select");
+const lang2_select =  document.getElementById("lang2_select");
+
+//list cac langs co 13 langs
+//lLangs[n][0] se la ten lang ro rang cua nuoc do
+//lLangs[n][1] se la voice
+const lLangs = 
+[['Danish',         'da-DK'],
+ ['English',        'en-US'],
+ ['French',         'fr-FR'],
+ ['German',         'de-DE'],
+ ['Italian',        'it-IT'],
+ ['Japanese',       'ja-JP'],
+ ['Korean',         'ko-KR'],
+ ['Mexico',         'es-MX'],
+ ['Nederlands',     'nl-NL'],
+ ['Rusian',         'ru-RU'],
+ ['Taiwan',         'zh-TW'],
+ ['Thai',           'th-TH'],
+ ['Vietnamese',     'vi-VN']]; 
+
+// alert(lLangs[12][0]); //la Danish
+//alert(lLangs[12][1]); //la da-DK
+//alert(lLangs[12][1].substring(0, 2)); //la da
+
+//day la list cac lang quoc gia
+const listLangCountry = lLangs.map(pt => pt[0]);
+
+//day la list cac lang quoc gia
+const listLangVoice = lLangs.map(pt => pt[1]);
+
+function updateMenulang1_select() {
+    for (i = lang1_select.options.length-1; i >= 0;i--) {
+        lang1_select.remove(i);
+    }
+    for (let i = 0; i < listLangCountry.length; i++) {
+        let optn = listLangCountry[i];
+        let el = document.createElement("option");
+        el.textContent = optn;
+        el.value = optn;
+        lang1_select.appendChild(el);
+    }
+}
+updateMenulang1_select();
+lang1_select.selectedIndex = 12; // chọn option thứ 2 (index bắt đầu từ 0)
+
+function updateMenulang2_select() {
+    for (i = lang2_select.options.length-1; i >= 0;i--) {
+        lang2_select.remove(i);
+    }
+    for (let i = 0; i < listLangCountry.length; i++) {
+        let optn = listLangCountry[i];
+        let el = document.createElement("option");
+        el.textContent = optn;
+        el.value = optn;
+        lang2_select.appendChild(el);
+    }
+}
+updateMenulang2_select();
+lang2_select.selectedIndex = 1; // chọn option thứ 2 (index bắt đầu từ 0)
+
+
+
 
 
 let listUrlYt = ["https://youtu.be/sk=proj=epXwjLAeKPLBuTFMvjDmdQAhDVbhKcSZJ60xkDI4iF419uvhXC7GZ7jS7CHl8=OCemM293KtU5T3BlbkFJJ14i4QAWBYiJQbPMNBOMtspp8QL==mVbG2uig2oq44YGtjW9TFb3DdQuIrKYm7kNvvTnUqKoUA"];
@@ -149,7 +223,8 @@ function addMessage(role, text) {
     text = text.replace(/^"(.*)"$/, '$1');// bỏ dấu ngoặc kép ở đầu và cuối nếu có
     const div = document.createElement("div");
     //div.innerHTML = `<span class='${role}'>${text}</span> <br>`;
-    div.innerHTML = `<span class="${role}">${role === "mic1-noi" ? "<br>" : ""} ${text}</span>`;
+    //div.innerHTML = `<span class="${role}">${role === "mic1-noi" ? "<br>" : ""} ${text}</span>`;
+    div.innerHTML = `<span class="${role}">${role.includes('noi') ? "<br>" : ""} ${text}</span>`;
 
     chatbox.appendChild(div);
     chatbox.scrollTop = chatbox.scrollHeight;
@@ -184,8 +259,8 @@ async function translateWithGPT(vietnameseText) {
   return englishText;
 }
 
-// Hàm phát âm tiếng Anh
-function speakEnglish(text) {
+// Hàm phát âm text dich
+function speakTextDich(text) {
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US';
@@ -196,31 +271,31 @@ function speakEnglish(text) {
     console.log("Trình duyệt không hỗ trợ speechSynthesis");
   }
 };
-// Nhận giọng nói tiếng Việt từ mic1
+// Nhận giọng nói từ mic1
 mic1_button.onclick = () => {
 
     const recognition1 = new webkitSpeechRecognition();
-    recognition1.lang = 'vi-VN';
+    recognition1.lang = listLangVoice[lang1_select.selectedIndex];
     recognition1.continuous = false;//
     recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
 
     recognition1.onresult = async (event) => {
-        const vietnameseText = event.results[0][0].transcript;
-        console.log("Bạn nói:", vietnameseText);
-        addMessage("mic1-noi", vietnameseText);
+        const mic1TextNoi = event.results[0][0].transcript;
+        console.log("Bạn nói:", mic1TextNoi);
+        addMessage("mic1-noi", mic1TextNoi);
 
         recognition1.stop();// Dừng nhận giọng nói khi kết thúc 
         //dat o cho nay thi mic ios moi bien mat
         //alert(vietnameseText);
 
         // Dịch bằng GPT
-        const englishText = await translateWithGPT(vietnameseText);
-        console.log("GPT dịch:", englishText);
-        addMessage("mic1-dich", englishText);
+        const mic1TextDich = await translateWithGPT(mic1TextNoi);
+        console.log("GPT dịch:", mic1TextDich);
+        addMessage("mic1-dich", mic1TextDich);
 
         // Gán hành động cho loa_button để phát lại
-        loa_button.onclick = () => speakEnglish(englishText);
+        loa_button.onclick = () => speakTextDich(mic1TextDich);
         loa_button.click(); // tự động phát luôn
     };
 
@@ -237,6 +312,47 @@ mic1_button.onclick = () => {
     recognition1.start();// Bắt đầu nhận giọng nói
 };
 
+// Nhận giọng nói từ mic2
+mic2_button.onclick = () => {
+
+    const recognition2 = new webkitSpeechRecognition();
+    recognition2.lang = 'en-US';
+    recognition2.continuous = false;//
+    recognition2.interimResults = false;// Chỉ lấy kết quả cuối cùng
+
+
+    recognition2.onresult = async (event) => {
+        const mic2TextNoi = event.results[0][0].transcript;
+        console.log("Bạn nói:", mic2TextNoi);
+        addMessage("mic2-noi", mic2TextNoi);
+
+        recognition2.stop();// Dừng nhận giọng nói khi kết thúc 
+        //dat o cho nay thi mic ios moi bien mat
+        //alert(vietnameseText);
+
+        // Dịch bằng GPT
+        const mic2TextDich = await translateWithGPT(mic2TextNoi);
+        console.log("GPT dịch:", mic2TextDich);
+        addMessage("mic2-dich", mic2TextDich);
+
+        // Gán hành động cho loa_button để phát lại
+        loa_button.onclick = () => speakTextDich(mic2TextDich);
+        loa_button.click(); // tự động phát luôn
+    };
+
+    recognition2.onerror = (e) => {
+        console.error("Lỗi nhận giọng nói:", e.error);
+    };
+    recognition2.onend = () => {
+      mic2_button.style.backgroundImage = "none";
+    };
+    recognition2.onstart = function() {// đang nhận giọng nói sau khi bấm mic1
+      mic2_button.style.backgroundImage = "url('icons/mic2-animation.gif')"; 
+    };
+
+    recognition2.start();// Bắt đầu nhận giọng nói
+};
+
 start_button.onclick=()=>{
   const recognition = new webkitSpeechRecognition();
   recognition.onresult = e => {
@@ -246,13 +362,70 @@ start_button.onclick=()=>{
 
   recognition.start();
 
-  loa_button.onclick = () => speakEnglish("Let's begin!");
+  loa_button.onclick = () => speakTextDich("Let's begin!");
   loa_button.click(); // tự động phát luôn
 
   start_button.style.backgroundImage = "url('icons/started.png')";
   start_button.disabled = true;
 
 }
+//function toggleMenu1(){
+//    let indexlang1_select = lang1_select.selectedIndex  
+//}
+//Anh: Translate the above sentence into English naturally without explanation.
+//Translate the above sentence into Vietnamese naturally without explanation.
+
+//Đan Mạch: Oversæt ovenstående sætning naturligt til dansk uden forklaring.
+//Oversæt ovenstående sætning naturligt til vietnamesisk uden forklaring.
+
+//Pháp: Traduisez la phrase ci-dessus en français naturellement sans explication.
+//Traduisez la phrase ci-dessus en vietnamien naturellement sans explication.
+
+//Đức: Übersetzen Sie den obigen Satz auf natürliche Weise und ohne Erklärung ins Deutsche.
+//Übersetzen Sie den obigen Satz ohne Erklärung ins Vietnamesische.
+
+//Italy: Traduci la frase sopra in italiano in modo naturale, senza spiegazioni.
+//Traduci la frase precedente in vietnamita in modo naturale, senza spiegazioni.
+
+//Nhật: 上記の文を説明なしで自然な日本語に翻訳してください。(Jōki no bun o setsumei nashide shizen'na nihongo ni hon'yaku shite kudasai.)
+//上記の文を説明なしで自然にベトナム語に翻訳してください。Jōki no bun o setsumei nashide shizen ni Betonamu-go ni hon'yaku shite kudasai.
+
+//Hàn: 위의 문장을 설명 없이 자연스럽게 한국어로 번역해 보세요. (wiui munjang-eul seolmyeong eobs-i jayeonseuleobge hangug-eolo beon-yeoghae boseyo.)
+//위의 문장을 설명 없이 자연스럽게 베트남어로 번역해 보세요.wiui munjang-eul seolmyeong eobs-i jayeonseuleobge beteunam-eolo beon-yeoghae boseyo.
+
+//Tây Ban Nha: Traduzca la frase anterior al español de forma natural y sin explicaciones.
+//Traduzca la oración anterior al vietnamita de forma natural y sin explicaciones.
+
+//Hà Lan : Vertaal de bovenstaande zin op natuurlijke wijze naar het Nederlands Spaans, zonder uitleg.
+//Vertaal de bovenstaande zin op natuurlijke wijze naar het Vietnamees, zonder uitleg.
+
+//Nga: Переведите данное предложение на русский язык естественным образом, без пояснений. (Perevedite dannoye predlozheniye na russkiy yazyk yestestvennym obrazom, bez poyasneniy.)
+//Переведите данное предложение на вьетнамский язык естественным образом, без пояснений. Perevedite dannoye predlozheniye na v'yetnamskiy yazyk yestestvennym obrazom, bez poyasneniy.
+
+//Trung (Giản Thể): 将上述句子自然地翻译成中文（简体），无需解释。(Jiāng shàngshù jùzǐ zìrán dì fānyì chéng zhōngwén (jiǎntǐ), wúxū jiěshì.)
+//将上述句子自然地翻译成越南语，无需解释。Jiāng shàngshù jùzǐ zìrán dì fānyì chéng yuènán yǔ, wúxū jiěshì.
+
+//Thái : แปลประโยคข้างต้นเป็นภาษาไทยตามธรรมชาติโดยไม่ต้องอธิบาย (Pæl prayokh k̄ĥāng t̂n pĕn p̣hās̄ʹā thịy tām ṭhrrmchāti doy mị̀ t̂xng xṭhibāy)
+//แปลประโยคข้างต้นเป็นภาษาเวียดนามตามธรรมชาติโดยไม่ต้องมีคำอธิบาย  Pæl prayokh k̄ĥāng t̂n pĕn p̣hās̄ʹā weīydnām tām ṭhrrmchāti doy mị̀ t̂xng mī khả xṭhibāy
+
+//Tây Tạng: གོང་གི་ཚིག་དུམ་འདི་འགྲེལ་བཤད་མེད་པར་རང་བཞིན་གྱིས་བོད་སྐད་དུ་བསྒྱུར་རོགས། (gong gi tshig dum 'di 'grel bshad med par rang bzhin gyis bod skad du bsgyur rogs/)
+//གོང་གསལ་གྱི་ཚིག་གྲུབ་དེ་འགྲེལ་བཤད་མེད་པར་རང་བཞིན་གྱིས་ཝི་ཏི་ནམ་སྐད་དུ་བསྒྱུར་རོགས། gong gsal gyi tshig grub de 'grel bshad med par rang bzhin gyis wi ti nam skad du bsgyur rogs/
+
+//Lào: ແປປະໂຫຍກຂ້າງເທິງນີ້ເປັນພາສາຫວຽດນາມຕາມທໍາມະຊາດໂດຍບໍ່ມີການອະທິບາຍ. aep paojk khangthoengni pen phasaviadnam tamthoamasad odnybomikan athibai
+
+//Khmer: បកប្រែប្រយោគខាងលើទៅជាភាសាវៀតណាមដោយធម្មជាតិដោយគ្មានការពន្យល់។   bakabre brayok khangleu tow chea pheasaea vietneam daoy thommocheate daoy kmean kar ponyol .
+
+//Do Thái : לוייטנאמית באופן טבעי ללא הסברים. tirgem et hameshpat han"le levietnamit be'ufan tiv'i lele hasavrim.
+
+//Thổ Nhĩ Kỳ: Yukarıdaki cümleyi açıklama yapmadan doğal bir şekilde Vietnamcaya çevirin.
+
+//Ba Lan: Przetłumacz powyższe zdanie na język wietnamski naturalnie, bez wyjaśnień.
+
+//Bồ Đào Nha: Traduza a frase acima para o vietnamita naturalmente, sem explicações.
+
+//La-Tinh: Sententiam supra scriptam in Vietnamiensem linguam naturaliter sine explicatione verte.
+
+//Dịch câu trên sang tiếng Việt một cách tự nhiên mà không cần giải thích.
 
 </script>    
 </body>
