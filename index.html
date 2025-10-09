@@ -96,10 +96,10 @@ h2 { text-align: center; color:darkblue}
   align-items: center;
   justify-content: center;
 }
-.mic1-vi {
-    color: rgb(226, 218, 218);
+.mic1-noi {
+    color: rgb(125, 122, 122);
 }
-.mic1-en {
+.mic1-dich {
     color: darkgreen;
     font-size: xx-large;
 }
@@ -149,7 +149,7 @@ function addMessage(role, text) {
     text = text.replace(/^"(.*)"$/, '$1');// bỏ dấu ngoặc kép ở đầu và cuối nếu có
     const div = document.createElement("div");
     //div.innerHTML = `<span class='${role}'>${text}</span> <br>`;
-    div.innerHTML = `<span class="${role}">${role === "mic1-vi" ? "<br>" : ""} ${text}</span>`;
+    div.innerHTML = `<span class="${role}">${role === "mic1-noi" ? "<br>" : ""} ${text}</span>`;
 
     chatbox.appendChild(div);
     chatbox.scrollTop = chatbox.scrollHeight;
@@ -208,7 +208,7 @@ mic1_button.onclick = () => {
     recognition1.onresult = async (event) => {
         const vietnameseText = event.results[0][0].transcript;
         console.log("Bạn nói:", vietnameseText);
-        addMessage("mic1-vi", vietnameseText);
+        addMessage("mic1-noi", vietnameseText);
 
         recognition1.stop();// Dừng nhận giọng nói khi kết thúc 
         //dat o cho nay thi mic ios moi bien mat
@@ -217,7 +217,7 @@ mic1_button.onclick = () => {
         // Dịch bằng GPT
         const englishText = await translateWithGPT(vietnameseText);
         console.log("GPT dịch:", englishText);
-        addMessage("mic1-en", englishText);
+        addMessage("mic1-dich", englishText);
 
         // Gán hành động cho loa_button để phát lại
         loa_button.onclick = () => speakEnglish(englishText);
