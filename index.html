@@ -238,27 +238,16 @@ mic1_button.onclick = () => {
 };
 
 start_button.onclick=()=>{
-  mic1_button.onclick = () => {
-    const recognition1 = new webkitSpeechRecognition();
-    recognition1.continuous = false;//
-    recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
-    recognition1.onresult = async (event) => {
-        const englishText = event.results[0][0].transcript;
-        englishText = "Let's get started!"
-        console.log("Bạn nói:", englishText);
-        recognition1.stop();// Dừng nhận giọng nói khi kết thúc 
-        //dat o cho nay thi mic ios moi bien mat
-    };
-    recognition1.start();// Bắt đầu nhận giọng nói
-  };
   mic1_button.click();
-  
-  loa_button.onclick = () => speakEnglish("Let's get started!");
+
+  loa_button.onclick = () => speakEnglish("Let's begin!");
   loa_button.click(); // tự động phát luôn
 
   start_button.style.backgroundImage = "url('icons/started.png')";
   start_button.disabled = true;
+
 }
+
 </script>    
 </body>
 </html>
