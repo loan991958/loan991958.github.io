@@ -211,7 +211,7 @@ mic1_button.onclick = () => {
         addMessage("mic1-vi", vietnameseText);
 
         recognition1.stop();// Dừng nhận giọng nói khi kết thúc 
-
+        //dat o cho nay thi mic ios moi bien mat
         //alert(vietnameseText);
 
         // Dịch bằng GPT
@@ -238,7 +238,6 @@ mic1_button.onclick = () => {
 };
 start_button.onclick=()=>{
   const recognition = new webkitSpeechRecognition();// Khởi tạo đối tượng nhận giọng nói de mo mic trong ios
-  recognition.stop();
   loa_button.onclick = () => speakEnglish("Let's get started!");
   loa_button.click(); // tự động phát luôn
   start_button.style.backgroundImage = "url('icons/started.png')";
