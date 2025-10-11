@@ -23,7 +23,7 @@ h2 {
 #chatbox { 
   border: 1px solid #ccc; 
   padding: 10px; 
-  height: 360px; 
+  height: 350px; 
   overflow-y: scroll; 
   margin-bottom: 10px; 
 }
@@ -187,29 +187,41 @@ const lang2_select =  document.getElementById("lang2_select");
 //lLangs[n][0] se la ten lang ro rang cua nuoc do
 //lLangs[n][1] se la voice
 const lLangs = 
-[['Danish',         'da-DK'],
- ['English',        'en-US'],
- ['French',         'fr-FR'],
- ['German',         'de-DE'],
- ['Italian',        'it-IT'],
- ['Japanese',       'ja-JP'],
- ['Korean',         'ko-KR'],
- ['Mexico',         'es-MX'],
- ['Nederlands',     'nl-NL'],
- ['Rusian',         'ru-RU'],
- ['Taiwan',         'zh-TW'],
- ['Thai',           'th-TH'],
- ['Vietnamese',     'vi-VN']]; 
+[['Chinese',    'zh-TW', 'Tiếng Trung'],
+ ['Danish',     'da-DK', 'Tiếng Đan Mạch'], 
+ ['Dutch',      'nl-NL', 'Tiếng Hà Lan'],
+ ['English',    'en-US', 'Tiếng Anh'],
+ ['French',     'fr-FR', 'Tiếng Pháp'],
+ ['German',     'de-DE', 'Tiếng Đức'],
+ ['Hebrew',     'he-IL', 'Tiếng Do Thái'],
+ ['Italy',      'it-IT', 'Tiếng Italy'],
+ ['Japanese',   'ja-JP', 'Tiếng Nhật'],
+ ['Khmer',      'xx-xx', 'Tiếng Khmer'],
+ ['Korean',     'ko-KR', 'Tiếng Hàn'],
+ ['Lao',        'lo-LA', 'Tiếng Lào'],
+ ['Latin',      'la-LAT','Tiếng La-tinh'],
+ ['Portuguese', 'pt-PT', 'Tiếng Bồ Đào Nha'],
+ ['Rusian',     'ru-RU', 'Tiếng Nga'],
+ ['Spanish',    'es-MX', 'Tiếng Tây Ban Nha'],
+ ['Thai',       'th-TH', 'Tiếng Thái'],
+ ['Tibetan',    'bo-CN', 'Tiếng Tây Tạng'],
+ ['Turkish',    'tr-TR', 'Tiếng Thổ Nhĩ Kỳ'],
+ ['Vietnamese', 'vi-VN', 'Tiếng Việt']]
 
 // alert(lLangs[12][0]); //la Danish
 //alert(lLangs[12][1]); //la da-DK
 //alert(lLangs[12][1].substring(0, 2)); //la da
 
-//day la list cac lang quoc gia
+//day la list cac lang quoc gia, vd French
 const listLangCountry = lLangs.map(pt => pt[0]);
 
-//day la list cac lang quoc gia
+//day la list cac MA lang voice, vd fr-FR
 const listLangVoice = lLangs.map(pt => pt[1]);
+
+//day la list cac Tieng theo tieng Viet, vd Tieng Đan Mạch, Tiếng Lào...
+const listLangTiengDich = lLangs.map(pt => pt[2]);
+
+var tiengYcDich='';
 
 function updateMenulang1_select() {
     for (i = lang1_select.options.length-1; i >= 0;i--) {
@@ -224,7 +236,7 @@ function updateMenulang1_select() {
     }
 }
 updateMenulang1_select();
-lang1_select.selectedIndex = 12; // chọn option thứ 2 (index bắt đầu từ 0)
+lang1_select.selectedIndex = 19; // chọn option thứ 2 (index bắt đầu từ 0)
 
 function updateMenulang2_select() {
     for (i = lang2_select.options.length-1; i >= 0;i--) {
@@ -239,7 +251,7 @@ function updateMenulang2_select() {
     }
 }
 updateMenulang2_select();
-lang2_select.selectedIndex = 1; // chọn option thứ 2 (index bắt đầu từ 0)
+lang2_select.selectedIndex = 3; // chọn option thứ 2 (index bắt đầu từ 0)
 
 
 
@@ -290,9 +302,18 @@ async function sendToGPT(prompt) {
     return reply;
 }
 
+//alert(listLangTiengDich[lang1_select.selectedIndex]);
+//alert(listLangTiengDich[lang2_select.selectedIndex]);
 
-async function translateWithGPT(vietnameseText) {
-  const prompt = `"${vietnameseText}". Dịch câu trên sang tiếng Anh một cách tự nhiên mà không cần giải thích.`;
+async function translateWithGPT(textDemDich, micNoi) {
+  if (micNoi==='mic1'){
+    tiengYcDich = listLangTiengDich[lang2_select.selectedIndex];
+  }else{
+    tiengYcDich = listLangTiengDich[lang1_select.selectedIndex];
+  }
+  //const langb = "Tiếng Anh";
+  //const prompt = `"${textDemDich}". Dịch câu trên một cách tự nhiên mà không cần giải thích gì ra văn bản có mã ngôn ngữ là "en". `;
+  const prompt = `"${textDemDich}". Dịch câu trên sang ${tiengYcDich} mà không cần giải thích.`;
   
   const englishText = await sendToGPT(prompt); // Hàm này bạn đã có
   //alert(englishText);
@@ -330,7 +351,7 @@ mic1_button.onclick = () => {
         //alert(vietnameseText);
 
         // Dịch bằng GPT
-        const mic1TextDich = await translateWithGPT(mic1TextNoi);
+        const mic1TextDich = await translateWithGPT(mic1TextNoi, 'mic1');
         console.log("GPT dịch:", mic1TextDich);
         addMessage("mic1-dich", mic1TextDich);
 
