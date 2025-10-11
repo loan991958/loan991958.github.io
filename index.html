@@ -15,9 +15,21 @@ body {
     margin: auto;
 }
 
-h2 { text-align: center; color:darkblue}
+h2 { 
+  text-align: center; 
+  color:rgb(4, 4, 95);
+}
 
-#chatbox { border: 1px solid #ccc; padding: 10px; height: 400px; overflow-y: scroll; margin-bottom: 10px; }
+#chatbox { 
+  border: 1px solid #ccc; 
+  padding: 10px; 
+  height: 380px; 
+  overflow-y: scroll; 
+  margin-bottom: 10px; 
+  display: flex;
+  flex-direction: column; /* xếp các phần tử theo chiều dọc */
+  width: 100%;
+}
 
 .menu-group {
   display: flex;
@@ -29,7 +41,7 @@ h2 { text-align: center; color:darkblue}
 
 
 .menu-group select {
-  width: 30%; /* hoặc tuỳ chỉnh theo nhu cầu */
+  width: 40%; /* hoặc tuỳ chỉnh theo nhu cầu */
   padding: 8px;
   font-size: 16px;
   background-color: transparent;
@@ -97,22 +109,41 @@ h2 { text-align: center; color:darkblue}
   justify-content: center;
 }
 .mic1-noi {
-    color: rgb(125, 122, 122);
+  color: rgb(125, 122, 122);
 }
 .mic1-dich {
-    color: darkgreen;
-    font-size: xx-large;
+  color: darkgreen;
+  font-size: xx-large;
 }
+
 .mic2-noi {
-    color: #71759f;
+  color: #71759f;
 }
 .mic2-dich {
-    color: darkblue;
-    font-size: xx-large;
+  color: darkblue;
+  font-size: xx-large;
 }
+#lang1_select {
+  color:darkgreen;
+}
+
 #lang2_select {
   text-align: right;       /* Căn nội dung sang phải */
   direction: rtl;          /* Đảo hướng dòng để option hiển thị sát phải */
+  color: darkblue;
+}
+.keyboard-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10%  0% 24%; /* cách biên trái và phải 20px */
+  width: 100%;
+  box-sizing: border-box;
+}
+.keyboard-group div {
+  width: 30%; /* hoặc tuỳ chỉnh theo nhu cầu */
+  padding: 0;
+  font-size: 20px;
+  background-color: transparent;
 }
 
 
@@ -137,7 +168,11 @@ h2 { text-align: center; color:darkblue}
     <button id="mic2_button" >🎙️</button>
 </div>
 
-
+<div class="keyboard-group">
+    <div id="keyboard1">⌨️</div>
+    <div id="keyboard2">⌨️</div>
+</div>
+<br><br><br>
 
 <script>
 const start_button = document.getElementById("start_button");
