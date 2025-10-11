@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversation in 2 languages</title>
+    <title>Chat in 2 languages</title>
 <style>
 body {
     background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
@@ -121,7 +121,7 @@ h2 {
   font-size: xx-large;
 }
 #lang1_select {
-  color:darkgreen;
+  color:rgb(2, 78, 2);
 }
 
 #lang2_select {
@@ -139,16 +139,19 @@ h2 {
 .keyboard-group div {
   width: 30%; /* hoặc tuỳ chỉnh theo nhu cầu */
   padding: 0;
-  font-size: 20px;
+  font-size: 24px;
   background-color: transparent;
 }
-
+#about{
+    color:#b18024;
+    font-size: 36px;
+}
 
 </style>
 
 </head>
 <body>
-<h2 >Conversation in 2 languages</h2>
+<h2 ><span id="about">C</span>hat in Two Languages</h2>
 <h2 >🗣️<button id="start_button"></button>👤</h2>
 
 
@@ -256,7 +259,12 @@ function addMessage(role, text) {
     const div = document.createElement("div");
     //div.innerHTML = `<span class='${role}'>${text}</span> <br>`;
     //div.innerHTML = `<span class="${role}">${role === "mic1-noi" ? "<br>" : ""} ${text}</span>`;
-    div.innerHTML = `<span class="${role}">${role.includes('noi') ? "<br>" : ""} ${text}</span>`;
+    if (role.includes('mic1')){
+      div.innerHTML = `<span class="${role}">${role.includes('mic1-noi') ? "<br>🟢" : ""} ${text}</span>`;
+    }
+    if (role.includes('mic2')){
+      div.innerHTML = `<span class="${role}">${role.includes('mic2-noi') ? "<br>👤" : ""} ${text}</span>`;
+    }  
 
     chatbox.appendChild(div);
     chatbox.scrollTop = chatbox.scrollHeight;
@@ -394,7 +402,7 @@ start_button.onclick=()=>{
 
   recognition.start();
 
-  loa_button.onclick = () => speakTextDich("Let's begin!");
+  loa_button.onclick = () => speakTextDich("Ready to begin!");
   loa_button.click(); // tự động phát luôn
 
   start_button.style.backgroundImage = "url('icons/started.png')";
