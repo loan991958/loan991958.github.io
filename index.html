@@ -33,7 +33,7 @@ h2 {
   position: absolute;
   top: 10px;      /* khoảng cách từ trên xuống */
   right: 10px;    /* khoảng cách từ phải sang */
-  z-index: 10;    /* đảm bảo nút nằm trên */
+  z-index: 20;    /* đảm bảo nút nằm trên */
   border-color: transparent ;
   background: transparent;
   color:white;
@@ -344,19 +344,62 @@ async function translateWithGPT(textDemDich, micNoi) {
   return textDaDich;
 }
 
+//ham setVoice roi spkeak luon moi lay ben ////////CAHOAN////////
+//se thay the function speakTextDich(text,langVoice)
+function setVoiceAndSpeak(text,langVoice) {
+    const voices = speechSynthesis.getVoices();
+    //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
+    let voice = null;
+    if (langVoice==='en-US'){
+      // Tìm giọng tiếng Anh tốt nhất
+      voice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
+      if (!voice) {
+        voice = voices.find(v => v.lang === 'en-US');
+      }
+    }else{
+      voice = voices.find(v => v.lang === langVoice);
+    }
+    if (voice) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = voice;
+      utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+      loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
+      utterance.addEventListener('end', handleEnd);
+      speechSynthesis.speak(utterance);
+    }
+}
+
+let availableVoices = [];
+function loadVoices() {
+  availableVoices = speechSynthesis.getVoices();
+  // Nếu chưa có giọng đọc, chờ sự kiện 'voiceschanged'
+  if (availableVoices.length === 0) {
+    speechSynthesis.onvoiceschanged = () => {
+      availableVoices = speechSynthesis.getVoices();
+      //populateVoiceList();
+    };
+  }
+}
 // Hàm phát âm text dich
 function speakTextDich(text,langVoice) {
-  //alert(langVoice);
-  if ('speechSynthesis' in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = langVoice;
-    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
-    speechSynthesis.speak(utterance);
-    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
-  } else {
-    console.log("Trình duyệt không hỗ trợ speechSynthesis");
-  }
+    const voices = speechSynthesis.getVoices();
+    console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
+    let voice = null;
+    voice = voices.find(v => v.lang === langVoice);
+    
+    if ('speechSynthesis' in window) {
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.voice = voice;
+      utterance.lang = voice.lang;
+
+      utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+      speechSynthesis.speak(utterance);
+      loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
+    }else{
+      console.log("Trình duyệt không hỗ trợ speechSynthesis");
+    }  
 };
+
 // Nhận giọng nói từ mic1
 mic1_button.onclick = () => {
 
@@ -465,6 +508,12 @@ function removeAllDivs() {
   childDivs.forEach(div => div.remove());
 }
 
+//------------------
+const voiceSelect = document.getElementById("voiceSelect");
+
+
+// Tải giọng đọc khi trang sẵn sàng
+window.onload = loadVoices;
 
 </script>    
 </body>
