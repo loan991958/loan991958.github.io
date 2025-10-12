@@ -20,6 +20,7 @@ h2 {
   color:rgb(4, 4, 95);
 }
 
+
 #chatbox { 
   border: 1px solid #ccc; 
   padding: 10px; 
@@ -167,14 +168,12 @@ h2 {
     color:#b18024;
     font-size: 36px;
 }
-
 </style>
 
 </head>
 <body>
 <h2 ><span id="about">C</span>hat with foreigners with AI translation</h2>
 <h2 >🗣️<button id="start_button"></button>👤</h2>
-
 
 <div id="chatbox">
   <button class="overlay-btn" onclick="removeAllDivs()">Clear 🗌</button>
@@ -344,39 +343,15 @@ async function translateWithGPT(textDemDich, micNoi) {
   return textDaDich;
 }
 
-//ham setVoice roi spkeak luon moi lay ben ////////CAHOAN////////
-//se thay the function speakTextDich(text,langVoice)
-function setVoiceAndSpeak(text,langVoice) {
-    const voices = speechSynthesis.getVoices();
-    //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
-    let voice = null;
-    if (langVoice==='en-US'){
-      // Tìm giọng tiếng Anh tốt nhất
-      voice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
-      if (!voice) {
-        voice = voices.find(v => v.lang === 'en-US');
-      }
-    }else{
-      voice = voices.find(v => v.lang === langVoice);
-    }
-    if (voice) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = voice;
-      utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
-      loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
-      utterance.addEventListener('end', handleEnd);
-      speechSynthesis.speak(utterance);
-    }
-}
+let voice = null;
 
-let availableVoices = [];
+let voices = [];
 function loadVoices() {
-  availableVoices = speechSynthesis.getVoices();
+  voices = speechSynthesis.getVoices();
   // Nếu chưa có giọng đọc, chờ sự kiện 'voiceschanged'
-  if (availableVoices.length === 0) {
+  if (voices.length === 0) {
     speechSynthesis.onvoiceschanged = () => {
-      availableVoices = speechSynthesis.getVoices();
-      //populateVoiceList();
+      voices = speechSynthesis.getVoices();
     };
   }
 }
@@ -384,9 +359,15 @@ function loadVoices() {
 function speakTextDich(text,langVoice) {
     const voices = speechSynthesis.getVoices();
     console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
-    let voice = null;
-    voice = voices.find(v => v.lang === langVoice);
-    
+    if (langVoice==='en-US'){
+      voice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
+      if (!voice){
+        voice = voices.find(v => v.lang === langVoice);    
+      }
+
+    }else{
+      voice = voices.find(v => v.lang === langVoice);
+    }
     if ('speechSynthesis' in window) {
       const utterance = new SpeechSynthesisUtterance(text);
       utterance.voice = voice;
@@ -494,7 +475,7 @@ start_button.onclick=()=>{
 
   recognition.start();
 
-  loa_button.onclick = () => speakTextDich("Ready to start!");
+  loa_button.onclick = () => speakTextDich("Ready!","en-US");
   loa_button.click(); // tự động phát luôn
 
   start_button.style.backgroundImage = "url('icons/started.png')";
