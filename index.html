@@ -26,6 +26,22 @@ h2 {
   height: 350px; 
   overflow-y: scroll; 
   margin-bottom: 10px; 
+
+  position: relative; /* làm gốc tọa độ cho phần tử con */
+
+}
+.overlay-btn {
+  position: absolute;
+  top: 10px;      /* khoảng cách từ trên xuống */
+  right: 10px;    /* khoảng cách từ phải sang */
+  z-index: 10;    /* đảm bảo nút nằm trên */
+  border-color: transparent ;
+  background: transparent;
+  color:white;
+  transition: transform 0.2s ease;
+}
+.overlay-btn:hover {
+  transform: scale(1.5); /* phóng to gap ruoi */
 }
 
 .menu-group {
@@ -151,11 +167,14 @@ h2 {
 
 </head>
 <body>
-<h2 ><span id="about">C</span>hat in Two Languages</h2>
+<h2 ><span id="about">C</span>hat with foreigners with AI translation</h2>
 <h2 >🗣️<button id="start_button"></button>👤</h2>
 
 
-<div id="chatbox"></div>
+<div id="chatbox">
+  <button class="overlay-btn" onclick="removeAllDivs()">Clear 🗌</button>
+</div>
+
 <br>
 <div class="menu-group">
     <select id="lang1_select" onclick="toggleMenu1()" ></select>
@@ -222,6 +241,8 @@ const listLangVoice = lLangs.map(pt => pt[1]);
 const listLangTiengDich = lLangs.map(pt => pt[2]);
 
 var tiengYcDich='';
+var lang1Voice='';
+var lang2Voice='';
 
 function updateMenulang1_select() {
     for (i = lang1_select.options.length-1; i >= 0;i--) {
@@ -311,20 +332,19 @@ async function translateWithGPT(textDemDich, micNoi) {
   }else{
     tiengYcDich = listLangTiengDich[lang1_select.selectedIndex];
   }
-  //const langb = "Tiếng Anh";
-  //const prompt = `"${textDemDich}". Dịch câu trên một cách tự nhiên mà không cần giải thích gì ra văn bản có mã ngôn ngữ là "en". `;
   const prompt = `"${textDemDich}". Dịch câu trên sang ${tiengYcDich} mà không cần giải thích.`;
   
-  const englishText = await sendToGPT(prompt); // Hàm này bạn đã có
+  const textDaDich = await sendToGPT(prompt); // Hàm này bạn đã có
   //alert(englishText);
-  return englishText;
+  return textDaDich;
 }
 
 // Hàm phát âm text dich
-function speakTextDich(text) {
+function speakTextDich(text,langVoice) {
+  //alert(langVoice);
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
+    utterance.lang = langVoice;
     utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
     speechSynthesis.speak(utterance);
     loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
@@ -336,7 +356,7 @@ function speakTextDich(text) {
 mic1_button.onclick = () => {
 
     const recognition1 = new webkitSpeechRecognition();
-    recognition1.lang = listLangVoice[lang1_select.selectedIndex];
+    recognition1.lang = listLangVoice[lang1_select.selectedIndex].substring(0,2);
     recognition1.continuous = false;//
     recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
@@ -356,7 +376,8 @@ mic1_button.onclick = () => {
         addMessage("mic1-dich", mic1TextDich);
 
         // Gán hành động cho loa_button để phát lại
-        loa_button.onclick = () => speakTextDich(mic1TextDich);
+        lang2Voice = listLangVoice[lang2_select.selectedIndex]
+        loa_button.onclick = () => speakTextDich(mic1TextDich, lang2Voice);
         loa_button.click(); // tự động phát luôn
     };
 
@@ -377,7 +398,8 @@ mic1_button.onclick = () => {
 mic2_button.onclick = () => {
 
     const recognition2 = new webkitSpeechRecognition();
-    recognition2.lang = 'en-US';
+    recognition2.lang = listLangVoice[lang2_select.selectedIndex].substring(0,2);
+    //alert(listLangVoice[lang2_select.selectedIndex].substring(0,2));
     recognition2.continuous = false;//
     recognition2.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
@@ -392,12 +414,13 @@ mic2_button.onclick = () => {
         //alert(vietnameseText);
 
         // Dịch bằng GPT
-        const mic2TextDich = await translateWithGPT(mic2TextNoi);
+        const mic2TextDich = await translateWithGPT(mic2TextNoi, 'mic2');
         console.log("GPT dịch:", mic2TextDich);
         addMessage("mic2-dich", mic2TextDich);
 
         // Gán hành động cho loa_button để phát lại
-        loa_button.onclick = () => speakTextDich(mic2TextDich);
+        lang1Voice = listLangVoice[lang1_select.selectedIndex]
+        loa_button.onclick = () => speakTextDich(mic2TextDich, lang1Voice);
         loa_button.click(); // tự động phát luôn
     };
 
@@ -423,13 +446,20 @@ start_button.onclick=()=>{
 
   recognition.start();
 
-  loa_button.onclick = () => speakTextDich("Ready to begin!");
+  loa_button.onclick = () => speakTextDich("Ready to start!");
   loa_button.click(); // tự động phát luôn
 
   start_button.style.backgroundImage = "url('icons/started.png')";
   start_button.disabled = true;
 
+
 }
+
+function removeAllDivs() {
+  const childDivs = chatbox.querySelectorAll("div");
+  childDivs.forEach(div => div.remove());
+}
+
 
 </script>    
 </body>
