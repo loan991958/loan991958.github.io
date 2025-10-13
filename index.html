@@ -266,7 +266,8 @@ function populateVoiceList() {
   for (let index = 0; index < listLangVoice.length; index++) {
       listVoiceC[index] = voices.find(v => v.lang === listLangVoice[index]); 
   }  
-  selectedVoices = listVoiceC.filter(Boolean); // loại bỏ null
+  //selectedVoices = listVoiceC.filter(Boolean); // loại bỏ null
+  selectedVoices = listVoiceC; // loại bỏ null
 
   // Hiển thị trong dropdown lang1_select
   lang1_select.innerHTML = '';
