@@ -264,14 +264,7 @@ function populateVoiceList() {
   }
   //tao list cac object voice
   for (let index = 0; index < listLangVoice.length; index++) {
-    if (listLangVoice[index] === 'en-US'){
-      listVoiceC[index] = voices.find(v => (v.lang === listLangVoice[index] && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen'))));
-      if (!listVoiceC[index]){
-        listVoiceC[index] = voices.find(v => v.lang === listLangVoice[index]); 
-      }
-    }else{
       listVoiceC[index] = voices.find(v => v.lang === listLangVoice[index]); 
-    }
   }  
   selectedVoices = listVoiceC.filter(Boolean); // loại bỏ null
 
