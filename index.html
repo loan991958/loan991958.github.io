@@ -237,6 +237,7 @@ const listLangCountry = lLangs.map(pt => pt[0]);
 
 //day la list cac MA lang voice, vd fr-FR
 const listLangVoice = lLangs.map(pt => pt[1]);
+
 const listMaText = lLangs.map(pt => pt[1].substring(0,2));
 
 //day la list cac Tieng theo tieng Viet, vd Tieng Đan Mạch, Tiếng Lào...
@@ -283,10 +284,8 @@ function populateVoiceList() {
     option.textContent = listLangCountry[index];
     lang1_select.appendChild(option);
   });
-  // Đặt mặc định chọn phần tử thứ 17 (index = 16)
-  if (lang1_select.options.length > 1) {
-    lang1_select.selectedIndex = 16;
-  }
+  // Đặt mặc định chọn phần tử index = 16)
+  lang1_select.selectedIndex = 16;
 
 // Hiển thị trong dropdown lang2_select
   lang2_select.innerHTML = '';
@@ -297,10 +296,8 @@ function populateVoiceList() {
     option.textContent = listLangCountry[index];
     lang2_select.appendChild(option);
   });
-  // Đặt mặc định chọn phần tử thứ 2 (index = 3)
-  if (lang2_select.options.length > 1) {
-    lang2_select.selectedIndex = 3;
-  }
+  // Đặt mặc định chọn phần tử index = 3
+  lang2_select.selectedIndex = 3;
 }
 //Thuc thi ham tren
 populateVoiceList();
@@ -314,7 +311,7 @@ if (typeof speechSynthesis !== "undefined" && speechSynthesis.onvoiceschanged !=
 loa_button.onclick = () => {
     const text = "Xin chào! Đây là ví dụ sử dụng giọng nói.";
     const utterance = new SpeechSynthesisUtterance(text);
-    const selectedIndex = lang2_select.value;
+    const selectedIndex = lang1_select.value;
     utterance.voice = selectedVoices[selectedIndex];
     speechSynthesis.speak(utterance);
 }
