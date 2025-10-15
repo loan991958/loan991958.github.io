@@ -353,9 +353,9 @@ function addMessage(role, text) {
 function speakTextDich(text,langVoice) {
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = langVoice;
-    utterance.lang = langVoice.lang;
-
+    //utterance.voice = langVoice;
+    //utterance.lang = langVoice.lang;
+    utterance.lang = langVoice.lang
     utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
     speechSynthesis.speak(utterance);
     loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
