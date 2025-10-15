@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat in 2 languages</title>
+    <title>Chat with foreigners</title>
 <style>
 body {
     background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
@@ -172,7 +172,7 @@ h2 {
 
 </head>
 <body>
-<h2 ><span id="about">C</span>hat with foreigners with AI translation</h2>
+<h2 ><span id="about">C</span>hat with foreigners with translation</h2>
 <h2 >🗣️<button id="start_button"></button>👤</h2>
 
 <div id="chatbox">
@@ -181,8 +181,8 @@ h2 {
 
 <br>
 <div class="menu-group">
-    <select id="lang1_select" onclick="toggleMenu1()" ></select>
-    <select id="lang2_select" onclick="toggleMenu2()" ></select>
+    <select id="lang1_select" onchange="toggleMenu1()" ></select>
+    <select id="lang2_select" onchange="toggleMenu2()" ></select>
 </div>
 
 <div class="button-group">
@@ -244,14 +244,13 @@ const listLangVoice = lLangs.map(pt => pt[1]);
 //day la list cac Tieng theo tieng Viet, vd Tieng Đan Mạch, Tiếng Lào...
 const listLangTiengDich = lLangs.map(pt => pt[2]);
 
+
+var lang1VoiceC=null; //voice tim theo ma, vd 'vi-VN' cua lang1_select 
+var lang2VoiceC=null; //voice tim theo ma, vd 'en-US' cua lang2_select
 var tiengYcDich='';
-var lang1Voice='';
-var lang2Voice='';
+
 
 function updateMenulang1_select() {
-    for (i = lang1_select.options.length-1; i >= 0;i--) {
-        lang1_select.remove(i);
-    }
     for (let i = 0; i < listLangCountry.length; i++) {
         let optn = listLangCountry[i];
         let el = document.createElement("option");
@@ -264,9 +263,6 @@ updateMenulang1_select();
 lang1_select.selectedIndex = 19; // chọn option thứ 2 (index bắt đầu từ 0)
 
 function updateMenulang2_select() {
-    for (i = lang2_select.options.length-1; i >= 0;i--) {
-        lang2_select.remove(i);
-    }
     for (let i = 0; i < listLangCountry.length; i++) {
         let optn = listLangCountry[i];
         let el = document.createElement("option");
@@ -278,18 +274,64 @@ function updateMenulang2_select() {
 updateMenulang2_select();
 lang2_select.selectedIndex = 3; // chọn option thứ 2 (index bắt đầu từ 0)
 
-
-
-
-
-let listUrlYt = ["https://youtu.be/sk=proj=epXwjLAeKPLBuTFMvjDmdQAhDVbhKcSZJ60xkDI4iF419uvhXC7GZ7jS7CHl8=OCemM293KtU5T3BlbkFJJ14i4QAWBYiJQbPMNBOMtspp8QL==mVbG2uig2oq44YGtjW9TFb3DdQuIrKYm7kNvvTnUqKoUA"];
-///GFG_FunBo();
-function maHoaLaiAK(){
-    let ch = listUrlYt[listUrlYt.length - 1].split("be/")[1].replaceAll("=","-");
-    //console.log(ch);
-    return ch;
+//------------------
+function toggleMenu1() {
+  let voices = speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
+    return;
+  }
+  //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
+  //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
+  //console.log(listLangVoice[lang2_select.selectedIndex]);
+  if (listLangVoice[lang1_select.selectedIndex]==='en-US'){
+    lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    if (lang1VoiceC===undefined){
+      lang1VoiceC = voices.find(v => v.lang === listLangVoice[lang1_select.selectedIndex]);
+    }    
+  }else{
+    lang1VoiceC = voices.find(v => v.lang === listLangVoice[lang1_select.selectedIndex]);
+  }
+  if (lang1VoiceC === undefined) {
+    console.log('Không có voice phù hợp');
+  } else {
+    console.log('Voice được chọn:', lang1VoiceC.lang);
+  }
 }
-let apiKey=maHoaLaiAK();
+
+//------------------------
+function toggleMenu2() {
+  let voices = speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
+    return;
+  }
+  //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
+  //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
+  //console.log(listLangVoice[lang2_select.selectedIndex]);
+  if (listLangVoice[lang2_select.selectedIndex]==='en-US'){
+    lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    if (lang2VoiceC===undefined){
+      lang2VoiceC = voices.find(v => v.lang === listLangVoice[lang2_select.selectedIndex]);
+    }    
+  }else{
+    lang2VoiceC = voices.find(v => v.lang === listLangVoice[lang2_select.selectedIndex]);
+  }
+  if (lang2VoiceC === undefined) {
+    console.log('Không có voice phù hợp');
+  } else {
+    console.log('Voice được chọn:', lang2VoiceC.lang);
+  }
+}
+
+// Đợi sự kiện voiceschanged để gọi toggleMenu1
+speechSynthesis.onvoiceschanged = () => {
+  toggleMenu1();
+  toggleMenu2();
+  console.log('lang1VoiceC:',lang1VoiceC);
+  console.log('lang2VoiceC:',lang2VoiceC);
+};
+
 
 function addMessage(role, text) {
     text = text.replace(/^"(.*)"$/, '$1');// bỏ dấu ngoặc kép ở đầu và cuối nếu có
@@ -307,102 +349,75 @@ function addMessage(role, text) {
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 
-
-// Hàm gọi GPT để dịch tiếng Việt sang tiếng Anh
-async function sendToGPT(prompt) {
-    const res = await fetch("https://api.openai.com/v1/chat/completions", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-            model: "gpt-4o-mini",
-            messages: [{ role: "user", content: prompt }]
-        }),
-    });
-
-    const data = await res.json();
-    const reply = data.choices[0].message.content;
-    return reply;
-}
-
-//alert(listLangTiengDich[lang1_select.selectedIndex]);
-//alert(listLangTiengDich[lang2_select.selectedIndex]);
-
-async function translateWithGPT(textDemDich, micNoi) {
-  if (micNoi==='mic1'){
-    tiengYcDich = listLangTiengDich[lang2_select.selectedIndex];
-  }else{
-    tiengYcDich = listLangTiengDich[lang1_select.selectedIndex];
-  }
-  const prompt = `"${textDemDich}". Dịch câu trên sang ${tiengYcDich} mà không cần giải thích.`;
-  
-  const textDaDich = await sendToGPT(prompt); // Hàm này bạn đã có
-  //alert(englishText);
-  return textDaDich;
-}
-
-let voice = null;
 // Hàm phát âm text dich
 function speakTextDich(text,langVoice) {
-  loadVoices((voices) => {
-    console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
-    if (langVoice==='en-US'){
-      voice = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
-      if (!voice){
-        voice = voices.find(v => v.lang === langVoice);    
-      }
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = langVoice;
 
-    }else{
-      voice = voices.find(v => v.lang === langVoice);
-    }
-    if ('speechSynthesis' in window) {
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.voice = voice;
-      utterance.lang = voice.lang;
+    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+    speechSynthesis.speak(utterance);
+    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
+  }else{
+    console.log("Trình duyệt không hỗ trợ speechSynthesis");
+  }  
 
-      utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
-      speechSynthesis.speak(utterance);
-      loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
-    }else{
-      console.log("Trình duyệt không hỗ trợ speechSynthesis");
-    }  
 
-  });
-
-    //const voices = speechSynthesis.getVoices();
 };
+
+// Hàm để dịch 
+function dichTextFromTo(textCanDich,fromMadt,toMadt,role){
+  //console.log('cac ts:',textCanDich,fromMadt,toMadt,role);
+  const inputText = textCanDich;
+  let sourceLanguage = fromMadt;
+  let targetLanguage = toMadt;
+
+  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+
+  const xhttp = new XMLHttpRequest();
+  xhttp.onreadystatechange = function () {
+    if (this.readyState == 4 && this.status == 200){
+      const responseReturned = JSON.parse(this.responseText);
+      const translations = responseReturned[0].map((text) => text[0]);
+      const textDichRa = translations.join(" ");
+      console.log(role,textDichRa);
+      //Xu li tiep tuc bang ham addMessage
+      if (role==='mic1'){
+        addMessage('mic1-dich', textDichRa);
+        loa_button.onclick = () => speakTextDich(textDichRa, lang2VoiceC);//lang2VoiceC la global da ton tai va update
+        loa_button.click(); // tự động phát luôn
+
+      }else{
+        addMessage('mic2-dich', textDichRa);
+        loa_button.onclick = () => speakTextDich(textDichRa, lang1VoiceC);//lang2VoiceC la global da ton tai va update
+        loa_button.click(); // tự động phát luôn
+
+      }
+    }
+  };
+  xhttp.open("GET", url);
+  xhttp.send();
+}
 
 // Nhận giọng nói từ mic1
 mic1_button.onclick = () => {
-
     const recognition1 = new webkitSpeechRecognition();
     recognition1.lang = listLangVoice[lang1_select.selectedIndex].substring(0,2);
     recognition1.continuous = false;//
     recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
-
-
     recognition1.onresult = async (event) => {
         const mic1TextNoi = event.results[0][0].transcript;
         console.log("Bạn nói:", mic1TextNoi);
         addMessage("mic1-noi", mic1TextNoi);
-
         recognition1.stop();// Dừng nhận giọng nói khi kết thúc 
         //dat o cho nay thi mic ios moi bien mat
         //alert(vietnameseText);
 
-        // Dịch bằng GPT
-        const mic1TextDich = await translateWithGPT(mic1TextNoi, 'mic1');
-        console.log("GPT dịch:", mic1TextDich);
-        addMessage("mic1-dich", mic1TextDich);
-
-        // Gán hành động cho loa_button để phát lại
-        lang2Voice = listLangVoice[lang2_select.selectedIndex]
-        loa_button.onclick = () => speakTextDich(mic1TextDich, lang2Voice);
-        loa_button.click(); // tự động phát luôn
+        // Dịch bằng xttps 
+        let fromMa = listLangVoice[lang1_select.selectedIndex].substring(0,2);
+        let toMa = listLangVoice[lang2_select.selectedIndex].substring(0,2);
+        dichTextFromTo(mic1TextNoi,fromMa,toMa,'mic1')
     };
-
     recognition1.onerror = (e) => {
         console.error("Lỗi nhận giọng nói:", e.error);
     };
@@ -412,19 +427,15 @@ mic1_button.onclick = () => {
     recognition1.onstart = function() {// đang nhận giọng nói sau khi bấm mic1
       mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; 
     };
-
     recognition1.start();// Bắt đầu nhận giọng nói
 };
 
 // Nhận giọng nói từ mic2
 mic2_button.onclick = () => {
-
     const recognition2 = new webkitSpeechRecognition();
     recognition2.lang = listLangVoice[lang2_select.selectedIndex].substring(0,2);
-    //alert(listLangVoice[lang2_select.selectedIndex].substring(0,2));
     recognition2.continuous = false;//
     recognition2.interimResults = false;// Chỉ lấy kết quả cuối cùng
-
 
     recognition2.onresult = async (event) => {
         const mic2TextNoi = event.results[0][0].transcript;
@@ -434,16 +445,10 @@ mic2_button.onclick = () => {
         recognition2.stop();// Dừng nhận giọng nói khi kết thúc 
         //dat o cho nay thi mic ios moi bien mat
         //alert(vietnameseText);
-
-        // Dịch bằng GPT
-        const mic2TextDich = await translateWithGPT(mic2TextNoi, 'mic2');
-        console.log("GPT dịch:", mic2TextDich);
-        addMessage("mic2-dich", mic2TextDich);
-
-        // Gán hành động cho loa_button để phát lại
-        lang1Voice = listLangVoice[lang1_select.selectedIndex]
-        loa_button.onclick = () => speakTextDich(mic2TextDich, lang1Voice);
-        loa_button.click(); // tự động phát luôn
+        // Dịch bằng xttps 
+        let fromMa = listLangVoice[lang2_select.selectedIndex].substring(0,2);
+        let toMa = listLangVoice[lang1_select.selectedIndex].substring(0,2);
+        dichTextFromTo(mic2TextNoi,fromMa,toMa,'mic2')
     };
 
     recognition2.onerror = (e) => {
@@ -457,9 +462,11 @@ mic2_button.onclick = () => {
     };
 
     recognition2.start();// Bắt đầu nhận giọng nói
-};
+
+  };
 
 start_button.onclick=()=>{
+  //--Doan ma nay chi de mo micro trong iphone, lap top ko can
   const recognition = new webkitSpeechRecognition();
   recognition.onresult = e => {
     console.log(e.results[0][0].transcript);
@@ -467,8 +474,10 @@ start_button.onclick=()=>{
   };  
 
   recognition.start();
+  //--het doan
 
-  loa_button.onclick = () => speakTextDich("Ready!","en-US");
+  //chi de kich hoat loa lan dau, 
+  loa_button.onclick = () => speakTextDich("Ready!");
   loa_button.click(); // tự động phát luôn
 
   start_button.style.backgroundImage = "url('icons/started.png')";
@@ -482,25 +491,6 @@ function removeAllDivs() {
   childDivs.forEach(div => div.remove());
 }
 
-//------------------
-const voiceSelect = document.getElementById("voiceSelect");
-
-
-// Đợi danh sách giọng đọc đầy đủ
-function loadVoices(callback) {
-  let voices = speechSynthesis.getVoices();
-  if (voices.length) {
-    callback(voices);
-  } else {
-    speechSynthesis.onvoiceschanged = () => {
-      voices = speechSynthesis.getVoices();
-      callback(voices);
-    };
-  }
-}
-
-// Tải giọng đọc khi trang sẵn sàng
-window.onload = loadVoices;
 
 </script>    
 </body>
