@@ -285,7 +285,7 @@ function toggleMenu1() {
   //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
   //console.log(listLangVoice[lang2_select.selectedIndex]);
   if (listLangVoice[lang1_select.selectedIndex]==='en-US'){
-    lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
     if (lang1VoiceC===undefined){
       lang1VoiceC = voices.find(v => v.lang === listLangVoice[lang1_select.selectedIndex]);
     }    
@@ -310,7 +310,7 @@ function toggleMenu2() {
   //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
   //console.log(listLangVoice[lang2_select.selectedIndex]);
   if (listLangVoice[lang2_select.selectedIndex]==='en-US'){
-    lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
     if (lang2VoiceC===undefined){
       lang2VoiceC = voices.find(v => v.lang === listLangVoice[lang2_select.selectedIndex]);
     }    
