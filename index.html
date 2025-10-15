@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chat with foreigners</title>
+    <title>Chat with foreigners </title>
 <style>
 body {
     background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
@@ -354,6 +354,7 @@ function speakTextDich(text,langVoice) {
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = langVoice;
+    utterance.lang = langVoice.lang;
 
     utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
     speechSynthesis.speak(utterance);
