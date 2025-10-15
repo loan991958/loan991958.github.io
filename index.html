@@ -181,8 +181,8 @@ h2 {
 
 <br>
 <div class="menu-group">
-    <select id="lang1_select" onchange="toggleMenu1()" ></select>
-    <select id="lang2_select" onchange="toggleMenu2()" ></select>
+    <select id="lang1_select" onchange="toggleMenu1(this.index)" ></select>
+    <select id="lang2_select" onchange="toggleMenu2(this.index)" ></select>
 </div>
 
 <div class="button-group">
@@ -276,6 +276,7 @@ lang2_select.selectedIndex = 3; // chọn option thứ 2 (index bắt đầu t�
 
 //------------------
 function toggleMenu1() {
+  //alert(lang1_select.selectedIndex);
   let voices = speechSynthesis.getVoices();
   if (voices.length === 0) {
     console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
@@ -301,6 +302,7 @@ function toggleMenu1() {
 
 //------------------------
 function toggleMenu2() {
+  //alert(lang2_select.selectedIndex);
   let voices = speechSynthesis.getVoices();
   if (voices.length === 0) {
     console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
@@ -354,6 +356,7 @@ function speakTextDich(text,langVoice) {
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = langVoice;
+    utterance.lang = langVoice.lang;
 
     utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
     speechSynthesis.speak(utterance);
@@ -477,7 +480,7 @@ start_button.onclick=()=>{
   //--het doan
 
   //chi de kich hoat loa lan dau, 
-  loa_button.onclick = () => speakTextDich("Ready!");
+  loa_button.onclick = () => speakTextDich("Ready!",lang2VoiceC);
   loa_button.click(); // tự động phát luôn
 
   start_button.style.backgroundImage = "url('icons/started.png')";
