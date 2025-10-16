@@ -516,6 +516,30 @@ function removeAllDivs() {
   childDivs.forEach(div => div.remove());
 }
 
+function fVoiceChoIndexUpdate(iUpdate){
+  let voices = speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
+    return;
+  }
+  let langVoiceC; 
+  if (listLangVoice[iUpdate]==='en-US'){
+    langVoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    if (langVoiceC===undefined){
+      langVoiceC = voices.find(v => v.lang === listLangVoice[iUpdate]);
+    }    
+  }else{
+    langVoiceC = voices.find(v => v.lang === listLangVoice[iUpdate]);
+  }
+  if (langVoiceC === undefined) {
+    console.log('Không có voice phù hợp');
+  } else {
+    console.log('Voice được chọn:', langVoiceC.lang);
+  }
+  return langVoiceC;
+}
+lang1VoiceC = fVoiceChoIndexUpdate(indexSelect1Update);
+lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
 </script>    
 </body>
