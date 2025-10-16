@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
     <title>Chat with foreigners </title>
 <style>
 body {
@@ -168,6 +169,10 @@ h2 {
     color:#b18024;
     font-size: 36px;
 }
+.banphim {
+  background-color: transparent;
+  border: none;
+}
 </style>
 
 </head>
@@ -192,8 +197,8 @@ h2 {
 </div>
 
 <div class="keyboard-group">
-    <div id="keyboard1">⌨️</div>
-    <div id="keyboard2">⌨️</div>
+    <div><button class='banphim' onclick="chatBoxKb1()">⌨️</button></div>
+    <div><button class='banphim' onclick="chatBoxKb2()">⌨️</button></div>
 </div>
 <br><br><br>
 
@@ -538,6 +543,9 @@ function fVoiceChoIndexUpdate(iUpdate){
 lang1VoiceC = fVoiceChoIndexUpdate(indexSelect1Update);
 lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
-</script>    
+</script>
+
+<script src="index.js"></script>
+
 </body>
 </html>
