@@ -245,9 +245,11 @@ const listLangVoice = lLangs.map(pt => pt[1]);
 const listLangTiengDich = lLangs.map(pt => pt[2]);
 
 
-var lang1VoiceC=null; //voice tim theo ma, vd 'vi-VN' cua lang1_select 
-var lang2VoiceC=null; //voice tim theo ma, vd 'en-US' cua lang2_select
+let lang1VoiceC=null; //voice tim theo ma, vd 'vi-VN' cua lang1_select 
+let lang2VoiceC=null; //voice tim theo ma, vd 'en-US' cua lang2_select
 var tiengYcDich='';
+let mic1TextDich='';
+let mic2TextDich='';
 
 
 function updateMenulang1_select() {
@@ -286,7 +288,7 @@ function toggleMenu1() {
   //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
   //console.log(listLangVoice[lang2_select.selectedIndex]);
   if (listLangVoice[lang1_select.selectedIndex]==='en-US'){
-    lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
+    lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
     if (lang1VoiceC===undefined){
       lang1VoiceC = voices.find(v => v.lang === listLangVoice[lang1_select.selectedIndex]);
     }    
@@ -312,7 +314,7 @@ function toggleMenu2() {
   //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
   //console.log(listLangVoice[lang2_select.selectedIndex]);
   if (listLangVoice[lang2_select.selectedIndex]==='en-US'){
-    lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen')));
+    lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
     if (lang2VoiceC===undefined){
       lang2VoiceC = voices.find(v => v.lang === listLangVoice[lang2_select.selectedIndex]);
     }    
@@ -356,7 +358,7 @@ function speakTextDich(text,langVoice) {
   if ('speechSynthesis' in window) {
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = langVoice;
-    utterance.lang = langVoice.lang;
+    //utterance.lang = langVoice.lang;
 
     utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
     speechSynthesis.speak(utterance);
@@ -369,38 +371,45 @@ function speakTextDich(text,langVoice) {
 };
 
 // Hàm để dịch 
-function dichTextFromTo(textCanDich,fromMadt,toMadt,role){
-  //console.log('cac ts:',textCanDich,fromMadt,toMadt,role);
-  const inputText = textCanDich;
-  let sourceLanguage = fromMadt;
-  let targetLanguage = toMadt;
+function dichTextFromTo(textDemDich, micNoi){
+    //console.log('cac ts:',textDemDich, micNoi);
+    const inputText = textDemDich;
+    let sourceLanguage;
+    let targetLanguage;
+    if (micNoi==='mic1'){
+        sourceLanguage = listLangVoice[lang1_select.selectedIndex].substring(0,2);
+        targetLanguage = listLangVoice[lang2_select.selectedIndex].substring(0,2);
+    }else{
+        sourceLanguage = listLangVoice[lang2_select.selectedIndex].substring(0,2);
+        targetLanguage = listLangVoice[lang1_select.selectedIndex].substring(0,2);
+    }    
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
 
-  const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
-
-  const xhttp = new XMLHttpRequest();
-  xhttp.onreadystatechange = function () {
-    if (this.readyState == 4 && this.status == 200){
-      const responseReturned = JSON.parse(this.responseText);
-      const translations = responseReturned[0].map((text) => text[0]);
-      const textDichRa = translations.join(" ");
-      console.log(role,textDichRa);
-      //Xu li tiep tuc bang ham addMessage
-      if (role==='mic1'){
-        addMessage('mic1-dich', textDichRa);
-        loa_button.onclick = () => speakTextDich(textDichRa, lang2VoiceC);//lang2VoiceC la global da ton tai va update
-        loa_button.click(); // tự động phát luôn
-
-      }else{
-        addMessage('mic2-dich', textDichRa);
-        loa_button.onclick = () => speakTextDich(textDichRa, lang1VoiceC);//lang2VoiceC la global da ton tai va update
-        loa_button.click(); // tự động phát luôn
-
-      }
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200){
+            const responseReturned = JSON.parse(this.responseText);
+            const translations = responseReturned[0].map((text) => text[0]);
+            const textDichRa  = translations.join(" ");
+            console.log(textDichRa);
+            //Viet textDichRa vao trong hop chat
+            if (micNoi==='mic1'){
+              mic1TextDich = textDichRa;
+              addMessage("mic1-dich", mic1TextDich);
+              loa_button.onclick = () => speakTextDich(mic1TextDich, lang2VoiceC);
+              loa_button.click(); // tự động phát luôn
+            }else{
+              mic2TextDich = textDichRa;
+              addMessage("mic2-dich", mic2TextDich);
+              loa_button.onclick = () => speakTextDich(mic2TextDich, lang1VoiceC);
+              loa_button.click(); // tự động phát luôn
+            }
+            //cho speak o sau, no se doc tren DIV cuoi cua chatbox
+        }
     }
-  };
-  xhttp.open("GET", url);
-  xhttp.send();
-}
+    xhttp.open("GET", url);
+    xhttp.send();
+};
 
 // Nhận giọng nói từ mic1
 mic1_button.onclick = () => {
@@ -408,19 +417,23 @@ mic1_button.onclick = () => {
     recognition1.lang = listLangVoice[lang1_select.selectedIndex].substring(0,2);
     recognition1.continuous = false;//
     recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
+
     recognition1.onresult = async (event) => {
         const mic1TextNoi = event.results[0][0].transcript;
         console.log("Bạn nói:", mic1TextNoi);
         addMessage("mic1-noi", mic1TextNoi);
+
         recognition1.stop();// Dừng nhận giọng nói khi kết thúc 
         //dat o cho nay thi mic ios moi bien mat
         //alert(vietnameseText);
 
-        // Dịch bằng xttps 
-        let fromMa = listLangVoice[lang1_select.selectedIndex].substring(0,2);
-        let toMa = listLangVoice[lang2_select.selectedIndex].substring(0,2);
-        dichTextFromTo(mic1TextNoi,fromMa,toMa,'mic1')
+        // Dịch bằng google
+        dichTextFromTo(mic1TextNoi, 'mic1');
+        // Gán hành động cho loa_button để phát lại
+        //doc text trong div cuoi cung cua chatbox
+        //mic1TextDich = text div cc;
     };
+
     recognition1.onerror = (e) => {
         console.error("Lỗi nhận giọng nói:", e.error);
     };
@@ -430,6 +443,7 @@ mic1_button.onclick = () => {
     recognition1.onstart = function() {// đang nhận giọng nói sau khi bấm mic1
       mic1_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; 
     };
+
     recognition1.start();// Bắt đầu nhận giọng nói
 };
 
@@ -448,10 +462,13 @@ mic2_button.onclick = () => {
         recognition2.stop();// Dừng nhận giọng nói khi kết thúc 
         //dat o cho nay thi mic ios moi bien mat
         //alert(vietnameseText);
-        // Dịch bằng xttps 
-        let fromMa = listLangVoice[lang2_select.selectedIndex].substring(0,2);
-        let toMa = listLangVoice[lang1_select.selectedIndex].substring(0,2);
-        dichTextFromTo(mic2TextNoi,fromMa,toMa,'mic2')
+
+        // Dịch bằng google
+        dichTextFromTo(mic2TextNoi, 'mic2');
+        // Gán hành động cho loa_button để phát lại
+        //doc text trong div cuoi cung cua chatbox
+        //mic1TextDich = text div cc;
+   
     };
 
     recognition2.onerror = (e) => {
@@ -461,11 +478,10 @@ mic2_button.onclick = () => {
       mic2_button.style.backgroundImage = "none";
     };
     recognition2.onstart = function() {// đang nhận giọng nói sau khi bấm mic1
-      mic2_button.style.backgroundImage = "url('icons/mic2-animation.gif')"; 
+      mic2_button.style.backgroundImage = "url('icons/mic1-animation.gif')"; 
     };
 
     recognition2.start();// Bắt đầu nhận giọng nói
-
   };
 
 start_button.onclick=()=>{
