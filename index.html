@@ -250,7 +250,8 @@ let lang2VoiceC=null; //voice tim theo ma, vd 'en-US' cua lang2_select
 var tiengYcDich='';
 let mic1TextDich='';
 let mic2TextDich='';
-
+let indexSelect1Update=0;
+let indexSelect2Update=0;
 
 function updateMenulang1_select() {
     for (let i = 0; i < listLangCountry.length; i++) {
@@ -263,6 +264,7 @@ function updateMenulang1_select() {
 }
 updateMenulang1_select();
 lang1_select.selectedIndex = 19; // chọn option thứ 2 (index bắt đầu từ 0)
+indexSelect1Update = lang1_select.selectedIndex;
 
 function updateMenulang2_select() {
     for (let i = 0; i < listLangCountry.length; i++) {
@@ -275,10 +277,13 @@ function updateMenulang2_select() {
 }
 updateMenulang2_select();
 lang2_select.selectedIndex = 3; // chọn option thứ 2 (index bắt đầu từ 0)
+indexSelect2Update = lang2_select.selectedIndex;
 
 //------------------
 function toggleMenu1() {
-  //alert(lang1_select.selectedIndex);
+  //cap nhat moi lan thay doi
+  indexSelect1Update = lang1_select.selectedIndex;
+
   let voices = speechSynthesis.getVoices();
   if (voices.length === 0) {
     console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
@@ -287,13 +292,13 @@ function toggleMenu1() {
   //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
   //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
   //console.log(listLangVoice[lang2_select.selectedIndex]);
-  if (listLangVoice[lang1_select.selectedIndex]==='en-US'){
+  if (listLangVoice[indexSelect1Update]==='en-US'){
     lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
     if (lang1VoiceC===undefined){
-      lang1VoiceC = voices.find(v => v.lang === listLangVoice[lang1_select.selectedIndex]);
+      lang1VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect1Update]);
     }    
   }else{
-    lang1VoiceC = voices.find(v => v.lang === listLangVoice[lang1_select.selectedIndex]);
+    lang1VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect1Update]);
   }
   if (lang1VoiceC === undefined) {
     console.log('Không có voice phù hợp');
@@ -304,7 +309,8 @@ function toggleMenu1() {
 
 //------------------------
 function toggleMenu2() {
-  //alert(lang2_select.selectedIndex);
+  //cap nhat moi lan thay doi
+  indexSelect2Update = lang2_select.selectedIndex;
   let voices = speechSynthesis.getVoices();
   if (voices.length === 0) {
     console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
@@ -313,13 +319,13 @@ function toggleMenu2() {
   //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
   //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
   //console.log(listLangVoice[lang2_select.selectedIndex]);
-  if (listLangVoice[lang2_select.selectedIndex]==='en-US'){
+  if (listLangVoice[indexSelect2Update]==='en-US'){
     lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
     if (lang2VoiceC===undefined){
-      lang2VoiceC = voices.find(v => v.lang === listLangVoice[lang2_select.selectedIndex]);
+      lang2VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect2Update]);
     }    
   }else{
-    lang2VoiceC = voices.find(v => v.lang === listLangVoice[lang2_select.selectedIndex]);
+    lang2VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect2Update]);
   }
   if (lang2VoiceC === undefined) {
     console.log('Không có voice phù hợp');
@@ -377,11 +383,11 @@ function dichTextFromTo(textDemDich, micNoi){
     let sourceLanguage;
     let targetLanguage;
     if (micNoi==='mic1'){
-        sourceLanguage = listLangVoice[lang1_select.selectedIndex].substring(0,2);
-        targetLanguage = listLangVoice[lang2_select.selectedIndex].substring(0,2);
+        sourceLanguage = listLangVoice[indexSelect1Update].substring(0,2);
+        targetLanguage = listLangVoice[indexSelect2Update].substring(0,2);
     }else{
-        sourceLanguage = listLangVoice[lang2_select.selectedIndex].substring(0,2);
-        targetLanguage = listLangVoice[lang1_select.selectedIndex].substring(0,2);
+        sourceLanguage = listLangVoice[indexSelect2Update].substring(0,2);
+        targetLanguage = listLangVoice[indexSelect1Update].substring(0,2);
     }    
     const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
 
@@ -414,7 +420,7 @@ function dichTextFromTo(textDemDich, micNoi){
 // Nhận giọng nói từ mic1
 mic1_button.onclick = () => {
     const recognition1 = new webkitSpeechRecognition();
-    recognition1.lang = listLangVoice[lang1_select.selectedIndex].substring(0,2);
+    recognition1.lang = listLangVoice[indexSelect1Update].substring(0,2);
     recognition1.continuous = false;//
     recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
@@ -450,7 +456,7 @@ mic1_button.onclick = () => {
 // Nhận giọng nói từ mic2
 mic2_button.onclick = () => {
     const recognition2 = new webkitSpeechRecognition();
-    recognition2.lang = listLangVoice[lang2_select.selectedIndex].substring(0,2);
+    recognition2.lang = listLangVoice[indexSelect2Update].substring(0,2);
     recognition2.continuous = false;//
     recognition2.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
