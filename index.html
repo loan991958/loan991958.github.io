@@ -98,20 +98,17 @@ h2 {
     width: 40px; /* Kích thước nút */
     height: 40px;
     border-radius: 50%; /* Làm cho nút tròn */
-    font-size: 40px;
-    background-color: lightgreen;    /* Nền xanh (blue) */
-  border: 2px solid darkgreen;    /* Đường viền xanh đậm hơn */
-  font-size: 20px;              /* Kích thước chữ */
-  font-weight: bold;
-  text-align: center;
-  /*line-height: 50px;             Căn giữa theo chiều dọc */
-  cursor: pointer;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Đổ bóng nhẹ */
-
+    font-size: 16px;
     /*background-image: url("icons/started.png");  Ảnh bên trong */
-    /*background-image:  url('icons/start.png');  Ảnh bên trong */
-    /*background-size: cover;  Đảm bảo ảnh phủ đầy */
-    /*background-position: center;*/
+    background-image:  url('icons/start.png'); /* Ảnh bên trong */
+    background-size: cover; /* Đảm bảo ảnh phủ đầy */
+    background-position: center;
+    background-color: lightgreen;
+    border: 2px solid darkgreen; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Đổ bóng nhẹ */
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
 }
 
 
@@ -640,10 +637,8 @@ start_button.onclick=()=>{
   banphim1.disabled = false;
   banphim2.disabled = false;
 
-  //start_button.style.backgroundImage = "url('icons/started.png')";
-  start_button.textContent ='';
-  start_button.textContent ='🔓';
-  //start_button.disabled = true;
+  start_button.style.backgroundImage = "url('icons/started.png')";
+  start_button.disabled = true;
 
 
 }
