@@ -66,6 +66,7 @@ h2 {
   align-items: center;
   width: 100%; /* hoặc đặt chiều rộng cụ thể */
   padding: 10px 0px; /* tuỳ chỉnh khoảng cách lề */
+
 }
 #mic1_button {
     width: 70px; /* Kích thước nút */
@@ -158,6 +159,7 @@ h2 {
   padding: 0 10%  0% 24%; /* cách biên trái và phải 20px */
   width: 100%;
   box-sizing: border-box;
+  
 }
 .keyboard-group div {
   width: 30%; /* hoặc tuỳ chỉnh theo nhu cầu */
@@ -169,11 +171,45 @@ h2 {
     color:#b18024;
     font-size: 36px;
 }
-.banphim {
+#banphim1,#banphim2 {
   background-color: transparent;
   border: none;
   font-size: 30px;
 }
+.mark1{
+  /*background-color: #ffff99;  Vàng nhạt */
+  background-color: #ccffcc; /* Xanh mint Nhẹ nhàng, dịu mắt */
+  color: inherit;            /* Giữ màu chữ gốc */
+ /*luu de tkhao: background-color: #ffff99; Vàng nhạt, rất phổ biến, dễ đọc*/
+
+}
+
+.mark2{
+  background-color: #cce5ff; /* Xanh dương nhạt, tươi sáng, không lóa */
+  color: inherit;            /* Giữ màu chữ gốc */
+}
+#box1_ghi{
+  border: 1px solid #ccc; 
+  font-size:24px;
+  width:100%;
+  height: 300px; 
+  overflow-y: scroll; 
+  padding-left: 10px;  
+  text-align: left; 
+  direction: ltr;
+} 
+#box2_ghi{
+  border: 1px solid #ccc; 
+  font-size:24px;
+  width:100%;
+  height: 300px; 
+  overflow-y: scroll; 
+  
+  padding-left: 10px;  
+  text-align: left; 
+  direction: ltr;
+} 
+
 </style>
 
 </head>
@@ -198,10 +234,10 @@ h2 {
 </div>
 
 <div class="keyboard-group">
-    <div><button class='banphim' onclick="chatBoxKb1()">⌨️</button></div>
-    <div><button class='banphim' onclick="chatBoxKb2()">⌨️</button></div>
+    <div><button id='banphim1' onclick="chatBoxKb1()">⌨️</button></div>
+    <div><button id='banphim2' onclick="chatBoxKb2()">⌨️</button></div>
 </div>
-<br><br><br>
+<br><br>
 
 <script>
 const start_button = document.getElementById("start_button");
@@ -211,6 +247,13 @@ const mic2_button = document.getElementById("mic2_button");
 const loa_button = document.getElementById("loa_button");
 const lang1_select =  document.getElementById("lang1_select");
 const lang2_select =  document.getElementById("lang2_select");
+const banphim1 =  document.getElementById("banphim1");
+const banphim2 =  document.getElementById("banphim2");
+
+mic1_button.disabled = true;
+mic2_button.disabled = true;   
+banphim1.disabled = true;
+banphim2.disabled = true;
 
 //list cac langs co 13 langs
 //lLangs[n][0] se la ten lang ro rang cua nuoc do
@@ -363,21 +406,80 @@ function addMessage(role, text) {
 }
 
 // Hàm phát âm text dich
-function speakTextDich(text,langVoice) {
+function speakTextDichCc(text,langVoice,lnoiDatTextDichCcVaMic) {
   if ('speechSynthesis' in window) {
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.voice = langVoice;
+  //  const utterance = new SpeechSynthesisUtterance(text);
+  //  utterance.voice = langVoice;
     //utterance.lang = langVoice.lang;
 
-    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+  //  utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+  //  speechSynthesis.speak(utterance);
+  //  loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
+    window.speechSynthesis.cancel();
+
+    text = lnoiDatTextDichCcVaMic[0].innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = langVoice;
+    
+    //khi doc den cuoi thi cho innerHTML chi la text, khong con mark nua
+    //de bien mat highlight
+    function handleEnd() {
+        lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+    }
+    function handleBoundary(event) {
+        if (event.name === 'sentence') {
+            // we only care about word boundaries
+            return;
+        }
+        const wordStart = event.charIndex;
+        let wordLength = event.charLength;
+        if (wordLength === undefined) {
+            // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
+            const match = text.substring(wordStart).match(/^[a-z\d']*/i);
+            wordLength = match[0].length;
+        }
+        // wrap word in <mark> tag
+        const wordEnd = wordStart + wordLength;
+        const word = text.substring(wordStart, wordEnd);
+        let markedText;
+        if (lnoiDatTextDichCcVaMic[1]==='mic1-dich') {  
+          markedText = text.substring(0, wordStart) + '<mark class="mark1">' + word + '</mark>' + text.substring(wordEnd);
+        }else{
+          markedText = text.substring(0, wordStart) + '<mark class="mark2">' + word + '</mark>' + text.substring(wordEnd);
+        }
+        lnoiDatTextDichCcVaMic[0].innerHTML = markedText; //phan nay co ma trong resultsdichEl nen phai innerHTML
+            //t them: tim cac "mark" de thuc thi ham scrollIntoView() de cuon div chua text doc
+        let markElement = document.querySelector("mark");
+        if (markElement){
+            markElement.scrollIntoView({
+                behavior: "smooth", block: "center"
+            });
+        }
+    }
+
+    //utterance.addEventListener('start', handleStart);
+    utterance.addEventListener('end', handleEnd);
+    utterance.addEventListener('boundary', handleBoundary);
     speechSynthesis.speak(utterance);
-    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
+
   }else{
     console.log("Trình duyệt không hỗ trợ speechSynthesis");
   }  
 
 
 };
+
+function layNoiDatTextCc(micDich){
+  let allDivs,id_dat_textchay;
+  if (micDich==='mic1-dich'){
+    allDivs = chatbox.querySelectorAll(".mic1-dich");
+  }else{
+    allDivs = chatbox.querySelectorAll(".mic2-dich");
+  }
+  id_dat_textchay = allDivs[allDivs.length - 1];
+  console.log('tttttttttt:',micDich);
+  return [id_dat_textchay,micDich] ;
+}
 
 // Hàm để dịch 
 function dichTextFromTo(textDemDich, micNoi){
@@ -405,12 +507,14 @@ function dichTextFromTo(textDemDich, micNoi){
             if (micNoi==='mic1'){
               mic1TextDich = textDichRa;
               addMessage("mic1-dich", mic1TextDich);
-              loa_button.onclick = () => speakTextDich(mic1TextDich, lang2VoiceC);
+              let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic1-dich");/////////////////////
+              loa_button.onclick = () => speakTextDichCc(mic1TextDich, lang2VoiceC,lnoiDatTextDichCcVaMic);
               loa_button.click(); // tự động phát luôn
             }else{
               mic2TextDich = textDichRa;
               addMessage("mic2-dich", mic2TextDich);
-              loa_button.onclick = () => speakTextDich(mic2TextDich, lang1VoiceC);
+              let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic2-dich");/////////////////////
+              loa_button.onclick = () => speakTextDichCc(mic2TextDich, lang1VoiceC,lnoiDatTextDichCcVaMic);
               loa_button.click(); // tự động phát luôn
             }
             //cho speak o sau, no se doc tren DIV cuoi cua chatbox
@@ -505,8 +609,13 @@ start_button.onclick=()=>{
   //--het doan
 
   //chi de kich hoat loa lan dau, 
-  loa_button.onclick = () => speakTextDich("Ready!",lang2VoiceC);
+  loa_button.onclick = () => speakTextDichCc("Ready!",lang2VoiceC);
   loa_button.click(); // tự động phát luôn
+
+  mic1_button.disabled = false;
+  mic2_button.disabled = false;   
+  banphim1.disabled = false;
+  banphim2.disabled = false;
 
   start_button.style.backgroundImage = "url('icons/started.png')";
   start_button.disabled = true;
