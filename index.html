@@ -250,10 +250,6 @@ const lang2_select =  document.getElementById("lang2_select");
 const banphim1 =  document.getElementById("banphim1");
 const banphim2 =  document.getElementById("banphim2");
 
-mic1_button.disabled = true;
-mic2_button.disabled = true;   
-banphim1.disabled = true;
-banphim2.disabled = true;
 
 //list cac langs co 13 langs
 //lLangs[n][0] se la ten lang ro rang cua nuoc do
@@ -611,11 +607,6 @@ start_button.onclick=()=>{
   //chi de kich hoat loa lan dau, 
   loa_button.onclick = () => speakTextDichCc("Ready!",lang2VoiceC);
   loa_button.click(); // tự động phát luôn
-
-  mic1_button.disabled = false;
-  mic2_button.disabled = false;   
-  banphim1.disabled = false;
-  banphim2.disabled = false;
 
   start_button.style.backgroundImage = "url('icons/started.png')";
   start_button.disabled = true;
