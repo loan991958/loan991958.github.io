@@ -95,18 +95,23 @@ h2 {
     justify-content: center;
 }
 #start_button {
-    width: 30px; /* Kích thước nút */
-    height: 30px;
+    width: 40px; /* Kích thước nút */
+    height: 40px;
     border-radius: 50%; /* Làm cho nút tròn */
-    font-size: 16px;
+    font-size: 40px;
+    background-color: lightgreen;    /* Nền xanh (blue) */
+  border: 2px solid darkgreen;    /* Đường viền xanh đậm hơn */
+  font-size: 20px;              /* Kích thước chữ */
+  font-weight: bold;
+  text-align: center;
+  /*line-height: 50px;             Căn giữa theo chiều dọc */
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Đổ bóng nhẹ */
+
     /*background-image: url("icons/started.png");  Ảnh bên trong */
-    background-image:  url('icons/start.png'); /* Ảnh bên trong */
-    background-size: cover; /* Đảm bảo ảnh phủ đầy */
-    background-position: center;
-    border: none; /* Viền */
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
+    /*background-image:  url('icons/start.png');  Ảnh bên trong */
+    /*background-size: cover;  Đảm bảo ảnh phủ đầy */
+    /*background-position: center;*/
 }
 
 
@@ -215,7 +220,7 @@ h2 {
 </head>
 <body>
 <h2 ><span id="about">C</span>hat with foreigners with translation</h2>
-<h2 >🗣️<button id="start_button"></button>👤</h2>
+<h2 >🗣️<button id="start_button">🔒</button>👤</h2>
 
 <div id="chatbox">
   <button class="overlay-btn" onclick="removeAllDivs()">Clear 🗌</button>
@@ -624,7 +629,7 @@ start_button.onclick=()=>{
   };  
 
   recognition.start();
-  //--het doan
+  //--het doan 🔓🔒
 
   //chi de kich hoat loa lan dau, 
   loa_button.onclick = () => speakTextDich("Ready!",lang2VoiceC);
@@ -635,8 +640,9 @@ start_button.onclick=()=>{
   banphim1.disabled = false;
   banphim2.disabled = false;
 
-  start_button.style.backgroundImage = "url('icons/started.png')";
-  start_button.disabled = true;
+  //start_button.style.backgroundImage = "url('icons/started.png')";
+  start_button.innerText='🔓';
+  //start_button.disabled = true;
 
 
 }
