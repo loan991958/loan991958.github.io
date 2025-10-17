@@ -250,6 +250,10 @@ const lang2_select =  document.getElementById("lang2_select");
 const banphim1 =  document.getElementById("banphim1");
 const banphim2 =  document.getElementById("banphim2");
 
+mic1_button.disabled = true;
+mic2_button.disabled = true;   
+banphim1.disabled = true;
+banphim2.disabled = true;
 
 //list cac langs co 13 langs
 //lLangs[n][0] se la ten lang ro rang cua nuoc do
@@ -593,6 +597,24 @@ mic2_button.onclick = () => {
     recognition2.start();// Bắt đầu nhận giọng nói
   };
 
+//ham nay chi cho noi ready
+function speakTextDich(text,langVoice) {
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = langVoice;
+    //utterance.lang = langVoice.lang;
+
+    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+    speechSynthesis.speak(utterance);
+    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
+  }else{
+    console.log("Trình duyệt không hỗ trợ speechSynthesis");
+  }  
+
+
+};
+
+
 start_button.onclick=()=>{
   //--Doan ma nay chi de mo micro trong iphone, lap top ko can
   const recognition = new webkitSpeechRecognition();
@@ -605,8 +627,13 @@ start_button.onclick=()=>{
   //--het doan
 
   //chi de kich hoat loa lan dau, 
-  loa_button.onclick = () => speakTextDichCc("Ready!",lang2VoiceC);
+  loa_button.onclick = () => speakTextDich("Ready!",lang2VoiceC);
   loa_button.click(); // tự động phát luôn
+
+  mic1_button.disabled = false;
+  mic2_button.disabled = false;   
+  banphim1.disabled = false;
+  banphim2.disabled = false;
 
   start_button.style.backgroundImage = "url('icons/started.png')";
   start_button.disabled = true;
