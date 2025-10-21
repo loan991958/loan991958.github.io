@@ -20,31 +20,26 @@ h2 {
   text-align: center; 
   color:darkgreen;
 }
-
-
 #chatbox { 
+
   border: 1px solid #ccc; 
   padding: 10px; 
-  height: 320px; 
+  height: 260px; 
   overflow-y: scroll; 
   margin-bottom: 10px; 
-
-  position: relative; /* làm gốc tọa độ cho phần tử con */
+  transition: opacity 0.3s ease;
+  position:relative ; /*neu absolue thi chatbox se co lai khi ko co text*/  
+  
 }
-.overlay-btn {
-  position: absolute;
-  top: 10px;      /* khoảng cách từ trên xuống */
-  right: 10px;    /* khoảng cách từ phải sang */
-  z-index: 20;    /* đảm bảo nút nằm trên */
+.overlay-btn, .hidetext-btn{
   border-color: transparent ;
   background: transparent;
   color:white;
   transition: transform 0.2s ease;
 }
-.overlay-btn:hover {
+.overlay-btn:hover, .hidetext-btn:hover, .silent-btn:hover {
   transform: scale(1.5); /* phóng to gap ruoi */
 }
-
 .menu-group {
   display: flex;
   justify-content: space-between;
@@ -52,8 +47,6 @@ h2 {
   width: 100%;
   box-sizing: border-box;
 }
-
-
 .menu-group select {
   width: 40%; /* hoặc tuỳ chỉnh theo nhu cầu */
   padding: 8px;
@@ -66,7 +59,6 @@ h2 {
   align-items: center;
   width: 100%; /* hoặc đặt chiều rộng cụ thể */
   padding: 10px 0px; /* tuỳ chỉnh khoảng cách lề */
-
 }
 #mic1_button {
     width: 70px; /* Kích thước nút */
@@ -110,8 +102,6 @@ h2 {
     align-items: center;
     justify-content: center;
 }
-
-
 #loa_button {
   padding: 10px 20px;
   font-size: 16px;
@@ -129,22 +119,23 @@ h2 {
   color: rgb(125, 122, 122);
   position: relative;
   top: -4px; /* nâng lên 5px */
-
+  font-size:x-large;
 }
 .mic1-dich {
   color: darkgreen;
-  font-size: xx-large;
+  font-size: x-large;
+  /*font-size:x-large;*/
 }
-
 .mic2-noi {
   color: #71759f;
   position: relative;
   top: -4px; /* nâng lên 5px */
-
+  font-size:x-large;
 }
 .mic2-dich {
   color: darkblue;
-  font-size: xx-large;
+  font-size: x-large;
+  /*font-weight: bold;*/
 }
 #lang1_select {
   color:rgb(2, 78, 2);
@@ -182,14 +173,14 @@ h2 {
 }
 .mark1{
   /*background-color: #ffff99;  Vàng nhạt */
-  background-color: #ccffcc; /* Xanh mint Nhẹ nhàng, dịu mắt */
+  background-color: #ccffcc;  /*Xanh mint Nhẹ nhàng, dịu mắt */
   color: inherit;            /* Giữ màu chữ gốc */
  /*luu de tkhao: background-color: #ffff99; Vàng nhạt, rất phổ biến, dễ đọc*/
 
 }
 
 .mark2{
-  background-color: #cce5ff; /* Xanh dương nhạt, tươi sáng, không lóa */
+ background-color: #cce5ff; /*  Xanh dương nhạt, tươi sáng, không lóa */
   color: inherit;            /* Giữ màu chữ gốc */
 }
 #box1_ghi{
@@ -213,7 +204,10 @@ h2 {
   text-align: left; 
   direction: ltr;
 } 
-
+#batTbChatGpt{
+  color:#42300d;
+  text-align: center;
+}
 </style>
 
 </head>
@@ -221,9 +215,12 @@ h2 {
 <h2 ><span id="about">C</span>hat with foreigners with translation</h2>
 <h2 >🗣️<button id="start_button">🔒</button>👤</h2>
 
-<div id="chatbox">
+<div class="button-group">
+  <button class="hidetext-btn" onclick="anHienDivsInChat()">🗌 Hide/Show</button>
   <button class="overlay-btn" onclick="removeAllDivs()">Clear 🗌</button>
 </div>
+
+  <div id="chatbox" aria-hidden="false"></div>
 
 <br>
 <div class="menu-group">
@@ -241,11 +238,14 @@ h2 {
     <div><button id='banphim1' onclick="chatBoxKb1()">⌨️</button></div>
     <div><button id='banphim2' onclick="chatBoxKb2()">⌨️</button></div>
 </div>
-<br><br>
+<h3 id="batTbChatGpt"></h3>
+<br>
 
 <script>
 const start_button = document.getElementById("start_button");
 const chatbox = document.getElementById("chatbox");
+const chatboxcha = document.getElementById("chatboxcha");
+
 const mic1_button = document.getElementById("mic1_button");
 const mic2_button = document.getElementById("mic2_button");  
 const loa_button = document.getElementById("loa_button");
@@ -253,6 +253,7 @@ const lang1_select =  document.getElementById("lang1_select");
 const lang2_select =  document.getElementById("lang2_select");
 const banphim1 =  document.getElementById("banphim1");
 const banphim2 =  document.getElementById("banphim2");
+const batTbChatGpt =  document.getElementById("batTbChatGpt");
 
 mic1_button.disabled = true;
 mic2_button.disabled = true;   
@@ -302,6 +303,8 @@ let mic1TextDich='';
 let mic2TextDich='';
 let indexSelect1Update=0;
 let indexSelect2Update=0;
+let daBatChatGpt=false;
+var demAnHienClick=0;
 
 function updateMenulang1_select() {
     for (let i = 0; i < listLangCountry.length; i++) {
@@ -333,15 +336,11 @@ indexSelect2Update = lang2_select.selectedIndex;
 function toggleMenu1() {
   //cap nhat moi lan thay doi
   indexSelect1Update = lang1_select.selectedIndex;
-
   let voices = speechSynthesis.getVoices();
   if (voices.length === 0) {
     console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
     return;
   }
-  //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
-  //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
-  //console.log(listLangVoice[lang2_select.selectedIndex]);
   if (listLangVoice[indexSelect1Update]==='en-US'){
     lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
     if (lang1VoiceC===undefined){
@@ -355,6 +354,8 @@ function toggleMenu1() {
   } else {
     console.log('Voice được chọn:', lang1VoiceC.lang);
   }
+  checkChatGpt();
+
 }
 
 //------------------------
@@ -366,9 +367,6 @@ function toggleMenu2() {
     console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
     return;
   }
-  //console.log("Available voices:", voices.map(v => v.name + ' (' + v.lang + ')'));
-  //console.log('lang2_select.selectedIndex:', lang2_select.selectedIndex);
-  //console.log(listLangVoice[lang2_select.selectedIndex]);
   if (listLangVoice[indexSelect2Update]==='en-US'){
     lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
     if (lang2VoiceC===undefined){
@@ -382,6 +380,7 @@ function toggleMenu2() {
   } else {
     console.log('Voice được chọn:', lang2VoiceC.lang);
   }
+  checkChatGpt(indexSelect2Update);
 }
 
 // Đợi sự kiện voiceschanged để gọi toggleMenu1
@@ -398,37 +397,58 @@ function addMessage(role, text) {
     const div = document.createElement("div");
     //div.innerHTML = `<span class='${role}'>${text}</span> <br>`;
     //div.innerHTML = `<span class="${role}">${role === "mic1-noi" ? "<br>" : ""} ${text}</span>`;
-    if (role.includes('mic1')){
-      div.innerHTML = `<span class="${role}">${role.includes('mic1-noi') ? "<br>🟢" : ""} ${text}</span>`;
+    if (daBatChatGpt===true){
+      if (role.includes('mic1')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic1-noi') ? "<br>🟢֎" : ""} ${text}</span>`;
+      }
+      if (role.includes('mic2')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic2-noi') ? "<br>👤֎" : ""} ${text}</span>`;
+      }  
+    }else{
+      if (role.includes('mic1')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic1-noi') ? "<br>🟢" : ""} ${text}</span>`;
+      }
+      if (role.includes('mic2')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic2-noi') ? "<br>👤" : ""} ${text}</span>`;
+      }  
     }
-    if (role.includes('mic2')){
-      div.innerHTML = `<span class="${role}">${role.includes('mic2-noi') ? "<br>👤" : ""} ${text}</span>`;
-    }  
-
     chatbox.appendChild(div);
+    //cho div  msg.style.display = "none"; hoac = 'block' o day
+    //neu demAnHienClick%2 === 1 thi none, khac thi block
+    if (demAnHienClick%2 === 1){
+      div.style.display = "none";
+    }else{
+      div.style.display = "block";
+    }
+
     chatbox.scrollTop = chatbox.scrollHeight;
 }
 
 // Hàm phát âm text dich
 function speakTextDichCc(text,langVoice,lnoiDatTextDichCcVaMic) {
   if ('speechSynthesis' in window) {
-  //  const utterance = new SpeechSynthesisUtterance(text);
-  //  utterance.voice = langVoice;
-    //utterance.lang = langVoice.lang;
-
-  //  utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
-  //  speechSynthesis.speak(utterance);
-  //  loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
     window.speechSynthesis.cancel();
 
     text = lnoiDatTextDichCcVaMic[0].innerText;
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.voice = langVoice;
-    
-    //khi doc den cuoi thi cho innerHTML chi la text, khong con mark nua
-    //de bien mat highlight
+
+
+    utterance.addEventListener('start', handleStart);
+    utterance.addEventListener('end', handleEnd);
+    utterance.addEventListener('boundary', handleBoundary);
+
+    speechSynthesis.speak(utterance);
+
+    function handleStart(){
+      loa_button.style.backgroundImage="url('icons/loa-animation.gif')";
+
+    }
     function handleEnd() {
-        lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+      loa_button.style.backgroundImage="url('icons/loa.png')";
+      lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+      //dong tren day gan cho lnoiDatTextDichCcVaMic[0].innerHTML
+      //chi co gia tri la text, khong con mark nua de mat dau mark
     }
     function handleBoundary(event) {
         if (event.name === 'sentence') {
@@ -461,10 +481,9 @@ function speakTextDichCc(text,langVoice,lnoiDatTextDichCcVaMic) {
         }
     }
 
-    //utterance.addEventListener('start', handleStart);
-    utterance.addEventListener('end', handleEnd);
-    utterance.addEventListener('boundary', handleBoundary);
-    speechSynthesis.speak(utterance);
+
+    //khi doc den cuoi thi cho innerHTML chi la text, khong con mark nua
+    //de bien mat highlight
 
   }else{
     console.log("Trình duyệt không hỗ trợ speechSynthesis");
@@ -481,7 +500,7 @@ function layNoiDatTextCc(micDich){
     allDivs = chatbox.querySelectorAll(".mic2-dich");
   }
   id_dat_textchay = allDivs[allDivs.length - 1];
-  console.log('tttttttttt:',micDich);
+  //console.log('tttttttttt:',micDich);
   return [id_dat_textchay,micDich] ;
 }
 
@@ -512,13 +531,34 @@ function dichTextFromTo(textDemDich, micNoi){
               mic1TextDich = textDichRa;
               addMessage("mic1-dich", mic1TextDich);
               let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic1-dich");/////////////////////
-              loa_button.onclick = () => speakTextDichCc(mic1TextDich, lang2VoiceC,lnoiDatTextDichCcVaMic);
+              loa_button.onclick = () => {
+                //neu dang phat loa thi nhung
+                if (window.speechSynthesis.speaking) {
+                  window.speechSynthesis.cancel();
+                  lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+                  loa_button.style.backgroundImage = "url('icons/loa.png')";
+
+                }else{
+                //neu loa da dung thi doc lai
+                speakTextDichCc(mic1TextDich, lang2VoiceC,lnoiDatTextDichCcVaMic);
+              }
+            }
               loa_button.click(); // tự động phát luôn
             }else{
               mic2TextDich = textDichRa;
               addMessage("mic2-dich", mic2TextDich);
-              let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic2-dich");/////////////////////
-              loa_button.onclick = () => speakTextDichCc(mic2TextDich, lang1VoiceC,lnoiDatTextDichCcVaMic);
+              let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic2-dich");
+              loa_button.onclick = () => {
+                //neu dang phat loa thi nhung
+                if (window.speechSynthesis.speaking) {
+                  window.speechSynthesis.cancel();
+                  lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+                  loa_button.style.backgroundImage = "url('icons/loa.png')";
+                }else{
+                //neu loa da dung thi doc lai
+                speakTextDichCc(mic2TextDich, lang1VoiceC,lnoiDatTextDichCcVaMic);
+              }
+            }
               loa_button.click(); // tự động phát luôn
             }
             //cho speak o sau, no se doc tren DIV cuoi cua chatbox
@@ -545,7 +585,11 @@ mic1_button.onclick = () => {
         //alert(vietnameseText);
 
         // Dịch bằng google
-        dichTextFromTo(mic1TextNoi, 'mic1');
+        if (daBatChatGpt===false){
+          dichTextFromTo(mic1TextNoi, 'mic1');
+        }else{
+          sendGptReplyAndSpeak(mic1TextNoi);
+        }
         // Gán hành động cho loa_button để phát lại
         //doc text trong div cuoi cung cua chatbox
         //mic1TextDich = text div cc;
@@ -581,7 +625,11 @@ mic2_button.onclick = () => {
         //alert(vietnameseText);
 
         // Dịch bằng google
-        dichTextFromTo(mic2TextNoi, 'mic2');
+        if (daBatChatGpt===false){
+          dichTextFromTo(mic2TextNoi, 'mic2');
+        }else{
+          sendGptReplyAndSpeak(mic2TextNoi);
+        }
         // Gán hành động cho loa_button để phát lại
         //doc text trong div cuoi cung cua chatbox
         //mic1TextDich = text div cc;
@@ -648,6 +696,7 @@ start_button.onclick=()=>{
 function removeAllDivs() {
   const childDivs = chatbox.querySelectorAll("div");
   childDivs.forEach(div => div.remove());
+
 }
 
 function fVoiceChoIndexUpdate(iUpdate){
@@ -675,6 +724,8 @@ function fVoiceChoIndexUpdate(iUpdate){
 lang1VoiceC = fVoiceChoIndexUpdate(indexSelect1Update);
 lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
+
+//֎ ֎ ⚛️
 </script>
 
 <script src="index.js"></script>

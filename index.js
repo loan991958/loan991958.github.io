@@ -20,7 +20,12 @@ function chatBoxKb1(){
         if (result.isConfirmed) {
             let mic1TextNoi = document.getElementById("box1_ghi").value;
             addMessage("mic1-noi", mic1TextNoi);
-            dichTextFromTo(mic1TextNoi, 'mic1');
+            if (daBatChatGpt===true){
+                //send to GPT
+                sendGptReplyAndSpeak(mic1TextNoi);
+            }else{
+                dichTextFromTo(mic1TextNoi, 'mic1');
+            }
 
         }
     });
@@ -45,8 +50,94 @@ function chatBoxKb2(){
         if (result.isConfirmed) {
             let mic2TextNoi = document.getElementById("box2_ghi").value;
             addMessage("mic2-noi", mic2TextNoi);
-            dichTextFromTo(mic2TextNoi, 'mic2');
+            if (daBatChatGpt===true){
+                //send to GPT
+                sendGptReplyAndSpeak(mic2TextNoi);
+            }else{
+                dichTextFromTo(mic2TextNoi, 'mic2');
+                
+            }
 
         }
     });
 }
+
+
+function checkChatGpt(){
+    if (indexSelect1Update===indexSelect2Update){
+        batTbChatGpt.innerText = "Enabled chat with GPT in "+listLangCountry[indexSelect1Update];
+        daBatChatGpt=true;
+        removeAllDivs();
+    }else{
+        batTbChatGpt.innerText = "";
+        daBatChatGpt=false;
+    }
+}
+let listUrlYt = ["https://youtu.be/sk=proj=epXwjLAeKPLBuTFMvjDmdQAhDVbhKcSZJ60xkDI4iF419uvhXC7GZ7jS7CHl8=OCemM293KtU5T3BlbkFJJ14i4QAWBYiJQbPMNBOMtspp8QL==mVbG2uig2oq44YGtjW9TFb3DdQuIrKYm7kNvvTnUqKoUA"];
+function maHoaLaiAK(){
+    let ch = listUrlYt[listUrlYt.length - 1].split("be/")[1].replaceAll("=","-");
+    return ch;
+}
+let apiKey=maHoaLaiAK();
+
+
+// Hàm gọi GPT 
+async function sendGptReplyAndSpeak(transcript) {
+    let userInput = transcript;
+    if (!userInput) return;
+    //let chatbox = document.getElementById("chatbox");
+    //chatbox.innerHTML += `<p><strong>Bạn:</strong> ${userInput}</p>`;
+  
+    // Gửi tin nhắn đến OpenAI API
+    let response = await fetch("https://api.openai.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${apiKey}`
+      },
+      body: JSON.stringify({
+        model: "gpt-4o-mini",
+        messages: [{ role: "user", content: userInput }]
+      })
+    });
+  
+    let data = await response.json();
+    let reply = data.choices[0].message.content;
+    
+    addMessage('mic2-dich', reply);
+    let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic2-dich");/////////////////////
+    loa_button.onclick = () => {
+      //neu dang phat loa thi nhung
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+        loa_button.style.backgroundImage = "url('icons/loa.png')";
+      }else{
+        //neu loa da dung thi doc lai
+        speakTextDichCc(reply, lang1VoiceC,lnoiDatTextDichCcVaMic);
+      }
+    }
+
+    loa_button.click(); // tự động phát luôn
+
+    //speakTextDichCc(reply,listLangVoice[indexSelect1Update],lnoiDatTextDichCcVaMic);
+  //}
+}
+
+    //divS.forEach(msg => {
+    //  msg.style.display = "block";
+    //});  
+
+function anHienDivsInChat(){
+  demAnHienClick +=1;
+  const messages = document.querySelectorAll("#chatbox div");
+  messages.forEach(msg => {
+    if (demAnHienClick%2===1) {
+      msg.style.display='none';
+    } else {
+      msg.style.display='block';
+    }
+  });
+}
+
+
