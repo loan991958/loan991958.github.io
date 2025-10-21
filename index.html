@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
-    <title>Chat with foreigners </title>
+    <title>Chat in multiple languages</title>
 <style>
 body {
     background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
@@ -24,20 +24,20 @@ h2 {
 
   border: 1px solid #ccc; 
   padding: 10px; 
-  height: 260px; 
+  height: 250px; 
   overflow-y: scroll; 
   margin-bottom: 10px; 
   transition: opacity 0.3s ease;
   position:relative ; /*neu absolue thi chatbox se co lai khi ko co text*/  
   
 }
-.overlay-btn, .hidetext-btn{
+.overlay-btn, .hidetext-btn, .copytext-btn{
   border-color: transparent ;
   background: transparent;
   color:white;
   transition: transform 0.2s ease;
 }
-.overlay-btn:hover, .hidetext-btn:hover, .silent-btn:hover {
+.overlay-btn:hover, .hidetext-btn:hover, .copytext-btn:hover {
   transform: scale(1.5); /* phóng to gap ruoi */
 }
 .menu-group {
@@ -208,15 +208,34 @@ h2 {
   color:#42300d;
   text-align: center;
 }
+#copiedLabel {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #eee;
+  color: #333;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
 </style>
 
 </head>
 <body>
-<h2 ><span id="about">C</span>hat with foreigners with translation</h2>
+<h2 ><span id="about">C</span>hat in multiple languages</h2>
 <h2 >🗣️<button id="start_button">🔒</button>👤</h2>
 
 <div class="button-group">
   <button class="hidetext-btn" onclick="anHienDivsInChat()">🗌 Hide/Show</button>
+
+  <div style="position: relative; display: inline-block;">
+    <div id="copiedLabel" style="display: none;">Copied</div>
+    <button class="copytext-btn" onclick="copyText()">Copy 🗌 &nbsp&nbsp&nbsp&nbsp&nbsp</button>
+  </div>
+
   <button class="overlay-btn" onclick="removeAllDivs()">Clear 🗌</button>
 </div>
 
@@ -329,7 +348,7 @@ function updateMenulang2_select() {
     }
 }
 updateMenulang2_select();
-lang2_select.selectedIndex = 3; // chọn option thứ 2 (index bắt đầu từ 0)
+lang2_select.selectedIndex = 16; // chọn option thứ 2 (index bắt đầu từ 0)
 indexSelect2Update = lang2_select.selectedIndex;
 
 //------------------
@@ -676,8 +695,7 @@ start_button.onclick=()=>{
   };  
 
   recognition.start();
-  //--het doan 🔓🔒
-
+  
   //chi de kich hoat loa lan dau, 
   loa_button.onclick = () => speakTextDich("Ready!",lang2VoiceC);
   loa_button.click(); // tự động phát luôn
@@ -691,6 +709,21 @@ start_button.onclick=()=>{
   start_button.disabled = true;
 
 
+}
+
+function copyText(){
+  if (chatbox.innerText !== ""){
+    const allText = chatbox.innerText;
+    navigator.clipboard.writeText(allText).then(() => {
+    const label = document.getElementById("copiedLabel");
+    label.style.display = "block";
+
+    setTimeout(() => {
+      label.style.display = "none";
+    }, 1500);
+  });
+
+  }
 }
 
 function removeAllDivs() {
@@ -725,10 +758,12 @@ lang1VoiceC = fVoiceChoIndexUpdate(indexSelect1Update);
 lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
 
-//֎ ֎ ⚛️
+//֎ ֎ ⚛️ 🔓🔒
+
 </script>
 
 <script src="index.js"></script>
 
 </body>
 </html>
+

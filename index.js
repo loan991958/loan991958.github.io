@@ -69,7 +69,7 @@ function checkChatGpt(){
         daBatChatGpt=true;
         removeAllDivs();
     }else{
-        batTbChatGpt.innerText = "";
+        batTbChatGpt.innerText = "Chat in 2 languages ​​above";
         daBatChatGpt=false;
     }
 }
