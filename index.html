@@ -339,10 +339,11 @@ updateMenulang1_select();
 const savedChoice1 = localStorage.getItem("lastSelected1");
 if (savedChoice1) {
     lang1_select.selectedIndex = savedChoice1;
+    indexSelect1Update = lang1_select.selectedIndex;
 } else {
     lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
+    indexSelect1Update = lang1_select.selectedIndex;
 }
-indexSelect1Update = lang1_select.selectedIndex;
 //checkChatGpt();
 
 
@@ -359,10 +360,11 @@ updateMenulang2_select();
 const savedChoice2 = localStorage.getItem("lastSelected2");
 if (savedChoice2) {
     lang2_select.selectedIndex = savedChoice2;
+    indexSelect2Update = lang2_select.selectedIndex;
 } else {
     lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
+    indexSelect2Update = lang2_select.selectedIndex;
 }
-indexSelect2Update = lang2_select.selectedIndex;
 //checkChatGpt();
 
 //------------------
