@@ -344,7 +344,6 @@ if (savedChoice1) {
     lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
     indexSelect1Update = lang1_select.selectedIndex;
 }
-//checkChatGpt();
 
 
 function updateMenulang2_select() {
@@ -365,7 +364,15 @@ if (savedChoice2) {
     lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
     indexSelect2Update = lang2_select.selectedIndex;
 }
-//checkChatGpt();
+
+if (indexSelect1Update===indexSelect2Update){
+    //batTbChatGpt.innerText = "Enabled chat with GPT in "+listLangCountry[indexSelect1Update];
+    daBatChatGpt=true;
+    //removeAllDivs();
+}else{
+    //batTbChatGpt.innerText = "";
+    daBatChatGpt=false;
+}
 
 //------------------
 function toggleMenu1() {
@@ -787,7 +794,6 @@ lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
 
 //֎ ֎ ⚛️ 🔓🔒
-checkChatGpt();
 
 
 
