@@ -773,6 +773,7 @@ indexSelect1Update = lang1_select.selectedIndex;
 lang1_select.addEventListener("change", function() {
     localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
 });
+checkChatGpt();
 
 const savedChoice2 = localStorage.getItem("lastSelected2");
 if (savedChoice2) {
@@ -786,6 +787,7 @@ indexSelect2Update = lang2_select.selectedIndex;
 lang2_select.addEventListener("change", function() {
     localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
 });
+checkChatGpt();
 
 </script>
 
