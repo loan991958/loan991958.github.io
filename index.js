@@ -63,16 +63,6 @@ function chatBoxKb2(){
 }
 
 
-function checkChatGpt(){
-    if (indexSelect1Update===indexSelect2Update){
-        batTbChatGpt.innerText = "Enabled chat with GPT in "+listLangCountry[indexSelect1Update];
-        daBatChatGpt=true;
-        removeAllDivs();
-    }else{
-        batTbChatGpt.innerText = "";
-        daBatChatGpt=false;
-    }
-}
 let listUrlYt = ["https://youtu.be/sk=proj=epXwjLAeKPLBuTFMvjDmdQAhDVbhKcSZJ60xkDI4iF419uvhXC7GZ7jS7CHl8=OCemM293KtU5T3BlbkFJJ14i4QAWBYiJQbPMNBOMtspp8QL==mVbG2uig2oq44YGtjW9TFb3DdQuIrKYm7kNvvTnUqKoUA"];
 function maHoaLaiAK(){
     let ch = listUrlYt[listUrlYt.length - 1].split("be/")[1].replaceAll("=","-");
