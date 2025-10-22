@@ -764,11 +764,13 @@ lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 const savedChoice1 = localStorage.getItem("lastSelected1");
 if (savedChoice1) {
     lang1_select.selectedIndex = savedChoice1;
+
 } else {
     lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
 }
 indexSelect1Update = lang1_select.selectedIndex;
-
+//tim voice tuong ung bang ham sau, trong do da co checkChatGpt();
+toggleMenu1();
 
 // Khi người dùng thay đổi lựa chọn, lưu lại
 lang1_select.addEventListener("change", function() {
@@ -782,13 +784,14 @@ if (savedChoice2) {
     lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
 }
 indexSelect2Update = lang2_select.selectedIndex;
+//tim voice tuong ung bang ham sau, trong do da co checkChatGpt();
+toggleMenu2();
 
 // Khi người dùng thay đổi lựa chọn, lưu lại
 lang2_select.addEventListener("change", function() {
     localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
 });
 //chi can ktra 1 lan sau khi 2 select 
-checkChatGpt();
 
 </script>
 
