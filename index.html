@@ -48,7 +48,7 @@ h2 {
   box-sizing: border-box;
 }
 .menu-group select {
-  width: 40%; /* hoặc tuỳ chỉnh theo nhu cầu */
+  width: 42%; /* hoặc tuỳ chỉnh theo nhu cầu */
   padding: 8px;
   font-size: 16px;
   background-color: transparent;
@@ -759,6 +759,33 @@ lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
 
 //֎ ֎ ⚛️ 🔓🔒
+
+// Khi trang tải, đọc lựa chọn đã lưu
+const savedChoice1 = localStorage.getItem("lastSelected1");
+if (savedChoice1) {
+    lang1_select.selectedIndex = savedChoice1;
+} else {
+    lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
+}
+indexSelect1Update = lang1_select.selectedIndex;
+
+// Khi người dùng thay đổi lựa chọn, lưu lại
+lang1_select.addEventListener("change", function() {
+    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
+});
+
+const savedChoice2 = localStorage.getItem("lastSelected2");
+if (savedChoice2) {
+    lang2_select.selectedIndex = savedChoice2;
+} else {
+    lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
+}
+indexSelect2Update = lang2_select.selectedIndex;
+
+// Khi người dùng thay đổi lựa chọn, lưu lại
+lang2_select.addEventListener("change", function() {
+    localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
+});
 
 </script>
 
