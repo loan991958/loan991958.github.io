@@ -134,4 +134,8 @@ function anHienDivsInChat(){
     }
   });
 }
+window.addEventListener('load', function() {
+  checkChatGpt();
+});
 
+ 
