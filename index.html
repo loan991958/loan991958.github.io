@@ -343,6 +343,7 @@ if (savedChoice1) {
     lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
 }
 indexSelect1Update = lang1_select.selectedIndex;
+//checkChatGpt();
 
 
 function updateMenulang2_select() {
@@ -362,7 +363,7 @@ if (savedChoice2) {
     lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
 }
 indexSelect2Update = lang2_select.selectedIndex;
-
+//checkChatGpt();
 
 //------------------
 function toggleMenu1() {
@@ -386,6 +387,11 @@ function toggleMenu1() {
   } else {
     console.log('Voice được chọn:', lang1VoiceC.lang);
   }
+  // Khi người dùng thay đổi lựa chọn, lưu lại
+  lang1_select.addEventListener("change", function() {
+      localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
+  });
+
   checkChatGpt();
 
 }
@@ -412,6 +418,11 @@ function toggleMenu2() {
   } else {
     console.log('Voice được chọn:', lang2VoiceC.lang);
   }
+  // Khi người dùng thay đổi lựa chọn, lưu lại
+  lang2_select.addEventListener("change", function() {
+      localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
+  });
+
   checkChatGpt();
 }
 
@@ -423,15 +434,7 @@ speechSynthesis.onvoiceschanged = () => {
   console.log('lang2VoiceC:',lang2VoiceC);
 };
 
-// Khi người dùng thay đổi lựa chọn, lưu lại
-lang1_select.addEventListener("change", function() {
-    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
-});
 
-// Khi người dùng thay đổi lựa chọn, lưu lại
-lang2_select.addEventListener("change", function() {
-    localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
-});
 
 
 function addMessage(role, text) {
@@ -782,7 +785,7 @@ lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
 
 //֎ ֎ ⚛️ 🔓🔒
-checkChatGpt();
+
 
 
 
