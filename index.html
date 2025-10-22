@@ -335,8 +335,15 @@ function updateMenulang1_select() {
     }
 }
 updateMenulang1_select();
-lang1_select.selectedIndex = 16; // chọn option thứ 2 (index bắt đầu từ 0)
+// Khi trang tải, đọc lựa chọn đã lưu
+const savedChoice1 = localStorage.getItem("lastSelected1");
+if (savedChoice1) {
+    lang1_select.selectedIndex = savedChoice1;
+} else {
+    lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
+}
 indexSelect1Update = lang1_select.selectedIndex;
+
 
 function updateMenulang2_select() {
     for (let i = 0; i < listLangCountry.length; i++) {
@@ -348,8 +355,14 @@ function updateMenulang2_select() {
     }
 }
 updateMenulang2_select();
-lang2_select.selectedIndex = 3; // chọn option thứ 2 (index bắt đầu từ 0)
+const savedChoice2 = localStorage.getItem("lastSelected2");
+if (savedChoice2) {
+    lang2_select.selectedIndex = savedChoice2;
+} else {
+    lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
+}
 indexSelect2Update = lang2_select.selectedIndex;
+
 
 //------------------
 function toggleMenu1() {
@@ -409,6 +422,16 @@ speechSynthesis.onvoiceschanged = () => {
   console.log('lang1VoiceC:',lang1VoiceC);
   console.log('lang2VoiceC:',lang2VoiceC);
 };
+
+// Khi người dùng thay đổi lựa chọn, lưu lại
+lang1_select.addEventListener("change", function() {
+    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
+});
+
+// Khi người dùng thay đổi lựa chọn, lưu lại
+lang2_select.addEventListener("change", function() {
+    localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
+});
 
 
 function addMessage(role, text) {
@@ -760,38 +783,7 @@ lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
 
 //֎ ֎ ⚛️ 🔓🔒
 
-// Khi trang tải, đọc lựa chọn đã lưu
-const savedChoice1 = localStorage.getItem("lastSelected1");
-if (savedChoice1) {
-    lang1_select.selectedIndex = savedChoice1;
 
-} else {
-    lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
-}
-indexSelect1Update = lang1_select.selectedIndex;
-//tim voice tuong ung bang ham sau, trong do da co checkChatGpt();
-toggleMenu1();
-
-// Khi người dùng thay đổi lựa chọn, lưu lại
-lang1_select.addEventListener("change", function() {
-    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
-});
-
-const savedChoice2 = localStorage.getItem("lastSelected2");
-if (savedChoice2) {
-    lang2_select.selectedIndex = savedChoice2;
-} else {
-    lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
-}
-indexSelect2Update = lang2_select.selectedIndex;
-//tim voice tuong ung bang ham sau, trong do da co checkChatGpt();
-toggleMenu2();
-
-// Khi người dùng thay đổi lựa chọn, lưu lại
-lang2_select.addEventListener("change", function() {
-    localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
-});
-//chi can ktra 1 lan sau khi 2 select 
 
 </script>
 
