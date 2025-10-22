@@ -399,7 +399,7 @@ function toggleMenu2() {
   } else {
     console.log('Voice được chọn:', lang2VoiceC.lang);
   }
-  checkChatGpt(indexSelect2Update);
+  checkChatGpt();
 }
 
 // Đợi sự kiện voiceschanged để gọi toggleMenu1
@@ -769,11 +769,11 @@ if (savedChoice1) {
 }
 indexSelect1Update = lang1_select.selectedIndex;
 
+
 // Khi người dùng thay đổi lựa chọn, lưu lại
 lang1_select.addEventListener("change", function() {
     localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
 });
-checkChatGpt();
 
 const savedChoice2 = localStorage.getItem("lastSelected2");
 if (savedChoice2) {
@@ -787,6 +787,7 @@ indexSelect2Update = lang2_select.selectedIndex;
 lang2_select.addEventListener("change", function() {
     localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
 });
+//chi can ktra 1 lan sau khi 2 select 
 checkChatGpt();
 
 </script>
