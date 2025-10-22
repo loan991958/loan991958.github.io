@@ -359,6 +359,11 @@ if (savedChoice1) {
     lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
     indexSelect1Update = 16;
 }
+// Khi người dùng thay đổi lựa chọn, lưu lại
+lang1_select.addEventListener("change", function() {
+    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
+});
+
 checkChatGpt(indexSelect1Update,indexSelect2Update);
 
 
@@ -380,16 +385,13 @@ if (savedChoice2) {
     lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
     indexSelect2Update = 3;
 }
+// Khi người dùng thay đổi lựa chọn, lưu lại
+lang1_select.addEventListener("change", function() {
+    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
+});
+
 checkChatGpt(indexSelect1Update,indexSelect2Update);
 
-//if (indexSelect1Update===indexSelect2Update){
-    //batTbChatGpt.innerText = "Enabled chat with GPT in "+listLangCountry[indexSelect1Update];
-//    daBatChatGpt=true;
-    //removeAllDivs();
-//}else{
-    //batTbChatGpt.innerText = "";
-//    daBatChatGpt=false;
-//}
 
 //------------------
 function toggleMenu1() {
