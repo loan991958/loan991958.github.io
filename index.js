@@ -121,13 +121,8 @@ async function sendGptReplyAndSpeak(transcript) {
 
     loa_button.click(); // tự động phát luôn
 
-    //speakTextDichCc(reply,listLangVoice[indexSelect1Update],lnoiDatTextDichCcVaMic);
-  //}
 }
 
-    //divS.forEach(msg => {
-    //  msg.style.display = "block";
-    //});  
 
 function anHienDivsInChat(){
   demAnHienClick +=1;
@@ -140,5 +135,4 @@ function anHienDivsInChat(){
     }
   });
 }
-
 
