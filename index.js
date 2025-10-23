@@ -172,15 +172,15 @@ function checkChatGpt() {
 // Lưu và kiểm tra khi thay đổi
 lang1_select.addEventListener('change', function() {
   localStorage.setItem('menu1Index', lang1_select.selectedIndex);
-  //indexSelect1Update = lang1_select.selectedIndex;
-  //findVoiceMenu1(indexSelect1Update);
-  //checkChatGpt();
+  indexSelect1Update = lang1_select.selectedIndex;
+  findVoiceMenu1(indexSelect1Update);
+  checkChatGpt();
 });
 
 lang2_select.addEventListener('change', function() {
   localStorage.setItem('menu2Index', lang2_select.selectedIndex);
-  //indexSelect2Update = lang2_select.selectedIndex;
-  //findVoiceMenu2(indexSelect2Update);
-  //checkChatGpt();
+  indexSelect2Update = lang2_select.selectedIndex;
+  findVoiceMenu2(indexSelect2Update);
+  checkChatGpt();
 });
  
