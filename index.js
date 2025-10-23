@@ -155,7 +155,7 @@ window.addEventListener('load', function() {
 // Hàm kiểm tra sự phù hợp
 function checkChatGpt() {
 
-  if (lang1_select.selectedIndex === lang2_select.selectedIndex) {
+  if (indexSelect1Update === indexSelect2Update) {
     removeAllDivs();
     daBatChatGpt=true;
     batTbChatGpt.innerText = "Enabled chat with GPT in "+listLangCountry[indexSelect1Update];
