@@ -243,8 +243,8 @@ h2 {
 
 <br>
 <div class="menu-group">
-    <select id="lang1_select" onchange="toggleMenu1(this.index)" ></select>
-    <select id="lang2_select" onchange="toggleMenu2(this.index)" ></select>
+    <select id="lang1_select" onchange="findVoiceMenu1(this.index)" ></select>
+    <select id="lang2_select" onchange="findVoiceMenu2(this.index)" ></select>
 </div>
 
 <div class="button-group">
@@ -325,7 +325,7 @@ let indexSelect2Update=0;
 let daBatChatGpt=false;
 var demAnHienClick=0;
 
-function checkChatGpt(indexSelet1,indexSelet2){
+function bcheckChatGpt(indexSelet1,indexSelet2){
     if (indexSelet1===indexSelet2){
         removeAllDivs();
         daBatChatGpt=true;
@@ -350,21 +350,6 @@ function updateMenulang1_select() {
     }
 }
 updateMenulang1_select();
-// Khi trang tải, đọc lựa chọn đã lưu
-const savedChoice1 = localStorage.getItem("lastSelected1");
-if (savedChoice1) {
-    lang1_select.selectedIndex = savedChoice1;
-    indexSelect1Update = savedChoice1;
-} else {
-    lang1_select.selectedIndex = 16; // mặc định là lựa chọn 3
-    indexSelect1Update = 16;
-}
-// Khi người dùng thay đổi lựa chọn, lưu lại
-lang1_select.addEventListener("change", function() {
-    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
-});
-
-checkChatGpt(indexSelect1Update,indexSelect2Update);
 
 
 function updateMenulang2_select() {
@@ -377,24 +362,9 @@ function updateMenulang2_select() {
     }
 }
 updateMenulang2_select();
-const savedChoice2 = localStorage.getItem("lastSelected2");
-if (savedChoice2) {
-    lang2_select.selectedIndex = savedChoice2;
-    indexSelect2Update = savedChoice2;
-} else {
-    lang2_select.selectedIndex = 3; // mặc định là lựa chọn 3
-    indexSelect2Update = 3;
-}
-// Khi người dùng thay đổi lựa chọn, lưu lại
-lang1_select.addEventListener("change", function() {
-    localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
-});
-
-checkChatGpt(indexSelect1Update,indexSelect2Update);
-
 
 //------------------
-function toggleMenu1() {
+function findVoiceMenu1() {
   //cap nhat moi lan thay doi
   indexSelect1Update = lang1_select.selectedIndex;
   let voices = speechSynthesis.getVoices();
@@ -415,17 +385,11 @@ function toggleMenu1() {
   } else {
     console.log('Voice được chọn:', lang1VoiceC.lang);
   }
-  // Khi người dùng thay đổi lựa chọn, lưu lại
-  lang1_select.addEventListener("change", function() {
-      localStorage.setItem("lastSelected1", lang1_select.selectedIndex);
-  });
-
-  checkChatGpt(indexSelect1Update,indexSelect2Update);
 
 }
 
 //------------------------
-function toggleMenu2() {
+function findVoiceMenu2() {
   //cap nhat moi lan thay doi
   indexSelect2Update = lang2_select.selectedIndex;
   let voices = speechSynthesis.getVoices();
@@ -446,18 +410,12 @@ function toggleMenu2() {
   } else {
     console.log('Voice được chọn:', lang2VoiceC.lang);
   }
-  // Khi người dùng thay đổi lựa chọn, lưu lại
-  lang2_select.addEventListener("change", function() {
-      localStorage.setItem("lastSelected2", lang2_select.selectedIndex);
-  });
-
-  checkChatGpt(indexSelect1Update,indexSelect2Update);
 }
 
-// Đợi sự kiện voiceschanged để gọi toggleMenu1
+// Đợi sự kiện voiceschanged để gọi findMenu1 findMenu2
 speechSynthesis.onvoiceschanged = () => {
-  toggleMenu1();
-  toggleMenu2();
+  findVoiceMenu1();
+  findVoiceMenu2();
   console.log('lang1VoiceC:',lang1VoiceC);
   console.log('lang2VoiceC:',lang2VoiceC);
 };

@@ -124,8 +124,54 @@ function anHienDivsInChat(){
     }
   });
 }
+//--------
+// Khôi phục chỉ số đã lưu hoặc gán mặc định
 window.addEventListener('load', function() {
+  const index1 = localStorage.getItem('menu1Index');
+  const index2 = localStorage.getItem('menu2Index');
+
+  if (index1 !== null) {
+    lang1_select.selectedIndex = parseInt(index1);
+  } else {
+    lang1_select.selectedIndex = 16;
+  }
+  if (index2 !== null) {
+    lang2_select.selectedIndex = parseInt(index2);
+  } else {
+      lang2_select.selectedIndex = 3;
+  }
+  //tham khao cach ghi gon
+  //menu1.selectedIndex = index1 !== null ? parseInt(index1) : 1;
+  //menu2.selectedIndex = index2 !== null ? parseInt(index2) : 2;
+
+  checkChatGpt(); // kiểm tra ngay khi khởi động
+});
+
+// Hàm kiểm tra sự phù hợp
+function checkChatGpt() {
+
+  if (lang1_select.selectedIndex === lang2_select.selectedIndex) {
+    removeAllDivs();
+    daBatChatGpt=true;
+    batTbChatGpt.innerText = "Enabled chat with GPT in "+listLangCountry[indexSelect1Update];
+  }else{
+    if (daBatChatGpt===true){
+      removeAllDivs();
+    }
+    daBatChatGpt=false;
+    batTbChatGpt.innerText = "";
+      
+  }
+}
+
+// Lưu và kiểm tra khi thay đổi
+lang1_select.addEventListener('change', function() {
+  localStorage.setItem('menu1Index', lang1_select.selectedIndex);
   checkChatGpt();
 });
 
+lang2_select.addEventListener('change', function() {
+  localStorage.setItem('menu2Index', lang2_select.selectedIndex);
+  checkChatGpt();
+});
  
