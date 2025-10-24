@@ -602,7 +602,7 @@ function dichTextFromTo(textDemDich, micNoi){
 // Nhận giọng nói từ mic1
 mic1_button.onclick = () => {
     const recognition1 = new webkitSpeechRecognition();
-    recognition1.lang = listLangVoice[indexSelect1Update].substring(0,2);
+    recognition1.lang = listLangVoice[indexSelect1Update];
     recognition1.continuous = false;//
     recognition1.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
@@ -642,7 +642,7 @@ mic1_button.onclick = () => {
 // Nhận giọng nói từ mic2
 mic2_button.onclick = () => {
     const recognition2 = new webkitSpeechRecognition();
-    recognition2.lang = listLangVoice[indexSelect2Update].substring(0,2);
+    recognition2.lang = listLangVoice[indexSelect2Update];
     recognition2.continuous = false;//
     recognition2.interimResults = false;// Chỉ lấy kết quả cuối cùng
 
