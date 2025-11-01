@@ -796,7 +796,7 @@ start_button.onclick=()=>{
     banphim2.disabled = false;
     start_button.style.backgroundImage = "url('icons/started.png')";
     //alert('da mo all');
-    //mic1_button.click(); //de kich hoat micro, se nhap alow mic
+    mic1_button.click(); //de kich hoat micro, se nhap alow mic
 
     loa_button.onclick = () => {
       const utterance = new SpeechSynthesisUtterance('Ready');
@@ -804,6 +804,11 @@ start_button.onclick=()=>{
       speechSynthesis.speak(utterance);
     }  
     loa_button.click(); // tự động phát luôn
+    if (is1Running) {
+      recognition1.stop();
+      recognition1=null;
+      is1Running=false;
+    }  
     //vo hieu hoa start_button
     start_button.disabled = true;
   }
