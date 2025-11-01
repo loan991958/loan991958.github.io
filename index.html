@@ -788,27 +788,25 @@ function speakTextDich(text,langVoice) {
 
 
 start_button.onclick=()=>{
-  //--Doan ma nay chi de mo micro trong iphone, lap top ko can
-  const recognition = new webkitSpeechRecognition();
-  recognition.onresult = e => {
-    console.log(e.results[0][0].transcript);
-    recognition.stop();
-  };  
+  if (start_button.style.backgroundImage !== "url('icons/started.png')"){
 
-  recognition.start();
-  
-  //chi de kich hoat loa lan dau, 
-  loa_button.onclick = () => speakTextDich("Ready!",lang2VoiceC);
-  loa_button.click(); // tự động phát luôn
+    mic1_button.disabled = false;
+    mic2_button.disabled = false;   
+    banphim1.disabled = false;
+    banphim2.disabled = false;
+    start_button.style.backgroundImage = "url('icons/started.png')";
+    //alert('da mo all');
+    //mic1_button.click(); //de kich hoat micro, se nhap alow mic
 
-  mic1_button.disabled = false;
-  mic2_button.disabled = false;   
-  banphim1.disabled = false;
-  banphim2.disabled = false;
-
-  start_button.style.backgroundImage = "url('icons/started.png')";
-  start_button.disabled = true;
-
+    loa_button.onclick = () => {
+      const utterance = new SpeechSynthesisUtterance('Ready');
+      utterance.voice = lang2VoiceC;
+      speechSynthesis.speak(utterance);
+    }  
+    loa_button.click(); // tự động phát luôn
+    //vo hieu hoa start_button
+    start_button.disabled = true;
+  }
 }
 
 function copyText(){
