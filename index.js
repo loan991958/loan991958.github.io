@@ -1,7 +1,88 @@
 // can dat ben html cai nay de chay Swal
 //<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
 
+// Hàm để dịch 
+function dichTextFromTo(textDemDich, micNoi){
+    //console.log('cac ts:',textDemDich, micNoi);
+    const inputText = textDemDich;
+    let sourceLanguage;
+    let targetLanguage;
+    if (micNoi==='mic1'){
+        sourceLanguage = listLangVoice[indexSelect1Update].substring(0,2);
+        targetLanguage = listLangVoice[indexSelect2Update].substring(0,2);
+    }else{
+        sourceLanguage = listLangVoice[indexSelect2Update].substring(0,2);
+        targetLanguage = listLangVoice[indexSelect1Update].substring(0,2);
+    }    
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+
+    const xhttp = new XMLHttpRequest();
+    xhttp.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200){
+            const responseReturned = JSON.parse(this.responseText);
+            const translations = responseReturned[0].map((text) => text[0]);
+            const textDichRa  = translations.join(" ");
+            console.log(textDichRa);
+            //Viet textDichRa vao trong hop chat
+            if (micNoi==='mic1'){
+              mic1TextDich = textDichRa;
+              addMessage("mic1-dich", mic1TextDich);
+              let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic1-dich");/////////////////////
+              loa_button.onclick = () => {
+                //neu dang phat loa thi nhung
+                if (window.speechSynthesis.speaking) {
+                  window.speechSynthesis.cancel();
+                  lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+                  loa_button.style.backgroundImage = "url('icons/loa.png')";
+
+                }else{
+                //neu loa da dung thi doc lai
+                speakTextDichCc(lang2VoiceC,lnoiDatTextDichCcVaMic, 'mic1');
+              }
+            }
+              loa_button.click(); // tự động phát luôn
+            }else{//neu micnoi la mic2
+              mic2TextDich = textDichRa;
+              addMessage("mic2-dich", mic2TextDich);
+              let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic2-dich");
+              loa_button.onclick = () => {
+                //neu dang phat loa thi nhung
+                if (window.speechSynthesis.speaking) {
+                  window.speechSynthesis.cancel();
+                  lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+                  loa_button.style.backgroundImage = "url('icons/loa.png')";
+                }else{
+                //neu loa da dung thi doc lai
+                speakTextDichCc(lang1VoiceC,lnoiDatTextDichCcVaMic, 'mic2');
+              }
+            }
+              loa_button.click(); // tự động phát luôn
+            }
+            //cho speak o sau, no se doc tren DIV cuoi cua chatbox
+        }
+    }
+    xhttp.open("GET", url);
+    xhttp.send();
+};
+
 function chatBoxKb1(){
+    //removeAllDivs();
+  if (is1Running) {
+    recognition1.stop();
+    recognition1=null;
+    is1Running=false;
+  }  
+  if (is2Running) {
+    recognition2.stop();
+    recognition2=null;
+    is2Running=false;
+  }  
+
+    //if (recognition1) recognition1.stop();
+    //if (recognition2) recognition2.stop();
+    //if (is1Running) is1Running=false;
+    //if (is2Running) is2Running=false;
+
     let bien1 = listLangCountry[indexSelect1Update];
     Swal.fire({
         title: `<span style='color:darkgreen;'>🗣️Chat by keyboard in ${bien1}</span>`,
@@ -24,7 +105,8 @@ function chatBoxKb1(){
                 //send to GPT
                 sendGptReplyAndSpeak(mic1TextNoi);
             }else{
-                dichTextFromTo(mic1TextNoi, 'mic1');
+              dichTextFromTo(mic1TextNoi, 'mic1');
+
             }
 
         }
@@ -32,6 +114,22 @@ function chatBoxKb1(){
 }
 
 function chatBoxKb2(){
+  //removeAllDivs();
+  if (is1Running) {
+    recognition1.stop();
+    recognition1=null;
+    is1Running=false;
+  }  
+  if (is2Running) {
+    recognition2.stop();
+    recognition2=null;
+    is2Running=false;
+  }  
+
+    //if (recognition1) recognition1.stop();
+    //if (recognition2) recognition2.stop();
+    //if (is1Running) is1Running=false;
+    //if (is2Running) is2Running=false;
     let bien2 = listLangCountry[indexSelect2Update];
     Swal.fire({
         title: `<span style='color:darkblue;'>👤Chat by keyboard in ${bien2}</span>`,
@@ -54,9 +152,9 @@ function chatBoxKb2(){
                 //send to GPT
                 sendGptReplyAndSpeak(mic2TextNoi);
             }else{
-                dichTextFromTo(mic2TextNoi, 'mic2');
-                
-            }
+              dichTextFromTo(mic2TextNoi, 'mic2');
+
+            }//------------------
 
         }
     });
@@ -104,7 +202,9 @@ async function sendGptReplyAndSpeak(transcript) {
         loa_button.style.backgroundImage = "url('icons/loa.png')";
       }else{
         //neu loa da dung thi doc lai
-        speakTextDichCc(reply, lang1VoiceC,lnoiDatTextDichCcVaMic);
+        //speakTextDichCc(reply, lang1VoiceC,lnoiDatTextDichCcVaMic);
+        speakTextDichCc(lang1VoiceC,lnoiDatTextDichCcVaMic, 'mic2');
+
       }
     }
 
