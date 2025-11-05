@@ -351,7 +351,7 @@ let indexSelect1Update=0;
 let indexSelect2Update=0;
 let daBatChatGpt=false;
 var demAnHienClick=0;
-var demStartButonClick=0;
+var demStartButonClick=-1;
 
 let recognition1=null;
 let recognition2=null;
@@ -788,14 +788,16 @@ function speakTextDich(text,langVoice) {
 
 
 start_button.onclick=()=>{
+  if (getComputedStyle(start_button).backgroundImage.includes("started.png")) {
+    location.reload();  
+    return;
+  }
   if (start_button.style.backgroundImage !== "url('icons/started.png')"){
-
     mic1_button.disabled = false;
     mic2_button.disabled = false;   
     banphim1.disabled = false;
     banphim2.disabled = false;
     start_button.style.backgroundImage = "url('icons/started.png')";
-    //alert('da mo all');
     mic1_button.click(); //de kich hoat micro, se nhap alow mic
 
     loa_button.onclick = () => {
@@ -809,8 +811,6 @@ start_button.onclick=()=>{
       recognition1=null;
       is1Running=false;
     }  
-    //vo hieu hoa start_button
-    start_button.disabled = true;
   }
 }
 
@@ -859,11 +859,6 @@ function fVoiceChoIndexUpdate(iUpdate){
 }
 lang1VoiceC = fVoiceChoIndexUpdate(indexSelect1Update);
 lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
-
-
-//֎ ֎ ⚛️ 🔓🔒🎤
-
-
 
 </script>
 
