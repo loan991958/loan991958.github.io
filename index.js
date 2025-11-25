@@ -284,3 +284,28 @@ lang2_select.addEventListener('change', function() {
   checkChatGpt();
 });
  
+function aboutapp() {
+Swal.fire({
+    title: "<span style='color:darkgreen;'>About</span>",
+    html: 
+      '<p style="text-align: left;  color:grey;">✅ Ứng dụng <span style="color:darkblue;">Chat in multiple languages </span> do <span style="color:darkblue;">tiensg89@gmail.com</span> viết với mục đích để học tiếng Anh và trò chuyện với chatGPT cũng như tập nói bằng vài ngoại ngữ với sự giúp đỡ của Google dịch.\n</p>'+
+      '<p style="text-align: left;  color:grey;">✅ <span style="color:darkblue;">Cách sử dụng như dưới đây sau khi vào trang ứng dụng web:</span>\n</p>'+
+      '<p style="text-align: left;  color:grey;"><span style="color:red;">Bước 1:</span> Nhấp vào 🔒 để kích hoạt micro và loa, nó sẽ yêu cầu alow mic và sau đó phát âm ready và mở khóa thành 🔓</p>'+
+      '<p style="text-align: left;  color:grey;"><span style="color:red;">Bước 2:</span> Chọn lại hai ngôn ngữ đàm thoại nếu cần. Nếu chọn hai ngôn ngữ đàm thoại giống nhau thì có nghĩa là ta đã chọn nói chuyện với chatGPT bằng ngôn ngữ đó. </p>'+
+      '<p style="text-align: left;  color:grey;"><span style="color:red;">Bước 3:</span> Nhấp một trong hai micro để bắt đầu nói. Khi ta ngưng nói thì trong bảng sẽ hiển thị văn bản nói và văn bản dịch đồng thời máy sẽ đọc văn bản dịch và loa cử động. Nếu nhấp vào loa nó sẽ phát âm lại văn bản dịch gần nhất. Nếu loa đang nói mà ta nhấp vào thì nó ngưng nói. Khi mic còn cử động thì có nghĩa nó đang lắng nghe ta nói tiếp. Nếu mic không cử động thì có nghĩa là nó đã ngưng lắng nghe, muốn nó nghe thì ta phải nhấp vào.</p>'+
+      '<p style="text-align: left;  color:grey;"><span style="color:red;">Bước 4:</span> Khi quá ồn ào, máy sẽ khó nhận thức tiếng nói, khi đó ta nhấp vào biểu tượng bàn phím để gõ văn bản trò chuyệ. Mỗi khi gõ xong thì nhấp OK để nhận  kết quả. </p>'+
+      '<p style="text-align: left;  color:grey;"><span style="color:red;">Bước 5:</span> Công dụng của 3 nút : "Show/Hide", "Copy", "Clear": </p>'+
+      '<p style="text-align: left;  color:grey;">- "Show/Hide": Nếu nhấp vào thì văn bản sẽ được che đi, nhấp lần nữa văn bản sẽ hiện ra.</p>'+
+      '<p style="text-align: left;  color:grey;">- "Copy": Khi nhấp vào thì văn bản sẽ được copy vào bộ nhớ, để sau đó ta có thể dán lại vào nơi khác, ví dụ email để chỉnh sửa hoặc gửi đi.</p>'+
+      '<p style="text-align: left;  color:grey;">- "Clear": Khi nhấp vào, các dòng văn bản sẽ bị xóa cho đễ nhìn. </p>'+
+      '<p style="text-align: left;  color:grey;"><span style="color:red;">Bước 6:</span>Khi thôi sử dụng thì nhấp vào 🔓 để khóa micro và loa lại thành 🔒.</p>'+
+
+      '<p style="text-align: left;  color:darkblue;">✅ Ứng dụng này cũng có thể giúp người dùng nó tập nói vài ngoại ngữ như đã có trong menu. Ví dụ đối với tôi trong việc học tiếng Anh:</p>'+
+      '<p style="text-align: left;  color:darkblue;">- Trong mỗi ngày, khi gặp phải những câu tiếng Anh chưa biết nói thì tôi  nói bằng tiếng Việt, ứng dụng sẽ dịch ra văn bản tiếng Anh và phát âm. Tôi sẽ nghe kỹ phát âm đó và tập nói theo bằng tiếng Anh, nểu nó dịch ra tiếng Việt đúng ý tôi thì có nghĩa là tôi đã nói câu tiếng Anh đó đúng. </p>'+
+      '<p style="text-align: left;  color:darkblue;">- Mỗi ngày tôi trò chuyện với GPT một đề tài ngắn bằng tiếng Anh để mình tập nói và tập nghe GPT trả lời. Nếu tôi nói, nghe và hiểu cuộc trò chuyện đó thì có nghĩa là tôi đã thành công. </p>',
+
+    confirmButtonText: "OK", 
+  });
+  
+}
+
