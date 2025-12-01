@@ -312,6 +312,7 @@ Swal.fire({
 let voicesX=[];
 
 voicesXem.addEventListener("click", () => {
+  removeAllDivs()
   voicesX = speechSynthesis.getVoices();
   for (const voice of voicesX) {
     console.log(`${voice.name} (${voice.lang})`);
