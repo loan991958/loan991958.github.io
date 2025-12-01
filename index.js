@@ -309,3 +309,15 @@ Swal.fire({
   
 }
 
+let voicesX=[];
+
+voicesXem.addEventListener("click", () => {
+  voicesX = speechSynthesis.getVoices();
+  for (const voice of voicesX) {
+    console.log(`${voice.name} (${voice.lang})`);
+    const div = document.createElement("div");
+    div.textContent = `${voice.name} (${voice.lang})`;
+    chatbox.appendChild(div);
+    
+  }
+});

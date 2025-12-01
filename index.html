@@ -242,11 +242,13 @@ h2 {
   font-weight: bold;
   white-space: nowrap;
 }
+
+
 </style>
 
 </head>
 <body>
-<h2 ><span id="about" onclick="aboutapp()">C</span>hat in multiple languages</h2>
+<h2 ><span id="about" onclick="aboutapp()">C</span>hat in multiple <span id="voicesXem">languages</span></h2>
 <h2 >🗣️<button id="start_button">🔒</button>👤</h2>
 
 <div class="button-group">
@@ -285,7 +287,8 @@ h2 {
     <div><button id='banphim2' onclick="chatBoxKb2()">⌨️</button></div>
 </div>
 <h3 id="batTbChatGpt"></h3>
-<br><br>
+
+<br><br><br>
 
 <script>
 const start_button = document.getElementById("start_button");
@@ -300,6 +303,7 @@ const lang2_select =  document.getElementById("lang2_select");
 const banphim1 =  document.getElementById("banphim1");
 const banphim2 =  document.getElementById("banphim2");
 const batTbChatGpt =  document.getElementById("batTbChatGpt");
+const voicesXem =  document.getElementById("voicesXem");
 
 mic1_button.disabled = true;
 mic2_button.disabled = true;   
