@@ -309,16 +309,26 @@ Swal.fire({
   
 }
 
-let voicesX=[];
-
+//let voicesX=[];
 voicesXem.addEventListener("click", () => {
   removeAllDivs()
-  voicesX = speechSynthesis.getVoices();
-  for (const voice of voicesX) {
-    console.log(`${voice.name} (${voice.lang})`);
-    const div = document.createElement("div");
-    div.textContent = `${voice.name} (${voice.lang})`;
-    chatbox.appendChild(div);
+  chatbox.innerText = window.speechSynthesis
+    .getVoices()
+    .map(x => [x.lang,x.name].join("\t"))
+    .sort()
+    .join("\r\n");
+  //voicesX = speechSynthesis.getVoices();
+  //for (const voice of voicesX) {
+  //  console.log(`${voice.name} (${voice.lang})`);
+  //  const div = document.createElement("div");
+  //  div.textContent = `${voice.name} (${voice.lang})`;
+  //  chatbox.appendChild(div);
     
-  }
+  //}
 });
+
+
+//Thuc thi ham
+//loadVoices();
+//Thuc thi ham khi window.speechSynthesis co thay doi, neu khong thay doi thi da chay o tren , con o duoi khong chay 
+//window.speechSynthesis.onvoiceschanged = function(e) { loadVoices(); }
