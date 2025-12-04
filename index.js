@@ -311,12 +311,15 @@ Swal.fire({
 
 //let voicesX=[];
 voicesXem.addEventListener("click", () => {
-  removeAllDivs()
-  chatbox.innerText = window.speechSynthesis
+  if (chatbox.innerText === ""){
+    chatbox.innerText = window.speechSynthesis
     .getVoices()
     .map(x => [x.lang,x.name].join("\t"))
     .sort()
     .join("\r\n");
+  }else{
+    chatbox.innerText = "";
+  }  
   //voicesX = speechSynthesis.getVoices();
   //for (const voice of voicesX) {
   //  console.log(`${voice.name} (${voice.lang})`);
