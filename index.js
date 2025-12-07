@@ -311,14 +311,14 @@ Swal.fire({
 
 //let voicesX=[];
 voicesXem.addEventListener("click", () => {
-  if (chatbox.innerText === ""){
-    chatbox.innerText = window.speechSynthesis
+  if (chatbox.innerHTML === ""){
+    chatbox.innerHTML = window.speechSynthesis
     .getVoices()
-    .map(x => [x.lang,x.name].join("\t"))
+    .map(x => [x.lang,x.name].join(" - "))
     .sort()
-    .join("\r\n");
+    .join("<br>");
   }else{
-    chatbox.innerText = "";
+    chatbox.innerHTML = "";
   }  
   //voicesX = speechSynthesis.getVoices();
   //for (const voice of voicesX) {

@@ -6,6 +6,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
     <title>Chat in multiple languages</title>
 <style>
+/*
 body {
     background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
     color: #fff;
@@ -15,7 +16,23 @@ body {
     max-width: 700px; 
     margin: auto;
 }
+*/
+html,body {
+    background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
+    color: #fff;
+    font: 1rem/1 'Poppins', sans-serif;
+    height:100%;
+    padding: 20px;
+    /*max-width: 700px;*/ 
+    margin: auto;
+}
+body{
+min-height: 100vh;
+width:100%;
+display: flex;
+flex-direction: column;
 
+}
 h2 { 
   text-align: center; 
   color:darkgreen;
@@ -288,7 +305,7 @@ h2 {
 </div>
 <h3 id="batTbChatGpt"></h3>
 
-<br><br><br>
+
 
 <script>
 const start_button = document.getElementById("start_button");
