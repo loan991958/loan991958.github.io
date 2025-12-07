@@ -28,10 +28,12 @@ html,body {
 }
 body{
 min-height: 100vh;
-width:100%;
 display: flex;
 flex-direction: column;
-
+padding-bottom: env(safe-area-inset-bottom);
+}
+main{
+flex: 1;
 }
 h2 { 
   text-align: center; 
@@ -242,10 +244,6 @@ h2 {
   text-align: left; 
   direction: ltr;
 } 
-#batTbChatGpt{
-  color:#42300d;
-  text-align: center;
-}
 #copiedLabel {
   position: absolute;
   top: -20px;
@@ -258,6 +256,10 @@ h2 {
   font-size: 12px;
   font-weight: bold;
   white-space: nowrap;
+}
+#batTbChatGpt{
+  color:#42300d;
+  text-align: center;
 }
 
 
@@ -304,7 +306,6 @@ h2 {
     <div><button id='banphim2' onclick="chatBoxKb2()">⌨️</button></div>
 </div>
 <h3 id="batTbChatGpt"></h3>
-
 
 
 <script>
