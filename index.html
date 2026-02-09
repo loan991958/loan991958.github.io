@@ -1,1 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
+  <title>Tiensg89 Play Youtube</title>
+   <link rel="stylesheet" href="sophie.css">
+</head>
+<body>
+<!-- Header -->
+<header class="sticky"> 
+
+
+  <div class="video-container">
+    <div id="playerContainer"></div>
+  </div>
+
+  <div class="menu-group">
+    <select id="voiceSelect"></select>
+    <button id='rateRead' onclick="tocDoDoc()">Rate: 1</button>
+
+    <button id="playBtn">▶️</button>
+
+    <button class='butp1' onclick="btnReadSub()">Sub only</button>
+    <button class='butp2' onclick="btnYoutubeSound()">Yt only</button>
+  </div>
+  <!-- <hr> -->
+  </header>
+
+    <br>
+    <div id="currentSubtitle">[source subtitles]</div>
+    <div id="loa_button">🔊</div>
+    <div id="subdich">[translated subtitles ]</div>
+    
+    <hr>
+    <div id="videochon" onclick="them_Http()">JqJ7PlMCDuE</div>
+    <hr>
+    <br>
+
+
+    <button class="buttonD"><select id="selectVideo"></select> </button>
+    
+    <br><button id="tbao_pde" onclick="lay_phudejson_byst()"></button>
+
+    <h4>Chọn Chủ đề ⬇ và video ⬆</h4>
+    <button class="buttonD"><select id="selectChude"></select></button>
+
+    <br><br><h3>Nhập Url youtube của bạn:</h3>
+    <input type="text" id="inputurl" placeholder="Enter a youtube url">
+    <br><button id="OK" onclick="xuLiUrlInput()">OK</button><br>
+
+    <br><br><button class="buttonD" onclick="tom_tat_ndvideo()" style="width:60%;">Tóm tắt nội dung của video</button><br>
+    <div id="chatbox" aria-hidden="false"></div>
+
+
+    <!--<h4><a href="https://tien89.streamlit.app" style="background: transparent;text-align: center; ">.</a></h4>-->
+    <h4><a href="z.py" style="background: transparent;text-align: center; ">.</a></h4>
+
+<!-- Footer -->
+<footer>
+ 
+    <p>&copy; 2026 From tiensg89@gmail.com. All Rights Reserved.</p>
+   <!-- <p>2318 Cartesian St, Katy, Houston, TX 77494, USA</p>
+    <p><a href="https://adunglacchurch.github.io" target="_blank">About</a> | <a href="https://tiensgus.github.io" target="_blank">App1</a>| <a href="https://loan991958.github.io" target="_blank">App2</a>| <a href="https://hoangco89.github.io" target="_blank">App3</a></p>-->
+</footer>
+<!-- YouTube API -->
+  <script src="https://www.youtube.com/iframe_api"></script>
+  <script>
+    // https://www.youtube.com/watch?v=mi3xR5eGQ3s&list=PLtBFFyhEIC7n7PULjzTttoe4sNKzv4DBu&index=1
+//https://www.youtu.be/watch?v=mi3xR5eGQ3s
+//<a href="https://www.youtube.com/watch?v=mi3xR5eGQ3s&list=PLtBFFyhEIC7n7PULjzTttoe4sNKzv4DBu&index=1">Click</a>
+//<a href="https://www.youtu.be/mi3xR5eGQ3s">CLIC SAU TTTTTTTTT</a>
+
+    const videochon = document.getElementById("videochon");
+    const playBtn = document.getElementById("playBtn");
+    const selectChude = document.getElementById("selectChude");
+    const selectVideo = document.getElementById("selectVideo");
+    const currentSubtitle = document.getElementById("currentSubtitle");
+    const subdich = document.getElementById("subdich");
+    const tbao_pde = document.getElementById("tbao_pde");
+    const inputurl = document.getElementById("inputurl");
+    const chatbox = document.getElementById("chatbox");
+
+    let player = null;
+    let videoId = videochon.textContent;
+    let subtitles = [];
+    
+    function onYouTubeIframeAPIReady() {
+      player = new YT.Player("playerContainer", {
+        height: "315",
+        width: "560",
+        videoId: videochon.textContent, //`${id_video}`
+        playerVars: { autoplay: 0, controls: 1 },
+        events: {
+          onReady: () => { },
+          onStateChange: (e) => {
+            if (e.data === YT.PlayerState.PAUSED) stopReading();
+            if (e.data === YT.PlayerState.PLAYING) resumeSync();
+            if (e.data === YT.PlayerState.ENDED) stopReading();
+          }
+        }
+      });
+    }
+    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+      // ==========================
+      // 5. PLAY BUTTON
+      // ==========================
+      playBtn.addEventListener("click", async () => {
+        //alert("Playing video ID: " + videochon.textContent);
+         videoId = videochon.textContent;
+          subtitles = await fetchSubtitles(videoId);
+          if (subtitles.length>0){
+            translateFullJson(subtitles);
+            tbao_pde.textContent = ""
+          }else{
+            currentSubtitle.innerHTML="[source subtitles]";
+            subdich.innerHTML="[translated subtitles]";
+            tbao_pde.textContent = "No subtites. Click here to get!"
+          }
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+
+        startSync();
+      });
+
+      // ==========================
+      // 6. AUTO PLAY WHEN CHANGE VIDEO
+      // ==========================
+    
+      selectVideo.addEventListener("change", async () => {
+        const chudeId = selectChude.value;
+        const key = "bai_" + chudeId;
+        localStorage.setItem(key, selectVideo.value);
+        videochon.textContent = selectVideo.value;
+        videoId = videochon.textContent;
+
+        subtitles = await fetchSubtitles(videoId);
+
+        // 🔥 DỊCH TOÀN BỘ JSON
+        if (subtitles.length>0){
+          translateFullJson(subtitles);
+          tbao_pde.textContent = ""
+        }else{
+          currentSubtitle.innerHTML="[source subtitles]";
+          subdich.innerHTML="[translated subtitles]";
+          tbao_pde.textContent = "No subtites. Click here to get!"
+
+
+        }
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+
+        startSync();
+
+      });
+
+      selectVideo.addEventListener("dblclick", async () => {
+        const chudeId = selectChude.value;
+        const key = "bai_" + chudeId;
+        localStorage.setItem(key, selectVideo.value);
+        videochon.textContent = selectVideo.value;
+        videoId = videochon.textContent;
+
+        subtitles = await fetchSubtitles(videoId);
+
+        // 🔥 DỊCH TOÀN BỘ JSON
+        if (subtitles.length>0){
+          translateFullJson(subtitles);
+          tbao_pde.textContent = ""
+        }else{
+          currentSubtitle.innerHTML="[source subtitles]";
+          subdich.innerHTML="[translated subtitles]";
+          tbao_pde.textContent = "No subtites. Click here to get!"
+
+
+        }
+
+        player.loadVideoById(videoId);
+        player.playVideo();
+
+        startSync();
+
+      });
+
+//---------THU-----------
+//"https://www.youtube.com/watch?v=mi3xR5eGQ3s&list=PLtBFFyhEIC7n7PULjzTttoe4sNKzv4DBu&index=1"
+</script>
+  <script src="sophie.js"></script>
+</body>
+</html>
+
 
