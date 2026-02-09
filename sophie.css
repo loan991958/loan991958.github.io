@@ -1,0 +1,280 @@
+
+/* ĐỂ MỌI THỨ CO LẠI ĐÚNG CÁCH */
+*, *::before, *::after {
+    box-sizing: inherit;
+}
+
+html,body {
+    border-top: 2px solid #d4af37; /* vàng ánh kim */
+
+    height: 100%;
+   /* background-image: linear-gradient(60deg,black, rgb(241, 239, 245));*/
+   /* background-image: linear-gradient(45deg, #4158d0, #c850c0, #ffcc70); */
+    background-image: linear-gradient(-180deg, #b0c008ca, #254735); 
+   /*background-image:url("Icons/banner5.png");  */
+    color: #fff;
+    font: 1rem/1 'Poppins', sans-serif;
+    max-width: 800px;
+    /*flex-direction: column;*/
+    /*padding-bottom: env(safe-area-inset-bottom);*/
+    background-size: cover;
+    background-position: center;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* hoặc margin: 0 auto; */
+    /*margin-bottom: 20%;*/
+    width: 100%;
+    overflow-x: hidden;
+    box-sizing: border-box;
+
+}
+
+.video-container {
+    position: relative;
+    width: 100%;
+    min-width: 100%;
+    /* ép không co lại */
+    padding-bottom: 56.25%;
+    height: 0;
+    overflow: hidden;
+    background: #000;
+}
+
+iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    /* tránh Safari thêm khoảng trắng */
+}
+
+.menu-group {
+    margin-top: 4px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 0;
+    width: 100%;
+    box-sizing: border-box;
+}
+.butp1,.butp2{
+font-size: 1.4rem;
+}
+#voiceSelect{
+width: 30%; 
+display: block;
+margin-left: 0;
+font-size: 1.4rem;
+background-color: transparent;
+color:black;
+border-color: #000;
+border-bottom: 3px solid black;
+}
+#rateRead{
+font-size: 1.4rem;
+background-color: transparent;
+}
+#selectChude {
+width: 75%; 
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+font-weight:bolder ;
+background: transparent;
+color:rgb(155, 155, 242);
+background-color : transparent;
+border: none;
+}
+#selectVideo {
+width: 75%; 
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+background: transparent;
+color:orange;
+background-color : transparent;
+border: none;
+
+}
+
+h3{
+display: block;
+margin-left: auto;
+margin-right: auto;
+width: 75%; 
+font-weight:bolder;
+font-size: 1.2rem;
+text-align: center;
+color: gainsboro;
+}
+h4{
+font-weight:bolder;
+font-size: 1.2rem;
+margin-left:20px;
+color:rgb(223, 231, 223);
+width: 75%; 
+}
+h4,h5{
+display: block;
+margin-left: auto;
+margin-right: auto;
+font-size: 1.1rem;
+color:rgb(193, 193, 239);
+width: 75%; 
+}
+h4,h5{
+text-align: center;
+}
+#voiceSelect, #rateRead,.butp1,.butp2,#playBtn{
+width: 19%;
+font-size: 0.9rem;
+background-color: transparent;
+color:rgb(231, 225, 225);
+border-color: #000;
+border-bottom: 3px solid black;
+}
+
+#currentSubtitle{
+text-align: right;
+font-size: 1.0rem;
+height:3rem;
+color:rgb(200, 200, 243);
+overflow-y: auto;
+}
+
+#subdich{
+text-align: left;
+color:rgb(215, 142, 5);
+font-size: 1.1rem;
+height:5rem;
+margin-left:10px;
+font-style: italic;
+overflow-y: auto;
+}
+
+#playBtn{
+color:darkblue;
+font-weight:bolder;
+font-size: 1.1rem;
+}
+
+#loa_button{
+margin-left:10px;
+margin-bottom:4px;
+}
+.outiframe{
+margin-bottom:100%;
+}
+#tbao_pde , #click_khi_bichan{
+display: block;
+margin: 0 auto;
+width:50%;
+background-color: transparent;
+border:transparent;
+height: 20px;
+}
+#inputurl{
+width: 75%; 
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+color: black;
+background:#d2caca;
+}
+#OK{
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1rem;
+color:whitesmoke;
+width: 40px; 
+height: 40px; 
+border-radius: 50%;
+background: #014f05;
+}
+#radio-container{
+margin-left:40px;
+color:darkblue;
+width: 75%; 
+}
+#radio-container label {
+display: block;
+padding: 4px 0;      /* tăng khoảng cách trên/dưới */
+}
+#videochon{
+color:rgb(231, 225, 225);
+text-align: center;
+}
+
+
+
+header {
+ background-image: linear-gradient(-45deg, #f4d03f, #160223); 
+    /*background-image: linear-gradient(-180deg, #b0c008ca, #254735); */
+position: sticky;
+top: 0;
+z-index:1;
+background-color: #ffffff;
+padding: 0px;
+padding-bottom: 0%;
+/*text-align: center;*/
+border-bottom: 2px solid #d4af37; /* vàng ánh kim */
+border-top: 2px solid #d4af37; /* vàng ánh kim */
+}
+
+/* Footer */
+footer {
+/*background-image: linear-gradient(-180deg, #b0c008ca, #254735); */
+border-bottom: 2px solid #d4af37; /* vàng ánh kim */
+border-top: 2px solid #d4af37; /* vàng ánh kim */
+/*background-color: #2f2f2f;*/
+color: #d4af37;
+text-align: center;
+padding: 20px;
+}
+
+footer p, footer a {
+color: #d4af37;;
+font-size: 0.9em;
+}
+
+footer a:hover {
+color: #d4af37;
+}
+.buttonD{
+color:whitesmoke;
+background: linear-gradient(to bottom, #247b27 0%, #014f05 100%); /* Màu gradient 3D */
+border: none;
+border-radius: 8px;
+cursor: pointer;
+box-shadow: 0px 5px 0px #1B5E20; /* Đổ bóng để tạo hiệu ứng nổi */
+transition: all 0.2s ease-in-out;
+width: 75%; 
+
+display: block;
+margin-left: auto;
+margin-right: auto; /* hoặc margin: 0 auto; */
+font-size: 1.1rem;
+
+}
+
+#chatbox { 
+    border: transparent;
+  /*border: 1px solid #ccc; */
+  padding: 0px; 
+  height: auto; 
+  overflow-y: scroll; 
+  margin-bottom: 10px;
+  margin-top: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+
+  transition: opacity 0.3s ease;
+  position:relative ; 
+  
+}
