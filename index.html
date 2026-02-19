@@ -1,196 +1,892 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
-  <title>Tiensg89 Play Youtube</title>
-   <link rel="stylesheet" href="sophie.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> <!-- Import SweetAlert2 -->
+    <title>Chat in multiple languages</title>
+<style>
+/*
+body {
+    background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
+    color: #fff;
+    font: 1rem/1 'Poppins', sans-serif;
+    height:100%;
+    padding: 20px;
+    max-width: 700px; 
+    margin: auto;
+}
+*/
+html,body {
+    background-image: linear-gradient(30deg, #1666b0, #fbfafb); 
+    color: #fff;
+    font: 1rem/1 'Poppins', sans-serif;
+    height:100%;
+    padding: 20px;
+    /*max-width: 700px;*/ 
+    margin: auto;
+}
+body{
+/*min-height: 100vh;*/
+display: flex;
+flex-direction: column;
+padding-bottom: env(safe-area-inset-bottom);
+/*background-size: cover;
+background-position: center;*/
+}
+main{
+flex: 1;
+}
+h2 { 
+  text-align: center; 
+  color:darkgreen;
+}
+#chatbox { 
+
+  border: 1px solid #ccc; 
+  padding: 10px; 
+  height: 250px; 
+  overflow-y: scroll; 
+  margin-bottom: 10px; 
+  transition: opacity 0.3s ease;
+  position:relative ; /*neu absolue thi chatbox se co lai khi ko co text*/  
+  
+}
+.overlay-btn, .hidetext-btn, .copytext-btn{
+  border-color: transparent ;
+  background: transparent;
+  color:white;
+  transition: transform 0.2s ease;
+}
+.overlay-btn:hover, .hidetext-btn:hover, .copytext-btn:hover {
+  transform: scale(1.5); /* phóng to gap ruoi */
+}
+.menu-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10%; /* cách biên trái và phải 20px */
+  width: 100%;
+  box-sizing: border-box;
+}
+.menu-group select {
+  width: 42%; /* hoặc tuỳ chỉnh theo nhu cầu */
+  padding: 8px;
+  font-size: 16px;
+  background-color: transparent;
+}
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; /* hoặc đặt chiều rộng cụ thể */
+  padding: 10px 0px; /* tuỳ chỉnh khoảng cách lề */
+}
+#mic1_button, #mic2_button{
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: 3px solid #333; /* Viền */
+  
+}
+
+#mic1Pulse {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: green;
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+#mic2Pulse {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgb(4, 4, 122);
+  transition: transform 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  
+}
+
+.pulsing {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.5); }
+  100% { transform: scale(1); }
+}
+
+#start_button {
+    width: 40px; /* Kích thước nút */
+    height: 40px;
+    border-radius: 50%; /* Làm cho nút tròn */
+    font-size: 16px;
+    /*background-image: url("icons/started.png");  Ảnh bên trong */
+    background-image:  url('icons/start.png'); /* Ảnh bên trong */
+    background-size: cover; /* Đảm bảo ảnh phủ đầy */
+    background-position: center;
+    background-color: darkolivegreen;
+    border: 1px solid lightgreen; 
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Đổ bóng nhẹ */
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+}
+#loa_button {
+  padding: 10px 20px;
+  font-size: 16px;
+  width: 50px;
+  height: 50px;
+  border: 2px solid #ccc;
+  background-image: url("icons/loa.png");
+  background-size: cover;
+  background-position: center;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+}
+.mic1-noi {
+  color: rgb(125, 122, 122);
+  position: relative;
+  top: -4px; /* nâng lên 5px */
+  font-size:x-large;
+}
+.mic1-dich {
+  color: darkgreen;
+  font-size: x-large;
+  /*font-size:x-large;*/
+}
+.mic2-noi {
+  color: #71759f;
+  position: relative;
+  top: -4px; /* nâng lên 5px */
+  font-size:x-large;
+}
+.mic2-dich {
+  color: darkblue;
+  font-size: x-large;
+  /*font-weight: bold;*/
+}
+#lang1_select {
+  color:rgb(2, 78, 2);
+  font-weight: bolder;
+}
+
+#lang2_select {
+  text-align: right;       /* Căn nội dung sang phải */
+  direction: rtl;          /* Đảo hướng dòng để option hiển thị sát phải */
+  color: darkblue;
+  font-weight:bolder;
+}
+.keyboard-group {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 10%  0% 24%; /* cách biên trái và phải 20px */
+  width: 100%;
+  box-sizing: border-box;
+  
+}
+.keyboard-group div {
+  width: 30%; /* hoặc tuỳ chỉnh theo nhu cầu */
+  padding: 0;
+  font-size: 24px;
+  background-color: transparent;
+}
+#about{
+    color:#b18024;
+    font-size: 36px;
+}
+#banphim1,#banphim2 {
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+}
+.mark1{
+  /*background-color: #ffff99;  Vàng nhạt */
+  background-color: #ccffcc;  /*Xanh mint Nhẹ nhàng, dịu mắt */
+  color: inherit;            /* Giữ màu chữ gốc */
+ /*luu de tkhao: background-color: #ffff99; Vàng nhạt, rất phổ biến, dễ đọc*/
+
+}
+
+.mark2{
+ background-color: #cce5ff; /*  Xanh dương nhạt, tươi sáng, không lóa */
+  color: inherit;            /* Giữ màu chữ gốc */
+}
+#box1_ghi{
+  border: 1px solid #ccc; 
+  font-size:24px;
+  width:100%;
+  height: 300px; 
+  overflow-y: scroll; 
+  padding-left: 10px;  
+  text-align: left; 
+  direction: ltr;
+} 
+#box2_ghi{
+  border: 1px solid #ccc; 
+  font-size:24px;
+  width:100%;
+  height: 300px; 
+  overflow-y: scroll; 
+  
+  padding-left: 10px;  
+  text-align: left; 
+  direction: ltr;
+} 
+#copiedLabel {
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #eee;
+  color: #333;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  white-space: nowrap;
+}
+#batTbChatGpt{
+  color:#42300d;
+  text-align: center;
+}
+
+
+</style>
+
 </head>
 <body>
-<!-- Header -->
-<header class="sticky"> 
+<h2 ><span id="about" onclick="aboutapp()">C</span>hat in multiple <span id="voicesXem">languages</span></h2>
+<h2 >🗣️<button id="start_button">🔒</button>👤</h2>
 
+<div class="button-group">
+  <button class="hidetext-btn" onclick="anHienDivsInChat()">🗌 Hide/Show</button>
 
-  <div class="video-container">
-    <div id="playerContainer"></div>
+  <div style="position: relative; display: inline-block;">
+    <div id="copiedLabel" style="display: none;">Copied</div>
+    <button class="copytext-btn" onclick="copyText()">Copy 🗌 &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</button>
   </div>
 
-  <div class="menu-group">
-    <select id="voiceSelect"></select>
-    <button id='rateRead' onclick="tocDoDoc()">Rate: 1</button>
+  <button class="overlay-btn" onclick="removeAllDivs()">Clear 🗌</button>
+</div>
 
-    <button id="playBtn">▶️</button>
+  <div id="chatbox" aria-hidden="false"></div>
 
-    <button class='butp1' onclick="btnReadSub()">Sub only</button>
-    <button class='butp2' onclick="btnYoutubeSound()">Yt only</button>
-  </div>
-  <!-- <hr> -->
-  </header>
+<br>
+<div class="menu-group">
+    <select id="lang1_select" onchange="findVoiceMenu1(this.index)" ></select>
+    <select id="lang2_select" onchange="findVoiceMenu2(this.index)" ></select>
+</div>
 
-    <br>
-    <div id="currentSubtitle">[source subtitles]</div>
-    <div id="loa_button">🔊</div>
-    <div id="subdich">[translated subtitles ]</div>
-    
-    <hr>
-    <div id="videochon" onclick="them_Http()">JqJ7PlMCDuE</div>
-    <hr>
-    <br>
+<div class="button-group">
+    <button id="mic1_button" >
+        <div id="mic1Pulse">🎙️</div>
+    </button>
 
+    <button id="loa_button" >
 
-    <button class="buttonD"><select id="selectVideo"></select> </button>
-    
-    <br><button id="tbao_pde" onclick="lay_phudejson_byst()"></button>
+    <button id="mic2_button">
+        <div id="mic2Pulse">🎙️</div>
+    </button>
+</div>
 
-    <h4>Chọn Chủ đề ⬇ và video ⬆</h4>
-    <button class="buttonD"><select id="selectChude"></select></button>
-
-    <br><br><h3>Nhập Url youtube của bạn:</h3>
-    <input type="text" id="inputurl" placeholder="Enter a youtube url">
-    <br><button id="OK" onclick="xuLiUrlInput()">OK</button><br>
-
-    <br><br><button class="buttonD" onclick="tom_tat_ndvideo()" style="width:60%;">Tóm tắt nội dung của video</button><br>
-    <div id="chatbox" aria-hidden="false"></div>
+<div class="keyboard-group">
+    <div><button id='banphim1' onclick="chatBoxKb1()">⌨️</button></div>
+    <div><button id='banphim2' onclick="chatBoxKb2()">⌨️</button></div>
+</div>
+<h3 id="batTbChatGpt"></h3>
 
 
-    <!--<h4><a href="https://tien89.streamlit.app" style="background: transparent;text-align: center; ">.</a></h4>-->
-    <h4><a href="z.py" style="background: transparent;text-align: center; ">.</a></h4>
+<script>
+const start_button = document.getElementById("start_button");
+const chatbox = document.getElementById("chatbox");
+const chatboxcha = document.getElementById("chatboxcha");
 
-<!-- Footer -->
-<footer>
- 
-    <p>&copy; 2026 From tiensg89@gmail.com. All Rights Reserved.</p>
-   <!-- <p>2318 Cartesian St, Katy, Houston, TX 77494, USA</p>
-    <p><a href="https://adunglacchurch.github.io" target="_blank">About</a> | <a href="https://tiensgus.github.io" target="_blank">App1</a>| <a href="https://loan991958.github.io" target="_blank">App2</a>| <a href="https://hoangco89.github.io" target="_blank">App3</a></p>-->
-</footer>
-<!-- YouTube API -->
-  <script src="https://www.youtube.com/iframe_api"></script>
-  <script>
-    // https://www.youtube.com/watch?v=mi3xR5eGQ3s&list=PLtBFFyhEIC7n7PULjzTttoe4sNKzv4DBu&index=1
-//https://www.youtu.be/watch?v=mi3xR5eGQ3s
-//<a href="https://www.youtube.com/watch?v=mi3xR5eGQ3s&list=PLtBFFyhEIC7n7PULjzTttoe4sNKzv4DBu&index=1">Click</a>
-//<a href="https://www.youtu.be/mi3xR5eGQ3s">CLIC SAU TTTTTTTTT</a>
+const mic1_button = document.getElementById("mic1_button");
+const mic2_button = document.getElementById("mic2_button");  
+const loa_button = document.getElementById("loa_button");
+const lang1_select =  document.getElementById("lang1_select");
+const lang2_select =  document.getElementById("lang2_select");
+const banphim1 =  document.getElementById("banphim1");
+const banphim2 =  document.getElementById("banphim2");
+const batTbChatGpt =  document.getElementById("batTbChatGpt");
+const voicesXem =  document.getElementById("voicesXem");
 
-    const videochon = document.getElementById("videochon");
-    const playBtn = document.getElementById("playBtn");
-    const selectChude = document.getElementById("selectChude");
-    const selectVideo = document.getElementById("selectVideo");
-    const currentSubtitle = document.getElementById("currentSubtitle");
-    const subdich = document.getElementById("subdich");
-    const tbao_pde = document.getElementById("tbao_pde");
-    const inputurl = document.getElementById("inputurl");
-    const chatbox = document.getElementById("chatbox");
+mic1_button.disabled = true;
+mic2_button.disabled = true;   
+banphim1.disabled = true;
+banphim2.disabled = true;
 
-    let player = null;
-    let videoId = videochon.textContent;
-    let subtitles = [];
-    
-    function onYouTubeIframeAPIReady() {
-      player = new YT.Player("playerContainer", {
-        height: "315",
-        width: "560",
-        videoId: videochon.textContent, //`${id_video}`
-        playerVars: { autoplay: 0, controls: 1 },
-        events: {
-          onReady: () => { },
-          onStateChange: (e) => {
-            if (e.data === YT.PlayerState.PAUSED) stopReading();
-            if (e.data === YT.PlayerState.PLAYING) resumeSync();
-            if (e.data === YT.PlayerState.ENDED) stopReading();
-          }
+//list cac langs co 13 langs
+//lLangs[n][0] se la ten lang ro rang cua nuoc do
+//lLangs[n][1] se la voice
+const lLangs = 
+[['Chinese',    'zh-TW', 'Tiếng Trung'],
+ ['Danish',     'da-DK', 'Tiếng Đan Mạch'], 
+ ['Dutch',      'nl-NL', 'Tiếng Hà Lan'],
+ ['English',    'en-US', 'Tiếng Anh'],
+ ['French',     'fr-FR', 'Tiếng Pháp'],
+ ['German',     'de-DE', 'Tiếng Đức'],
+ ['Hebrew',     'he-IL', 'Tiếng Do Thái'],
+ ['Italy',      'it-IT', 'Tiếng Italy'],
+ ['Japanese',   'ja-JP', 'Tiếng Nhật'],
+ ['Korean',     'ko-KR', 'Tiếng Hàn'],
+ ['Latin',      'la-LAT','Tiếng La-tinh'],
+ ['Portuguese', 'pt-PT', 'Tiếng Bồ Đào Nha'],
+ ['Rusian',     'ru-RU', 'Tiếng Nga'],
+ ['Spanish',    'es-MX', 'Tiếng Tây Ban Nha'],
+ ['Thai',       'th-TH', 'Tiếng Thái'],
+ ['Turkish',    'tr-TR', 'Tiếng Thổ Nhĩ Kỳ'],
+ ['Vietnamese', 'vi-VN', 'Tiếng Việt']]
+
+// alert(lLangs[12][0]); //la Danish
+//alert(lLangs[12][1]); //la da-DK
+//alert(lLangs[12][1].substring(0, 2)); //la da
+
+//day la list cac lang quoc gia, vd French
+const listLangCountry = lLangs.map(pt => pt[0]);
+
+//day la list cac MA lang voice, vd fr-FR
+const listLangVoice = lLangs.map(pt => pt[1]);
+
+//day la list cac Tieng theo tieng Viet, vd Tieng Đan Mạch, Tiếng Lào...
+const listLangTiengDich = lLangs.map(pt => pt[2]);
+
+
+let lang1VoiceC=null; //voice tim theo ma, vd 'vi-VN' cua lang1_select 
+let lang2VoiceC=null; //voice tim theo ma, vd 'en-US' cua lang2_select
+var tiengYcDich='';
+let mic1TextDich='';
+let mic2TextDich='';
+let indexSelect1Update=0;
+let indexSelect2Update=0;
+let daBatChatGpt=false;
+var demAnHienClick=0;
+var demStartButonClick=-1;
+
+let recognition1=null;
+let recognition2=null;
+let is1Running = false;
+let is2Running = false;
+
+function bcheckChatGpt(indexSelet1,indexSelet2){
+    if (indexSelet1===indexSelet2){
+        removeAllDivs();
+        daBatChatGpt=true;
+        batTbChatGpt.innerText = "Enabled chat with GPT in "+listLangCountry[indexSelect1Update];
+    }else{
+        if (daBatChatGpt===true){
+          removeAllDivs();
         }
-      });
+        daBatChatGpt=false;
+        batTbChatGpt.innerText = "";
+        
     }
-    window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+}
 
-      // ==========================
-      // 5. PLAY BUTTON
-      // ==========================
-      playBtn.addEventListener("click", async () => {
-        //alert("Playing video ID: " + videochon.textContent);
-         videoId = videochon.textContent;
-          subtitles = await fetchSubtitles(videoId);
-          if (subtitles.length>0){
-            translateFullJson(subtitles);
-            tbao_pde.textContent = ""
-          }else{
-            currentSubtitle.innerHTML="[source subtitles]";
-            subdich.innerHTML="[translated subtitles]";
-            tbao_pde.textContent = "No subtites. Click here to get!"
+function updateMenulang1_select() {
+    for (let i = 0; i < listLangCountry.length; i++) {
+        let optn = listLangCountry[i];
+        let el = document.createElement("option");
+        el.textContent = optn;
+        el.value = optn;
+        lang1_select.appendChild(el);
+    }
+}
+updateMenulang1_select();
+
+
+function updateMenulang2_select() {
+    for (let i = 0; i < listLangCountry.length; i++) {
+        let optn = listLangCountry[i];
+        let el = document.createElement("option");
+        el.textContent = optn;
+        el.value = optn;
+        lang2_select.appendChild(el);
+    }
+}
+updateMenulang2_select();
+
+//------------------
+function findVoiceMenu1() {
+  //cap nhat moi lan thay doi
+  indexSelect1Update = lang1_select.selectedIndex;
+  let voices = speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
+    return;
+  }
+  if (listLangVoice[indexSelect1Update]==='en-US'){
+    lang1VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    if (lang1VoiceC===undefined){
+      lang1VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect1Update]);
+    }    
+  }else{
+    lang1VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect1Update]);
+  }
+  if (lang1VoiceC === undefined) {
+    console.log('Không có voice phù hợp');
+  } else {
+    console.log('Voice được chọn:', lang1VoiceC.lang);
+  }
+
+}
+
+//------------------------
+function findVoiceMenu2() {
+  //cap nhat moi lan thay doi
+  indexSelect2Update = lang2_select.selectedIndex;
+  let voices = speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
+    return;
+  }
+  if (listLangVoice[indexSelect2Update]==='en-US'){
+    lang2VoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    if (lang2VoiceC===undefined){
+      lang2VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect2Update]);
+    }    
+  }else{
+    lang2VoiceC = voices.find(v => v.lang === listLangVoice[indexSelect2Update]);
+  }
+  if (lang2VoiceC === undefined) {
+    console.log('Không có voice phù hợp');
+  } else {
+    console.log('Voice được chọn:', lang2VoiceC.lang);
+  }
+}
+
+// Đợi sự kiện voiceschanged để gọi findMenu1 findMenu2
+speechSynthesis.onvoiceschanged = () => {
+  findVoiceMenu1();
+  findVoiceMenu2();
+//  console.log('lang1VoiceC:',lang1VoiceC);
+//  console.log('lang2VoiceC:',lang2VoiceC);
+};
+
+
+
+
+function addMessage(role, text) {
+    text = text.replace(/^"(.*)"$/, '$1');// bỏ dấu ngoặc kép ở đầu và cuối nếu có
+    const div = document.createElement("div");
+    //div.innerHTML = `<span class='${role}'>${text}</span> <br>`;
+    //div.innerHTML = `<span class="${role}">${role === "mic1-noi" ? "<br>" : ""} ${text}</span>`;
+    if (daBatChatGpt===true){
+      if (role.includes('mic1')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic1-noi') ? "<br>🟢֎" : ""} ${text}</span>`;
+      }
+      if (role.includes('mic2')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic2-noi') ? "<br>👤֎" : ""} ${text}</span>`;
+      }  
+    }else{
+      if (role.includes('mic1')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic1-noi') ? "<br>🟢" : ""} ${text}</span>`;
+      }
+      if (role.includes('mic2')){
+        div.innerHTML = `<span class="${role}">${role.includes('mic2-noi') ? "<br>👤" : ""} ${text}</span>`;
+      }  
+    }
+    chatbox.appendChild(div);
+    //cho div  msg.style.display = "none"; hoac = 'block' o day
+    //neu demAnHienClick%2 === 1 thi none, khac thi block
+    if (demAnHienClick%2 === 1){
+      div.style.display = "none";
+    }else{
+      div.style.display = "block";
+    }
+
+    chatbox.scrollTop = chatbox.scrollHeight;
+}
+
+// Hàm phát âm text dich
+//chu y rang neu langVoice 2 thi micNoi 1, neu langVoice 1 thi micNoi 2
+function speakTextDichCc(langVoice,lnoiDatTextDichCcVaMic,micNoi) {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+
+    text = lnoiDatTextDichCcVaMic[0].innerText;
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = langVoice;
+
+
+    utterance.addEventListener('start', handleStart);
+    utterance.addEventListener('end', handleEnd);
+    utterance.addEventListener('boundary', handleBoundary);
+
+    speechSynthesis.speak(utterance);
+
+    function handleStart(){
+      if (micNoi==='mic1' && recognition1 && is1Running) recognition1.stop();
+      if (micNoi==='mic2' && recognition2  && is2Running) recognition2.stop();
+      
+      loa_button.style.backgroundImage="url('icons/loa-animation.gif')";
+
+    }
+    function handleEnd() {
+      if (micNoi==='mic1' && recognition1 && is1Running) recognition1.start();
+      if (micNoi==='mic2' && recognition2  && is2Running) recognition2.start();
+      loa_button.style.backgroundImage="url('icons/loa.png')";
+      lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+      //dong tren day gan cho lnoiDatTextDichCcVaMic[0].innerHTML
+      //chi co gia tri la text, khong con mark nua de mat dau mark
+    }
+    function handleBoundary(event) {
+        if (event.name === 'sentence') {
+            // we only care about word boundaries
+            return;
+        }
+        const wordStart = event.charIndex;
+        let wordLength = event.charLength;
+        if (wordLength === undefined) {
+            // Safari doesn't provide charLength, so fall back to a regex to find the current word and its length (probably misses some edge cases, but good enough for this demo)
+            const match = text.substring(wordStart).match(/^[a-z\d']*/i);
+            wordLength = match[0].length;
+        }
+        // wrap word in <mark> tag
+        const wordEnd = wordStart + wordLength;
+        const word = text.substring(wordStart, wordEnd);
+        let markedText;
+        if (lnoiDatTextDichCcVaMic[1]==='mic1-dich') {  
+          markedText = text.substring(0, wordStart) + '<mark class="mark1">' + word + '</mark>' + text.substring(wordEnd);
+        }else{
+          markedText = text.substring(0, wordStart) + '<mark class="mark2">' + word + '</mark>' + text.substring(wordEnd);
+        }
+        lnoiDatTextDichCcVaMic[0].innerHTML = markedText; //phan nay co ma trong resultsdichEl nen phai innerHTML
+            //t them: tim cac "mark" de thuc thi ham scrollIntoView() de cuon div chua text doc
+        let markElement = document.querySelector("mark");
+        if (markElement){
+            markElement.scrollIntoView({
+                behavior: "smooth", block: "center"
+            });
+        }
+    }
+
+
+    //khi doc den cuoi thi cho innerHTML chi la text, khong con mark nua
+    //de bien mat highlight
+
+  }else{
+    console.log("Trình duyệt không hỗ trợ speechSynthesis");
+  }  
+
+
+};
+
+function layNoiDatTextCc(micDich){
+  let allDivs,id_dat_textchay;
+  if (micDich==='mic1-dich'){
+    allDivs = chatbox.querySelectorAll(".mic1-dich");
+  }else{
+    allDivs = chatbox.querySelectorAll(".mic2-dich");
+  }
+  id_dat_textchay = allDivs[allDivs.length - 1];
+  //console.log('tttttttttt:',micDich);
+  return [id_dat_textchay,micDich] ;
+}
+
+// Hàm để dịch 
+//da xoa function dichTextFromTo(textDemDich, micNoi){
+//ham dich text voi google translate
+async function translateText(text, from, to,micNoi) {
+    const inputText = text;
+    let sourceLanguage=from;
+    let targetLanguage=to;
+    const url = `https://translate.googleapis.com/translate_a/single?client=gtx&sl=${sourceLanguage}&tl=${targetLanguage}&dt=t&q=${encodeURI(inputText)}`;
+
+    return new Promise((resolve, reject) => {
+      const xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function () {
+        if (this.readyState == 4) {
+          if (this.status == 200){
+            const responseReturned = JSON.parse(this.responseText);
+            const translations = responseReturned[0].map((text) => text[0]);
+            const textDichRa  = translations.join(" ");
+            console.log(textDichRa);
+            //Viet textDichRa vao trong hop chat
+            //if (micNoi==='mic1'){
+            //  mic1TextDich = textDichRa;
+            //  addMessage("mic1-dich", mic1TextDich);
+            //}else{
+            //  mic2TextDich = textDichRa;
+            //  addMessage("mic2-dich", mic2TextDich);
+            //}
+            resolve(textDichRa);
+          } else {
+            reject('Error in translation request');
           }
-
-        player.loadVideoById(videoId);
-        player.playVideo();
-
-        startSync();
-      });
-
-      // ==========================
-      // 6. AUTO PLAY WHEN CHANGE VIDEO
-      // ==========================
-    
-      selectVideo.addEventListener("change", async () => {
-        const chudeId = selectChude.value;
-        const key = "bai_" + chudeId;
-        localStorage.setItem(key, selectVideo.value);
-        videochon.textContent = selectVideo.value;
-        videoId = videochon.textContent;
-
-        subtitles = await fetchSubtitles(videoId);
-
-        // 🔥 DỊCH TOÀN BỘ JSON
-        if (subtitles.length>0){
-          translateFullJson(subtitles);
-          tbao_pde.textContent = ""
-        }else{
-          currentSubtitle.innerHTML="[source subtitles]";
-          subdich.innerHTML="[translated subtitles]";
-          tbao_pde.textContent = "No subtites. Click here to get!"
-
-
         }
+      };
+      xhttp.open("GET", url, true);
+      xhttp.send();
+    });
+}
 
-        player.loadVideoById(videoId);
-        player.playVideo();
+// Nhận giọng nói từ mic1
+mic1_button.onclick = () => {
+  if (is1Running) {
+    recognition1.stop();
+    recognition1=null;
+    is1Running=false;
+    return;
+  }else{  
+  if (is2Running) {//neu is2Running thi khong lam nua va loai bo no
+    is2Running = false;
+    recognition2=null;
+  }
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-        startSync();
+  recognition1 = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition1.lang = listLangVoice[indexSelect1Update];
+  recognition1.interimResults = false;
+  recognition1.continuous = false;
 
-      });
+  //let is1Running = false;
 
-      selectVideo.addEventListener("dblclick", async () => {
-        const chudeId = selectChude.value;
-        const key = "bai_" + chudeId;
-        localStorage.setItem(key, selectVideo.value);
-        videochon.textContent = selectVideo.value;
-        videoId = videochon.textContent;
+  recognition1.onstart = () => {
+    mic1Pulse.classList.add('pulsing');
+    mic1_button.style.backgroundColor = "gray"; 
+  }
+  recognition1.onend = () => {
+    mic1Pulse.classList.remove('pulsing');
+    mic1_button.style.backgroundColor = "transparent" ;
+    if (is1Running && !speechSynthesis.speaking) {
+      console.log('🎤 Mic tự khởi động lại sau khi bị ngắt');
+      recognition1.start();
+    }
+  };
 
-        subtitles = await fetchSubtitles(videoId);
+  recognition1.onresult = async (event) => {
+  const mic1TextNoi = event.results[0][0].transcript;
+  console.log("Bạn nói:", mic1TextNoi);
+  addMessage("mic1-noi", mic1TextNoi);
+  
+  // Ngắt mic trước khi nói
 
-        // 🔥 DỊCH TOÀN BỘ JSON
-        if (subtitles.length>0){
-          translateFullJson(subtitles);
-          tbao_pde.textContent = ""
-        }else{
-          currentSubtitle.innerHTML="[source subtitles]";
-          subdich.innerHTML="[translated subtitles]";
-          tbao_pde.textContent = "No subtites. Click here to get!"
+  if (daBatChatGpt===false){
+    //dichTextFromTo(mic1TextNoi, 'mic1');
+    const translated = await translateText(mic1TextNoi, listLangVoice[indexSelect1Update].substring(0,2), listLangVoice[indexSelect2Update].substring(0,2), 'mic1');
+    //console.log('TTTTTT:',translated);ok khi thu
+
+    addMessage("mic1-dich", translated);
+    let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic1-dich");
+
+    loa_button.onclick = () => {
+      //neu dang phat loa thi ngung
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+        loa_button.style.backgroundImage = "url('icons/loa.png')";
+      }else{
+        //neu loa da dung thi doc lai
+        speakTextDichCc(lang2VoiceC,lnoiDatTextDichCcVaMic, 'mic1');
+      }
+    }
+    loa_button.click(); // tự động phát luôn
+
+  }else{
+    if (is1Running) {
+      recognition1.stop();
+      recognition1=null;
+      is1Running=false;
+    }  
+    sendGptReplyAndSpeak(mic1TextNoi);
+  }
+
+  };
+  if (! is1Running) {
+    is1Running = true;
+    recognition1.start();
+  };
+};
+};
 
 
-        }
+// Nhận giọng nói từ mic2
+mic2_button.onclick = () => {
+  if (is2Running) {
+    recognition2.stop();
+    recognition2=null;
+    is2Running=false;
+    return;
+  }else{  
+  if (is1Running) {
+    is1Running = false;
+    recognition1=null;
+  }
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
 
-        player.loadVideoById(videoId);
-        player.playVideo();
+  recognition2 = new (window.SpeechRecognition || window.webkitSpeechRecognition)();
+  recognition2.lang = listLangVoice[indexSelect2Update];
+  recognition2.interimResults = false;
+  recognition2.continuous = false;
 
-        startSync();
+  //let is2Running = false;
 
-      });
+  recognition2.onstart = () => {
+    mic2Pulse.classList.add('pulsing');
+    mic2_button.style.backgroundColor = "gray"; 
+  }
+  recognition2.onend = () => {
+    mic2Pulse.classList.remove('pulsing');
+    mic2_button.style.backgroundColor = "transparent" ;
+    if (is2Running && !speechSynthesis.speaking) {
+      console.log('🎤 Mic tự khởi động lại sau khi bị ngắt');
+      recognition2.start();
+    }
+  };
 
-//---------THU-----------
-//"https://www.youtube.com/watch?v=mi3xR5eGQ3s&list=PLtBFFyhEIC7n7PULjzTttoe4sNKzv4DBu&index=1"
+  recognition2.onresult = async (event) => {
+  const mic2TextNoi = event.results[0][0].transcript;
+  console.log("Bạn nói:", mic2TextNoi);
+  addMessage("mic2-noi", mic2TextNoi);
+  
+  // Ngắt mic trước khi nói
+
+  if (daBatChatGpt===false){
+    //dichTextFromTo(mic1TextNoi, 'mic1');
+    const translated = await translateText(mic2TextNoi, listLangVoice[indexSelect2Update].substring(0,2), listLangVoice[indexSelect1Update].substring(0,2), 'mic2');
+    //console.log('TTTTTT:',translated);ok khi thu
+
+    addMessage("mic2-dich", translated);
+    let lnoiDatTextDichCcVaMic = layNoiDatTextCc("mic2-dich");
+
+    loa_button.onclick = () => {
+      //neu dang phat loa thi ngung
+      if (window.speechSynthesis.speaking) {
+        window.speechSynthesis.cancel();
+        lnoiDatTextDichCcVaMic[0].innerHTML = lnoiDatTextDichCcVaMic[0].innerText;
+        loa_button.style.backgroundImage = "url('icons/loa.png')";
+      }else{
+        //neu loa da dung thi doc lai
+        speakTextDichCc(lang1VoiceC,lnoiDatTextDichCcVaMic,'mic2');
+      }
+    }
+    loa_button.click(); // tự động phát luôn
+
+  }else{
+    if (is2Running) {
+      recognition2.stop();
+      recognition2=null;
+      is2Running=false;
+    }  
+    sendGptReplyAndSpeak(mic2TextNoi);
+  }
+
+  };
+  if (! is2Running) {
+    is2Running = true;
+    recognition2.start();
+  };
+};
+
+//ham nay chi cho noi ready
+function speakTextDich(text,langVoice) {
+  if ('speechSynthesis' in window) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.voice = langVoice;
+    //utterance.lang = langVoice.lang;
+
+    utterance.onend = () => loa_button.style.backgroundImage = "url('icons/loa.png')";
+    speechSynthesis.speak(utterance);
+    loa_button.style.backgroundImage = "url('icons/loa-animation.gif')";
+  }else{
+    console.log("Trình duyệt không hỗ trợ speechSynthesis");
+  }  
+};
+
+};
+
+
+start_button.onclick=()=>{
+  if (getComputedStyle(start_button).backgroundImage.includes("started.png")) {
+    location.reload();  
+    return;
+  }
+  if (start_button.style.backgroundImage !== "url('icons/started.png')"){
+    mic1_button.disabled = false;
+    mic2_button.disabled = false;   
+    banphim1.disabled = false;
+    banphim2.disabled = false;
+    start_button.style.backgroundImage = "url('icons/started.png')";
+    mic1_button.click(); //de kich hoat micro, se nhap alow mic
+
+    loa_button.onclick = () => {
+      const utterance = new SpeechSynthesisUtterance('Ready');
+      utterance.voice = lang2VoiceC;
+      speechSynthesis.speak(utterance);
+    }  
+    loa_button.click(); // tự động phát luôn
+    if (is1Running) {
+      recognition1.stop();
+      recognition1=null;
+      is1Running=false;
+    }  
+  }
+}
+
+function copyText(){
+  if (chatbox.innerText !== ""){
+    const allText = chatbox.innerText;
+    navigator.clipboard.writeText(allText).then(() => {
+    const label = document.getElementById("copiedLabel");
+    label.style.display = "block";
+
+    setTimeout(() => {
+      label.style.display = "none";
+    }, 1500);
+  });
+
+  }
+}
+
+function removeAllDivs() {
+  const childDivs = chatbox.querySelectorAll("div");
+  childDivs.forEach(div => div.remove());
+
+}
+
+function fVoiceChoIndexUpdate(iUpdate){
+  let voices = speechSynthesis.getVoices();
+  if (voices.length === 0) {
+    console.warn("Danh sách voices chưa sẵn sàng. Đợi sự kiện voiceschanged...");
+    return;
+  }
+  let langVoiceC; 
+  if (listLangVoice[iUpdate]==='en-US'){
+    langVoiceC = voices.find(v => v.lang === 'en-US' && (v.name.includes('Samantha') || v.name.includes('Daniel') || v.name.includes('Karen') || v.name.includes('Zira')));
+    if (langVoiceC===undefined){
+      langVoiceC = voices.find(v => v.lang === listLangVoice[iUpdate]);
+    }    
+  }else{
+    langVoiceC = voices.find(v => v.lang === listLangVoice[iUpdate]);
+  }
+  if (langVoiceC === undefined) {
+    console.log('Không có voice phù hợp');
+  } else {
+    console.log('Voice được chọn:', langVoiceC.lang);
+  }
+  return langVoiceC;
+}
+lang1VoiceC = fVoiceChoIndexUpdate(indexSelect1Update);
+lang2VoiceC = fVoiceChoIndexUpdate(indexSelect2Update);
+
 </script>
-  <script src="sophie.js"></script>
+
+<script src="index.js"></script>
+
 </body>
 </html>
-
-
